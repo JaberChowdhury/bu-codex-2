@@ -9,6 +9,7 @@ type PhotoFieldProps = {
   id: string
   value: string
   onChange: (dataUrl: string) => void
+  error?: string
   className?: string
 }
 
@@ -39,7 +40,7 @@ function resizeImage(file: File): Promise<string> {
   })
 }
 
-function PhotoField({ id, value, onChange, className }: PhotoFieldProps) {
+function PhotoField({ id, value, onChange, error, className }: PhotoFieldProps) {
   const [busy, setBusy] = React.useState(false)
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,6 +100,11 @@ function PhotoField({ id, value, onChange, className }: PhotoFieldProps) {
         className="sr-only"
         onChange={handleChange}
       />
+      {error ? (
+        <p role="alert" className="font-mono text-xs text-destructive">
+          {error}
+        </p>
+      ) : null}
     </div>
   )
 }

@@ -26,6 +26,8 @@ export const RELATIONS = ["teammate", "friend", "classmate", "other"] as const
 
 export const GENDERS = ["male", "female"] as const
 
+export const SECTIONS = ["A", "B", "C"] as const
+
 export const EXPERIENCE_LEVELS: Record<number, string> = {
   1: "Beginner",
   2: "Regular",
@@ -39,9 +41,6 @@ export const STEP_LABELS = [
   "MEMBER 03",
   "REVIEW",
 ] as const
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const MOBILE_RE = /^[0-9+()\- ]{7,15}$/
 
 export function emptyMember(): Member {
   return {
@@ -65,37 +64,6 @@ export function emptyDraft(): Draft {
     teamName: "",
     members: [emptyMember(), emptyMember(), emptyMember()],
   }
-}
-
-export function isEmailValid(value: string) {
-  return EMAIL_RE.test(value.trim())
-}
-
-export function isMobileValid(value: string) {
-  return MOBILE_RE.test(value.trim())
-}
-
-export function isMemberRequiredValid(member: Member) {
-  return (
-    member.photo !== "" &&
-    member.fullName.trim() !== "" &&
-    member.gender !== "" &&
-    member.studentId.trim() !== "" &&
-    member.batch.trim() !== "" &&
-    member.section.trim() !== "" &&
-    isEmailValid(member.gmail) &&
-    isMobileValid(member.mobile) &&
-    member.tshirt !== "" &&
-    member.experience >= 1 &&
-    member.experience <= 3
-  )
-}
-
-export function isDraftValid(draft: Draft) {
-  return (
-    draft.teamName.trim() !== "" &&
-    draft.members.every(isMemberRequiredValid)
-  )
 }
 
 export function makeTeamCode(teamName: string) {

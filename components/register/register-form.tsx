@@ -18,12 +18,11 @@ import { Progress } from "@/components/ui/progress"
 
 import { MemberFields } from "./member-fields"
 import { ReviewStep } from "./review-step"
+import { memberSchema, teamNameSchema } from "./schema"
 import {
   STORAGE_KEY,
   STEP_LABELS,
   emptyDraft,
-  isDraftValid,
-  isMemberRequiredValid,
   makeTeamCode,
   sanitizeDraft,
   type Draft,
@@ -46,6 +45,7 @@ function readStoredDraft(): Draft {
 function RegisterForm() {
   const [draft, setDraft] = React.useState<Draft>(readStoredDraft)
   const [step, setStep] = React.useState(0)
+  const [attempted, setAttempted] = React.useState(false)
   const [dialogOpen, setDialogOpen] = React.useState(false)
   const [teamCode, setTeamCode] = React.useState("")
   const submittedRef = React.useRef(false)
@@ -71,17 +71,46 @@ function RegisterForm() {
     []
   )
 
-  const stepValid =
-    step === 0
-      ? draft.teamName.trim() !== ""
-      : step >= 1 && step <= 3
-        ? isMemberRequiredValid(draft.members[step - 1])
-        : isDraftValid(draft)
+  const teamNameError = React.useMemo(() => {
+    const result = teamNameSchema.safeParse(draft.teamName)
+    return result.success ? "" : result.error.issues[0]?.message ?? ""
+  }, [draft.teamName])
 
-  const overallValid = isDraftValid(draft)
+  const teamStepValid = !teamNameError
+  const memberStepValid = React.useMemo(() => {
+    if (step < 1 || step > 3) return false
+    return memberSchema.safeParse(draft.members[step - 1]).success
+  }, [draft.members, step])
+
+  const overallValid = React.useMemo(() => {
+    return (
+      teamStepValid &&
+      draft.members.every((member) => memberSchema.safeParse(member).success)
+    )
+  }, [draft, teamStepValid])
+
+  const stepValid =
+    step === 0 ? teamStepValid : step >= 1 && step <= 3 ? memberStepValid : overallValid
+
+  const handleNext = () => {
+    if (!stepValid) {
+      setAttempted(true)
+      return
+    }
+    setAttempted(false)
+    setStep((current) => Math.min(TOTAL_STEPS - 1, current + 1))
+  }
+
+  const handleBack = () => {
+    setAttempted(false)
+    setStep((current) => Math.max(0, current - 1))
+  }
 
   const handleSubmit = () => {
-    if (!overallValid) return
+    if (!overallValid) {
+      setAttempted(true)
+      return
+    }
     setTeamCode(makeTeamCode(draft.teamName))
     submittedRef.current = true
     try {
@@ -125,10 +154,16 @@ function RegisterForm() {
                   onChange={(event) =>
                     setDraft((prev) => ({ ...prev, teamName: event.target.value }))
                   }
+                  aria-invalid={!!teamNameError}
                   placeholder="BU_CODEX_TEAM"
                   autoComplete="off"
                   aria-required="true"
                 />
+                {attempted && teamNameError ? (
+                  <p role="alert" className="font-mono text-xs text-destructive">
+                    {teamNameError}
+                  </p>
+                ) : null}
               </div>
               <p className="font-mono text-xs leading-relaxed text-muted-foreground">
                 three members register together. one leader coordinates the
@@ -142,6 +177,7 @@ function RegisterForm() {
               member={draft.members[step - 1]}
               index={step - 1}
               onChange={(patch) => patchMember(step - 1, patch)}
+              attempted={attempted}
             />
           )}
 
@@ -155,29 +191,15 @@ function RegisterForm() {
         </CardContent>
 
         <CardFooter className="justify-between">
-          <Button
-            variant="outline"
-            onClick={() => setStep((current) => Math.max(0, current - 1))}
-            disabled={step === 0}
-          >
+          <Button variant="outline" onClick={handleBack} disabled={step === 0}>
             {"< back"}
           </Button>
           {step < TOTAL_STEPS - 1 ? (
-            <Button
-              variant="default"
-              onClick={() =>
-                setStep((current) => Math.min(TOTAL_STEPS - 1, current + 1))
-              }
-              disabled={!stepValid}
-            >
+            <Button variant="default" onClick={handleNext}>
               {"> next"}
             </Button>
           ) : (
-            <Button
-              variant="default"
-              onClick={handleSubmit}
-              disabled={!overallValid}
-            >
+            <Button variant="default" onClick={handleSubmit}>
               {"> submit"}
             </Button>
           )}
