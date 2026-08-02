@@ -16,8 +16,8 @@ function AlgorithmNetwork() {
 
   // Procedural graph generation
   const { positions, phases, edges } = React.useMemo(() => {
-    const pos = []
-    const ph = []
+    const pos: THREE.Vector3[] = []
+    const ph: { x: number; y: number; z: number; speed: number }[] = []
     for (let i = 0; i < NUM_NODES; i++) {
       const theta = Math.random() * 2 * Math.PI
       const phi = Math.acos((Math.random() * 2) - 1)
@@ -172,12 +172,7 @@ function AlgorithmNetwork() {
 
       <lineSegments ref={linesRef}>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            count={edges.length * 2}
-            array={linePositions}
-            itemSize={3}
-          />
+          <bufferAttribute args={[linePositions, 3]} />
         </bufferGeometry>
         <lineBasicMaterial color="#556677" transparent opacity={0.25} />
       </lineSegments>
