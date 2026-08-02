@@ -1,0 +1,68 @@
+"use client"
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
+import { SectionHeading } from "@/components/home/section-heading"
+
+const faqs = [
+  {
+    question: "Who can participate?",
+    answer:
+      "Any student of Bangladesh University (BU), from any department. Teams of exactly three.",
+  },
+  {
+    question: "I don't have a team yet.",
+    answer:
+      "Solo joiners can be matched through the BU CODEX community channel.",
+  },
+  {
+    question: "Is the onsite final mandatory?",
+    answer: "Yes. Qualify online, show up on Sep 12.",
+  },
+  {
+    question: "What should I bring?",
+    answer:
+      "Student ID and a valid photo ID. Laptops optional; a computer is provided at the venue.",
+  },
+  {
+    question: "Is there an entry fee?",
+    answer:
+      "Yes — 400tk per team, paid once at registration. Covers the contest kit, refreshments, and venue costs.",
+  },
+  {
+    question: "How is the contest scored?",
+    answer:
+      "ICPC-style on toph.co. Correct submissions are ranked by problems solved, then total penalty time.",
+  },
+]
+
+export function Faq() {
+  return (
+    <section id="faq" className="py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionHeading label="faq · queries">
+          <h2 className="mt-3 font-heading text-2xl font-bold tnum sm:text-3xl">
+            FAQ
+          </h2>
+        </SectionHeading>
+        <Accordion className="mt-10 max-w-3xl">
+          {faqs.map((faq) => (
+            <AccordionItem key={faq.question} value={faq.question}>
+              <AccordionTrigger className="font-heading">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </section>
+  )
+}
