@@ -11,7 +11,7 @@ export const sectionSchema = z.enum([...SECTIONS], {
 })
 
 export const memberSchema = z.object({
-  photo: z.string().min(1, "photo is required"),
+  photo: z.any().refine((val) => val !== null && typeof val !== "string", "photo is required"),
   fullName: z
     .string()
     .trim()

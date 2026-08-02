@@ -8,7 +8,7 @@ import { Tracks } from "@/components/home/tracks"
 import { Reveal } from "@/components/motion/reveal"
 import { Ticker } from "@/components/motion/ticker"
 
-export default function Page() {
+export default function HomePage() {
   return (
     <>
       <Hero />

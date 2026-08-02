@@ -30,6 +30,8 @@ export function Countdown({
   className?: string
 }) {
   const now = useNow()
+  if (now === null) return null
+
   const { days, hours, minutes, seconds } = diff(target, now)
   const live = target - now <= 0
 
@@ -52,23 +54,19 @@ export function Countdown({
   if (size === "xl") {
     return (
       <div
-        className={`flex flex-wrap items-stretch gap-2 sm:gap-3 ${className ?? ""}`}
+        className={`grid grid-cols-4 gap-2 sm:gap-4 w-full max-w-2xl ${className ?? ""}`}
       >
-        {units.map((unit, i) => (
-          <div key={unit.label} className="flex items-stretch gap-2 sm:gap-3">
-            <div className="flex flex-col items-center rounded-lg border border-border bg-card px-4 py-3 sm:px-6 sm:py-4">
-              <span className="tnum font-heading text-4xl font-bold text-foreground sm:text-6xl">
-                {unit.value}
-              </span>
-              <span className="mt-1 font-mono text-[0.65rem] uppercase tracking-widest text-muted-foreground">
-                {unit.label}
-              </span>
-            </div>
-            {i < units.length - 1 && (
-              <span className="hidden self-center font-heading text-3xl text-muted-foreground sm:inline">
-                :
-              </span>
-            )}
+        {units.map((unit) => (
+          <div
+            key={unit.label}
+            className="flex flex-col items-center justify-center rounded-xl border border-border/50 bg-card/40 backdrop-blur-md p-3 sm:p-5 shadow-sm transition-colors hover:bg-card/60"
+          >
+            <span className="tnum font-heading text-3xl sm:text-5xl lg:text-6xl font-extrabold text-foreground tracking-tight drop-shadow-sm">
+              {unit.value}
+            </span>
+            <span className="mt-1 sm:mt-2 font-mono text-[0.6rem] sm:text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              {unit.label}
+            </span>
           </div>
         ))}
       </div>

@@ -1,5 +1,5 @@
 export type Member = {
-  photo: string
+  photo: File | null
   fullName: string
   gender: string
   studentId: string
@@ -44,7 +44,7 @@ export const STEP_LABELS = [
 
 export function emptyMember(): Member {
   return {
-    photo: "",
+    photo: null,
     fullName: "",
     gender: "",
     studentId: "",
@@ -89,7 +89,7 @@ export function sanitizeDraft(raw: unknown): Draft {
   const members = fallback.members.map((fallbackMember, index) => {
     const source = (rawMembers[index] ?? {}) as Record<string, unknown>
     const member: Member = { ...fallbackMember }
-    if (typeof source.photo === "string") member.photo = source.photo
+    // photo cannot be reliably restored from JSON, so we skip it (it stays null)
     if (typeof source.fullName === "string") member.fullName = source.fullName
     if (typeof source.gender === "string") member.gender = source.gender
     if (typeof source.studentId === "string") member.studentId = source.studentId

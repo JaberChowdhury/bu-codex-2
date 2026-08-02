@@ -48,6 +48,8 @@ function RegisterForm() {
   const [attempted, setAttempted] = React.useState(false)
   const [dialogOpen, setDialogOpen] = React.useState(false)
   const [teamCode, setTeamCode] = React.useState("")
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
+  const [submitError, setSubmitError] = React.useState("")
   const submittedRef = React.useRef(false)
 
   React.useEffect(() => {
@@ -106,26 +108,66 @@ function RegisterForm() {
     setStep((current) => Math.max(0, current - 1))
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!overallValid) {
       setAttempted(true)
       return
     }
-    setTeamCode(makeTeamCode(draft.teamName))
-    submittedRef.current = true
+    setSubmitError("")
+    setIsSubmitting(true)
+
+    const code = makeTeamCode(draft.teamName)
+    
     try {
-      window.localStorage.removeItem(STORAGE_KEY)
-    } catch {
-      // ignore
+      const formData = new FormData()
+      formData.append("teamName", draft.teamName)
+      formData.append("teamCode", code)
+      
+      draft.members.forEach((member, index) => {
+        if (member.photo) {
+          formData.append(`photo_${index}`, member.photo)
+        }
+        // Send the rest of the member data as JSON string
+        const { photo, ...rest } = member
+        formData.append(`member_${index}`, JSON.stringify(rest))
+      })
+
+      const response = await fetch("/api/register", {
+        method: "POST",
+        body: formData, // Browser sets Content-Type to multipart/form-data with boundary
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to register")
+      }
+
+      setTeamCode(code)
+      submittedRef.current = true
+      try {
+        window.localStorage.removeItem(STORAGE_KEY)
+      } catch {
+        // ignore
+      }
+      setDraft(emptyDraft())
+      setDialogOpen(true)
+    } catch (err: any) {
+      setSubmitError(err.message || "An unexpected error occurred.")
+    } finally {
+      setIsSubmitting(false)
     }
-    setDraft(emptyDraft())
-    setDialogOpen(true)
   }
 
   const percent = Math.round((step / (TOTAL_STEPS - 1)) * 100)
 
   return (
     <div className="space-y-6">
+      {submitError && (
+        <div className="rounded border border-destructive bg-destructive/10 p-3 text-sm text-destructive">
+          {submitError}
+        </div>
+      )}
       <Progress value={percent} className="flex flex-col gap-2">
         <div className="flex items-baseline justify-between gap-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
           <span>
@@ -191,16 +233,16 @@ function RegisterForm() {
         </CardContent>
 
         <CardFooter className="justify-between">
-          <Button variant="outline" onClick={handleBack} disabled={step === 0}>
+          <Button variant="outline" onClick={handleBack} disabled={step === 0 || isSubmitting}>
             {"< back"}
           </Button>
           {step < TOTAL_STEPS - 1 ? (
-            <Button variant="default" onClick={handleNext}>
+            <Button variant="default" onClick={handleNext} disabled={isSubmitting}>
               {"> next"}
             </Button>
           ) : (
-            <Button variant="default" onClick={handleSubmit}>
-              {"> submit"}
+            <Button variant="default" onClick={handleSubmit} disabled={isSubmitting}>
+              {isSubmitting ? "> submitting..." : "> submit"}
             </Button>
           )}
         </CardFooter>

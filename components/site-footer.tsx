@@ -1,8 +1,15 @@
+"use client"
+
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import { LiveClock } from "@/components/motion/live-clock"
+import { THEME_ROOT, themeFromPathname } from "@/components/theme"
 
 function SiteFooter() {
+  const pathname = usePathname()
+  const base = THEME_ROOT[themeFromPathname(pathname)]
+
   return (
     <footer className="border-t border-border">
       <div className="mx-auto max-w-6xl px-4 py-10">
@@ -13,13 +20,13 @@ function SiteFooter() {
           Department of CSE · Bangladesh University, Dhaka · Bangladesh
         </p>
         <div className="mt-6 flex flex-wrap gap-x-4 gap-y-1 border-t border-border pt-4 font-mono text-xs tracking-wide uppercase">
-          <Link href="/" className="text-muted-foreground hover:text-accent">
+          <Link href={`${base}/`} className="text-muted-foreground hover:text-accent">
             Home
           </Link>
-          <Link href="/gallery" className="text-muted-foreground hover:text-accent">
+          <Link href={`${base}/gallery`} className="text-muted-foreground hover:text-accent">
             Gallery
           </Link>
-          <Link href="/register" className="text-muted-foreground hover:text-accent">
+          <Link href={`${base}/register`} className="text-muted-foreground hover:text-accent">
             Register
           </Link>
           <span className="text-muted-foreground">judge on toph.co</span>

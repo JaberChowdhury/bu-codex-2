@@ -7,56 +7,31 @@ import { cn } from "@/lib/utils"
 
 type PhotoFieldProps = {
   id: string
-  value: string
-  onChange: (dataUrl: string) => void
+  value: File | null
+  onChange: (file: File | null) => void
   error?: string
   className?: string
 }
 
-function resizeImage(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onerror = () => reject(new Error("read failed"))
-    reader.onload = () => {
-      const img = new Image()
-      img.onerror = () => reject(new Error("decode failed"))
-      img.onload = () => {
-        const MAX_W = 200
-        const scale = Math.min(1, MAX_W / img.width)
-        const canvas = document.createElement("canvas")
-        canvas.width = Math.max(1, Math.round(img.width * scale))
-        canvas.height = Math.max(1, Math.round(img.height * scale))
-        const ctx = canvas.getContext("2d")
-        if (!ctx) {
-          reject(new Error("canvas unsupported"))
-          return
-        }
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-        resolve(canvas.toDataURL("image/jpeg", 0.72))
-      }
-      img.src = String(reader.result)
-    }
-    reader.readAsDataURL(file)
-  })
-}
-
 function PhotoField({ id, value, onChange, error, className }: PhotoFieldProps) {
-  const [busy, setBusy] = React.useState(false)
+  const [preview, setPreview] = React.useState<string | null>(null)
 
-  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  React.useEffect(() => {
+    if (!value) {
+      setPreview(null)
+      return
+    }
+    const objectUrl = URL.createObjectURL(value)
+    setPreview(objectUrl)
+    return () => URL.revokeObjectURL(objectUrl)
+  }, [value])
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     event.target.value = ""
     if (!file) return
     if (!file.type.startsWith("image/")) return
-    setBusy(true)
-    try {
-      const dataUrl = await resizeImage(file)
-      onChange(dataUrl)
-    } catch {
-      // ignore malformed images
-    } finally {
-      setBusy(false)
-    }
+    onChange(file)
   }
 
   return (
@@ -69,10 +44,10 @@ function PhotoField({ id, value, onChange, error, className }: PhotoFieldProps) 
         <span className="text-accent"> *</span>
       </Label>
       <div className="flex items-center gap-3">
-        {value ? (
+        {preview ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={value}
+            src={preview}
             alt=""
             className="h-12 w-12 rounded-md border border-border object-cover"
           />
@@ -86,7 +61,7 @@ function PhotoField({ id, value, onChange, error, className }: PhotoFieldProps) 
             htmlFor={id}
             className="inline-flex h-8 cursor-pointer items-center rounded-lg border border-input bg-transparent px-2.5 font-mono text-xs transition-colors hover:bg-muted focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
           >
-            {busy ? "reading…" : value ? "replace photo" : "attach photo"}
+            {value ? "replace photo" : "attach photo"}
           </Label>
           <p className="font-mono text-xs text-muted-foreground tnum">
             {value ? "photo: attached" : "photo: none"}

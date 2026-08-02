@@ -47,84 +47,11 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Hallmark · macrostructure: Stat-Led · H4 stat knobs: number=tabular, qualifier=under, secondary=4-up strip
- * theme: custom · vibe: "terminal print, muted violet, phosphor signal" · paper: oklch(21% 0.035 302) · accent: oklch(78% 0.15 155)
- * display: Geist Mono · body: Geist · axes: dark / mono / chromatic-green
- * studied: no · context: explicit (rebuild of ref.html) · v0.8.0
+/* Shared base for the BU CODEX site. Per-theme design tokens + component
+ * treatments live in `themes/{terminal,hum}.css`, imported only by their
+ * own route-group layouts and gated under html[data-theme] so themes never
+ * bleed into each other across client-side navigation.
  */
-
-:root {
-    --background: oklch(0.96 0.02 302);
-    --foreground: oklch(0.21 0.035 302);
-    --card: oklch(0.95 0.022 302);
-    --card-foreground: oklch(0.21 0.035 302);
-    --popover: oklch(0.955 0.02 302);
-    --popover-foreground: oklch(0.21 0.035 302);
-    --primary: oklch(0.21 0.035 302);
-    --primary-foreground: oklch(0.96 0.02 302);
-    --secondary: oklch(0.91 0.03 302);
-    --secondary-foreground: oklch(0.26 0.04 302);
-    --muted: oklch(0.91 0.028 302);
-    --muted-foreground: oklch(0.48 0.03 302);
-    --accent: oklch(0.72 0.14 155);
-    --accent-foreground: oklch(0.19 0.03 302);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.86 0.03 302);
-    --input: oklch(0.86 0.03 302);
-    --ring: oklch(0.66 0.12 155);
-    --chart-1: oklch(0.72 0.14 155);
-    --chart-2: oklch(0.66 0.12 302);
-    --chart-3: oklch(0.77 0.1 220);
-    --chart-4: oklch(0.82 0.1 60);
-    --chart-5: oklch(0.74 0.12 350);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.955 0.02 302);
-    --sidebar-foreground: oklch(0.21 0.035 302);
-    --sidebar-primary: oklch(0.21 0.035 302);
-    --sidebar-primary-foreground: oklch(0.96 0.02 302);
-    --sidebar-accent: oklch(0.91 0.03 302);
-    --sidebar-accent-foreground: oklch(0.26 0.04 302);
-    --sidebar-border: oklch(0.86 0.03 302);
-    --sidebar-ring: oklch(0.66 0.12 155);
-
-    --terminal-grid: oklch(0.87 0.03 302);
-}
-
-.dark {
-    --background: oklch(0.21 0.035 302);
-    --foreground: oklch(0.93 0.02 302);
-    --card: oklch(0.25 0.04 302);
-    --card-foreground: oklch(0.93 0.02 302);
-    --popover: oklch(0.24 0.04 302);
-    --popover-foreground: oklch(0.93 0.02 302);
-    --primary: oklch(0.78 0.15 155);
-    --primary-foreground: oklch(0.15 0.03 302);
-    --secondary: oklch(0.3 0.04 302);
-    --secondary-foreground: oklch(0.93 0.02 302);
-    --muted: oklch(0.3 0.04 302);
-    --muted-foreground: oklch(0.66 0.03 302);
-    --accent: oklch(0.78 0.15 155);
-    --accent-foreground: oklch(0.15 0.03 302);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(0.36 0.04 302);
-    --input: oklch(0.4 0.04 302);
-    --ring: oklch(0.78 0.15 155);
-    --chart-1: oklch(0.78 0.15 155);
-    --chart-2: oklch(0.72 0.13 302);
-    --chart-3: oklch(0.76 0.12 220);
-    --chart-4: oklch(0.82 0.12 60);
-    --chart-5: oklch(0.74 0.13 350);
-    --sidebar: oklch(0.24 0.04 302);
-    --sidebar-foreground: oklch(0.93 0.02 302);
-    --sidebar-primary: oklch(0.78 0.15 155);
-    --sidebar-primary-foreground: oklch(0.15 0.03 302);
-    --sidebar-accent: oklch(0.3 0.04 302);
-    --sidebar-accent-foreground: oklch(0.93 0.02 302);
-    --sidebar-border: oklch(0.36 0.04 302);
-    --sidebar-ring: oklch(0.78 0.15 155);
-
-    --terminal-grid: oklch(0.3 0.04 302);
-}
 
 @layer base {
     * {
@@ -135,10 +62,6 @@
     }
     body {
         @apply bg-background text-foreground overflow-x-clip;
-        background-image:
-            linear-gradient(var(--terminal-grid) 1px, transparent 1px) 0 0 / 100% 42px,
-            linear-gradient(90deg, var(--terminal-grid) 1px, transparent 1px) 0 0 / 42px 100%;
-        background-attachment: fixed;
     }
 }
 

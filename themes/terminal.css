@@ -1,0 +1,46 @@
+/* ── terminal · dark muted violet paper + phosphor-green signal ─────────────
+ * default theme. Loaded only on the terminal route group.
+ * `.dark` is toggled on <html> by ThemeRoot so shadcn `dark:` utilities apply.
+ */
+html[data-theme="terminal"] {
+    --background: oklch(0.26 0.035 302);
+    --foreground: oklch(0.93 0.02 302);
+    --card: oklch(0.3 0.04 302);
+    --card-foreground: oklch(0.93 0.02 302);
+    --popover: oklch(0.29 0.04 302);
+    --popover-foreground: oklch(0.93 0.02 302);
+    --primary: oklch(0.78 0.15 155);
+    --primary-foreground: oklch(0.15 0.03 302);
+    --secondary: oklch(0.36 0.04 302);
+    --secondary-foreground: oklch(0.93 0.02 302);
+    --muted: oklch(0.36 0.04 302);
+    --muted-foreground: oklch(0.66 0.03 302);
+    --accent: oklch(0.78 0.15 155);
+    --accent-foreground: oklch(0.15 0.03 302);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(0.42 0.04 302);
+    --input: oklch(0.46 0.04 302);
+    --ring: oklch(0.78 0.15 155);
+    --chart-1: oklch(0.78 0.15 155);
+    --chart-2: oklch(0.72 0.13 302);
+    --chart-3: oklch(0.76 0.12 220);
+    --chart-4: oklch(0.82 0.12 60);
+    --chart-5: oklch(0.74 0.13 350);
+    --sidebar: oklch(0.29 0.04 302);
+    --sidebar-foreground: oklch(0.93 0.02 302);
+    --sidebar-primary: oklch(0.78 0.15 155);
+    --sidebar-primary-foreground: oklch(0.15 0.03 302);
+    --sidebar-accent: oklch(0.36 0.04 302);
+    --sidebar-accent-foreground: oklch(0.93 0.02 302);
+    --sidebar-border: oklch(0.42 0.04 302);
+    --sidebar-ring: oklch(0.78 0.15 155);
+
+    --terminal-grid: oklch(0.37 0.04 302);
+}
+
+html[data-theme="terminal"] body {
+    background-image:
+        linear-gradient(var(--terminal-grid) 1px, transparent 1px) 0 0 / 100% 42px,
+        linear-gradient(90deg, var(--terminal-grid) 1px, transparent 1px) 0 0 / 42px 100%;
+    background-attachment: fixed;
+}

@@ -12,6 +12,8 @@ export function LiveClock({
   className?: string
 }) {
   const now = useNow()
+  if (now === null) return null
+
   const d = new Date(now)
   const time = d.toLocaleTimeString("en-GB", {
     hour12: false,

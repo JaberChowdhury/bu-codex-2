@@ -2,23 +2,30 @@
 
 import Link from "next/link"
 import { IconArrowRight, IconTerminal2 } from "@tabler/icons-react"
+import { usePathname } from "next/navigation"
 import * as React from "react"
 
 import { Button } from "@/components/ui/button"
+import { HeroIllustration } from "@/components/home/hero-illustration"
 import { TerminalBoot } from "@/components/home/terminal-boot"
 import { Countdown } from "@/components/motion/countdown"
+import { THEME_ROOT, themeFromPathname } from "@/components/theme"
 
 export function Hero() {
-  const [booted, setBooted] = React.useState(false)
+  const pathname = usePathname()
+  const base = THEME_ROOT[themeFromPathname(pathname)]
+  const registerHref = `${base}/register`
 
   return (
     <section className="mx-auto max-w-6xl px-4 pb-16 pt-16 sm:px-6 sm:pb-24 sm:pt-20">
-      <div className="max-w-3xl">
-        <div className="min-h-[7rem]">
-          <TerminalBoot onDone={() => setBooted(true)} />
-        </div>
+      <div className="min-h-[7rem]">
+        <TerminalBoot />
+      </div>
 
-        <div className={booted ? "rise" : "hidden"}>
+      <div
+        className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:gap-14 rise"
+      >
+        <div className="max-w-3xl">
           <p className="mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted-foreground">
             <span className="pulse-dot text-accent">●</span>
             <span className="text-accent">system_status: READY</span>
@@ -47,7 +54,7 @@ export function Hero() {
           </div>
 
           <div className="mt-10 flex flex-wrap items-center gap-3">
-            <Button size="lg" render={<Link href="/register" />}>
+            <Button size="lg" render={<Link href={registerHref} />}>
               <IconTerminal2 data-icon="inline-start" />
               register --now
               <IconArrowRight data-icon="inline-end" />
@@ -57,6 +64,10 @@ export function Hero() {
               read --faq
             </Button>
           </div>
+        </div>
+
+        <div className="pointer-events-none lg:sticky lg:top-10">
+          <HeroIllustration />
         </div>
       </div>
     </section>
