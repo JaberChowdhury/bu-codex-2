@@ -8,12 +8,13 @@ import {
 } from "@/components/ui/accordion"
 
 import { SectionHeading } from "@/components/home/section-heading"
+import { EVENT_DETAILS } from "@/lib/constants"
 
 const faqs = [
   {
     question: "Who can participate?",
     answer:
-      "Any student of Bangladesh University (BU), from any department. Teams of exactly three.",
+      `Any student of Bangladesh University (BU), from any department. Teams of exactly ${EVENT_DETAILS.TEAM_SIZE}.`,
   },
   {
     question: "I don't have a team yet.",
@@ -22,7 +23,7 @@ const faqs = [
   },
   {
     question: "Is the onsite final mandatory?",
-    answer: "Yes. Qualify online, show up on Sep 12.",
+    answer: `Yes. Qualify online, show up on ${EVENT_DETAILS.MONTH_DAY}.`,
   },
   {
     question: "What should I bring?",
@@ -32,12 +33,12 @@ const faqs = [
   {
     question: "Is there an entry fee?",
     answer:
-      "Yes — 400tk per team, paid once at registration. Covers the contest kit, refreshments, and venue costs.",
+      `Yes — ${EVENT_DETAILS.ENTRY_FEE_TEXT}, paid once at registration. Covers the contest kit, refreshments, and venue costs.`,
   },
   {
     question: "How is the contest scored?",
     answer:
-      "ICPC-style on toph.co. Correct submissions are ranked by problems solved, then total penalty time.",
+      `ICPC-style on ${EVENT_DETAILS.PLATFORM}. Correct submissions are ranked by problems solved, then total penalty time.`,
   },
 ]
 

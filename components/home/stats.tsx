@@ -1,9 +1,11 @@
+import { EVENT_DETAILS } from "@/lib/constants"
+
 const stats = [
-  { value: "20", label: "TEAM_SLOTS" },
-  { value: "400tk", label: "ENTRY_FEE" },
-  { value: "5h 00m", label: "DURATION" },
-  { value: "07", label: "PROBLEMS" },
-  { value: "AUG 13", label: "REG_CLOSES" },
+  { value: EVENT_DETAILS.TEAM_SLOTS.toString(), label: "TEAM_SLOTS" },
+  { value: EVENT_DETAILS.ENTRY_FEE_AMOUNT, label: "ENTRY_FEE" },
+  { value: EVENT_DETAILS.DURATION_TEXT, label: "DURATION" },
+  { value: EVENT_DETAILS.PROBLEMS_COUNT.toString().padStart(2, '0'), label: "PROBLEMS" },
+  { value: EVENT_DETAILS.REGISTRATION_CLOSES, label: "REG_CLOSES" },
 ]
 
 export function Stats() {

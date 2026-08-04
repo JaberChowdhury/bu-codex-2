@@ -2,20 +2,35 @@ import { NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 import { z } from "zod"
 
-import { memberSchema, teamNameSchema } from "@/components/register/schema"
+import { departmentSchema, memberSchema, teamNameSchema } from "@/components/register/schema"
+import { REGISTRATION_DEADLINE_ISO } from "@/lib/constants"
 
 // We create a strict schema for the incoming member payload (without photo, as photo is handled separately)
 const memberBaseSchema = memberSchema.omit({ photo: true })
 
 export async function POST(req: Request) {
   try {
+    if (Date.now() >= new Date(REGISTRATION_DEADLINE_ISO).getTime()) {
+      return NextResponse.json({ error: "Registration is closed" }, { status: 403 })
+    }
+
     const formData = await req.formData()
     
     const teamName = formData.get("teamName")
     const teamCode = formData.get("teamCode")
+    const department = formData.get("department")
 
     if (typeof teamName !== "string" || typeof teamCode !== "string") {
       return NextResponse.json({ error: "Invalid teamName or teamCode" }, { status: 400 })
+    }
+
+    if (typeof department !== "string") {
+      return NextResponse.json({ error: "Missing department" }, { status: 400 })
+    }
+
+    const departmentResult = departmentSchema.safeParse(department)
+    if (!departmentResult.success) {
+      return NextResponse.json({ error: "Invalid department" }, { status: 400 })
     }
 
     const teamNameResult = teamNameSchema.safeParse(teamName)
@@ -66,7 +81,7 @@ export async function POST(req: Request) {
       const fileName = `${teamCode}-member${i + 1}-${Date.now()}.${fileExt}`
 
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from("photos")
+        .from("student_images")
         .upload(fileName, photoFile, {
           contentType: photoFile.type,
           upsert: false
@@ -77,7 +92,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: `Failed to upload photo for member ${i + 1}: ${uploadError.message}` }, { status: 500 })
       }
 
-      const { data: publicUrlData } = supabase.storage.from("photos").getPublicUrl(fileName)
+      const { data: publicUrlData } = supabase.storage.from("student_images").getPublicUrl(fileName)
 
       parsedMembers.push({
         ...memberResult.data,
@@ -92,6 +107,7 @@ export async function POST(req: Request) {
         {
           team_name: teamNameResult.data,
           team_code: teamCode,
+          department: departmentResult.data,
           members: parsedMembers, // JSONB array with full member data + public photo URL
         }
       ])

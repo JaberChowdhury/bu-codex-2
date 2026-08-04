@@ -10,6 +10,7 @@ import { HeroIllustration } from "@/components/home/hero-illustration"
 import { TerminalBoot } from "@/components/home/terminal-boot"
 import { Countdown } from "@/components/motion/countdown"
 import { THEME_ROOT, themeFromPathname } from "@/components/theme"
+import { EVENT_DETAILS } from "@/lib/constants"
 
 export function Hero() {
   const pathname = usePathname()
@@ -36,19 +37,18 @@ export function Hero() {
           </p>
 
           <h1 className="mt-6 break-words font-heading text-4xl font-bold tnum sm:text-6xl lg:text-7xl">
-            07 PROBLEMS. 5 HOURS. 3 MINDS.
+            {String(EVENT_DETAILS.PROBLEMS_COUNT).padStart(2, "0")} PROBLEMS. {EVENT_DETAILS.DURATION_HOURS} HOURS. {EVENT_DETAILS.TEAM_SIZE} MINDS.
           </h1>
 
           <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
             A competitive programming contest by the BU CSE club. Round 02 lands
-            Sept 12, 2026. Prelims online on Toph. Final onsite. No cash prizes —
-            medals, certificates, t-shirts, and a five-hour adrenaline spike.
+            {EVENT_DETAILS.MONTH_DAY}, {EVENT_DETAILS.YEAR}. Prelims online on {EVENT_DETAILS.PLATFORM}. Final onsite. {EVENT_DETAILS.LONG_PRIZES_TEXT}, and a {EVENT_DETAILS.DURATION_HOURS}-hour adrenaline spike.
             Open to any department of Bangladesh University (BU).
           </p>
 
           <div className="mt-10 flex flex-col gap-3">
             <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              registration_closes_in · aug 13, 2026 · 20 slots · entry 400tk/team
+              registration_closes_in · {EVENT_DETAILS.REGISTRATION_CLOSES.toLowerCase()}, {EVENT_DETAILS.YEAR} · {EVENT_DETAILS.TEAM_SLOTS} slots · entry {EVENT_DETAILS.ENTRY_FEE_AMOUNT}/team
             </span>
             <Countdown size="xl" />
           </div>

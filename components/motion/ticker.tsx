@@ -3,19 +3,20 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
+import { EVENT_DETAILS } from "@/lib/constants"
 
 const ITEMS = [
-  "registration opens aug 02",
-  "registration closes aug 13",
-  "prelims online on toph · sep 08",
-  "onsite final · sep 12",
-  "teams of three",
+  `registration opens ${EVENT_DETAILS.REGISTRATION_OPENS.toLowerCase()}`,
+  `registration closes ${EVENT_DETAILS.REGISTRATION_CLOSES.toLowerCase()}`,
+  `prelims ${EVENT_DETAILS.PLATFORM_TEXT.toLowerCase()} · ${EVENT_DETAILS.PRELIMS_DATE.toLowerCase()}`,
+  `onsite final · ${EVENT_DETAILS.ONSITE_FINAL_DATE.toLowerCase()}`,
+  `teams of ${EVENT_DETAILS.TEAM_SIZE}`,
   "open to any BU department",
-  "20 team slots",
-  "entry fee: 400tk per team",
-  "no cash prizes — medals + certificates",
-  "snacks + food at start and midpoint",
-  "5 hours. 7 problems. 3 minds.",
+  `${EVENT_DETAILS.TEAM_SLOTS} team slots`,
+  `entry fee: ${EVENT_DETAILS.ENTRY_FEE_TEXT}`,
+  EVENT_DETAILS.SHORT_PRIZES_TEXT,
+  EVENT_DETAILS.SNACKS_INFO,
+  `${EVENT_DETAILS.DURATION_HOURS} hours. ${EVENT_DETAILS.PROBLEMS_COUNT} problems. ${EVENT_DETAILS.TEAM_SIZE} minds.`,
 ]
 
 export function Ticker({ className }: { className?: string }) {

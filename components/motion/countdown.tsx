@@ -3,8 +3,9 @@
 import * as React from "react"
 
 import { useNow } from "@/components/motion/use-now"
+import { EVENT_DETAILS } from "@/lib/constants"
 
-export const REG_CLOSE_TARGET = new Date("2026-08-13T17:59:00Z").getTime()
+export const REG_CLOSE_TARGET = new Date(EVENT_DETAILS.REG_CLOSE_TARGET_ISO).getTime()
 
 function diff(target: number, now: number) {
   let ms = Math.max(0, target - now)

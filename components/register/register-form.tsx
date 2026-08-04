@@ -15,11 +15,23 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { cn } from "@/lib/utils"
 
 import { MemberFields } from "./member-fields"
 import { ReviewStep } from "./review-step"
-import { memberSchema, teamNameSchema } from "./schema"
+import { departmentSchema, memberSchema, teamNameSchema } from "./schema"
 import {
+  DEFAULT_DEPARTMENT,
+  FACULTIES,
   STORAGE_KEY,
   STEP_LABELS,
   emptyDraft,
@@ -78,7 +90,12 @@ function RegisterForm() {
     return result.success ? "" : result.error.issues[0]?.message ?? ""
   }, [draft.teamName])
 
-  const teamStepValid = !teamNameError
+  const departmentError = React.useMemo(() => {
+    const result = departmentSchema.safeParse(draft.department)
+    return result.success ? "" : result.error.issues[0]?.message ?? ""
+  }, [draft.department])
+
+  const teamStepValid = !teamNameError && !departmentError
   const memberStepValid = React.useMemo(() => {
     if (step < 1 || step > 3) return false
     return memberSchema.safeParse(draft.members[step - 1]).success
@@ -122,6 +139,7 @@ function RegisterForm() {
       const formData = new FormData()
       formData.append("teamName", draft.teamName)
       formData.append("teamCode", code)
+      formData.append("department", draft.department)
       
       draft.members.forEach((member, index) => {
         if (member.photo) {
@@ -207,6 +225,45 @@ function RegisterForm() {
                   </p>
                 ) : null}
               </div>
+              <div className="space-y-2">
+                <Label
+                  htmlFor="department"
+                  className="font-mono text-xs uppercase tracking-widest text-muted-foreground"
+                >
+                  department
+                  <span className="text-accent"> *</span>
+                </Label>
+                <Select
+                  value={draft.department || null}
+                  onValueChange={(value) => {
+                    setDraft((prev) => ({ ...prev, department: value ?? DEFAULT_DEPARTMENT }))
+                  }}
+                >
+                  <SelectTrigger
+                    id="department"
+                    className={cn("w-full", departmentError && "border-destructive")}
+                  >
+                    <SelectValue placeholder="select department" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {FACULTIES.map((faculty) => (
+                      <SelectGroup key={faculty.name}>
+                        <SelectLabel>{faculty.name}</SelectLabel>
+                        {faculty.departments.map((dept) => (
+                          <SelectItem key={dept} value={dept}>
+                            {dept}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {attempted && departmentError ? (
+                  <p role="alert" className="font-mono text-xs text-destructive">
+                    {departmentError}
+                  </p>
+                ) : null}
+              </div>
               <p className="font-mono text-xs leading-relaxed text-muted-foreground">
                 three members register together. one leader coordinates the
                 entry — this form captures the whole team under a single code.
@@ -255,8 +312,9 @@ function RegisterForm() {
               registration: SUCCESS
             </DialogTitle>
             <DialogDescription className="font-mono">
-              This is a demo build — registration opens Aug 02 2026. Data is
-              stored only in your browser.
+              Your team has been registered successfully. We&apos;ve saved your
+              details and will contact you at the leader&apos;s email with
+              further updates. Keep your team code safe.
             </DialogDescription>
           </DialogHeader>
           <div

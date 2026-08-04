@@ -21,6 +21,7 @@ function ReviewStep({ draft, ready, onEdit }: ReviewStepProps) {
           team
         </p>
         <p className="font-heading text-lg font-medium">{draft.teamName}</p>
+        <p className="font-mono text-xs text-muted-foreground">{draft.department}</p>
       </div>
 
       <div className="space-y-3">

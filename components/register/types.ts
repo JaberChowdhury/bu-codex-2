@@ -15,12 +15,16 @@ export type Member = {
 
 export type Draft = {
   teamName: string
+  department: string
   members: [Member, Member, Member]
 }
 
 export const STORAGE_KEY = "bu-codex-reg-draft"
 
-export const TSHIRTS = ["XS", "S", "M", "L", "XL", "XXL"] as const
+export { TSHIRTS } from "@/lib/constants"
+export type { TShirtSize } from "@/lib/constants"
+import { DEPARTMENTS, DEFAULT_DEPARTMENT, FACULTIES } from "@/lib/constants"
+export { DEPARTMENTS, DEFAULT_DEPARTMENT, FACULTIES }
 
 export const RELATIONS = ["teammate", "friend", "classmate", "other"] as const
 
@@ -62,6 +66,7 @@ export function emptyMember(): Member {
 export function emptyDraft(): Draft {
   return {
     teamName: "",
+    department: DEFAULT_DEPARTMENT,
     members: [emptyMember(), emptyMember(), emptyMember()],
   }
 }
@@ -85,6 +90,11 @@ export function sanitizeDraft(raw: unknown): Draft {
   if (typeof raw !== "object" || raw === null) return fallback
   const record = raw as Record<string, unknown>
   const teamName = typeof record.teamName === "string" ? record.teamName : ""
+  const department =
+    typeof record.department === "string" &&
+    (DEPARTMENTS as readonly string[]).includes(record.department)
+      ? record.department
+      : DEFAULT_DEPARTMENT
   const rawMembers = Array.isArray(record.members) ? record.members : []
   const members = fallback.members.map((fallbackMember, index) => {
     const source = (rawMembers[index] ?? {}) as Record<string, unknown>
@@ -110,5 +120,5 @@ export function sanitizeDraft(raw: unknown): Draft {
     }
     return member
   }) as Draft["members"]
-  return { teamName, members }
+  return { teamName, department, members }
 }

@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/home/section-heading"
+import { EVENT_DETAILS } from "@/lib/constants"
 
 const placements = [
   { rank: "01", name: "GOLD", detail: "medal + certificate" },
@@ -12,7 +13,7 @@ export function Prizes() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading label="prizes · rewards">
           <h2 className="mt-3 font-mono text-sm text-accent tnum sm:text-base">
-            prize_pool: {"{"} cash: 0, medals: yes, certificates: yes {"}"}
+            prize_pool: {"{"} {EVENT_DETAILS.PRIZE_POOL_TEXT} {"}"}
           </h2>
         </SectionHeading>
         <div className="mt-10 divide-y divide-border border-y border-border">
@@ -34,8 +35,7 @@ export function Prizes() {
           ))}
         </div>
         <p className="mt-5 font-mono text-xs text-muted-foreground">
-          <span className="text-accent">every onsite finalist:</span> t-shirt +
-          goodies
+          <span className="text-accent">every onsite finalist:</span> {EVENT_DETAILS.FINALIST_PRIZES}
         </p>
       </div>
     </section>

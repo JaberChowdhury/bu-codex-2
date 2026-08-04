@@ -1,33 +1,34 @@
 import { SectionHeading } from "@/components/home/section-heading"
+import { EVENT_DETAILS } from "@/lib/constants"
 
 const events = [
   {
     index: "01",
-    date: "AUG 02",
+    date: EVENT_DETAILS.REGISTRATION_OPENS,
     label: "Registration opens",
-    detail: "Open to any BU department, teams of 3",
+    detail: `Open to any BU department, teams of ${EVENT_DETAILS.TEAM_SIZE}`,
   },
   {
     index: "02",
-    date: "AUG 13",
+    date: EVENT_DETAILS.REGISTRATION_CLOSES,
     label: "Registration closes",
-    detail: "20 slots",
+    detail: `${EVENT_DETAILS.TEAM_SLOTS} slots`,
   },
   {
     index: "03",
-    date: "SEP 08",
+    date: EVENT_DETAILS.PRELIMS_DATE,
     label: "Prelims",
-    detail: "Online, on toph.co",
+    detail: EVENT_DETAILS.PRELIMS_LOCATION,
   },
   {
     index: "04",
-    date: "SEP 12",
+    date: EVENT_DETAILS.ONSITE_FINAL_DATE,
     label: "Onsite final",
-    detail: "Bangladesh University, Dhaka",
+    detail: EVENT_DETAILS.ONSITE_LOCATION,
   },
   {
     index: "05",
-    date: "SEP 12 · evening",
+    date: EVENT_DETAILS.AWARDS_DATE,
     label: "Awards ceremony",
     detail: "Medals, certificates, t-shirts",
   },

@@ -1,6 +1,7 @@
 import { z } from "zod"
 
 import { SECTIONS, TSHIRTS } from "./types"
+import { DEPARTMENTS } from "@/lib/constants"
 
 export const genderSchema = z.enum(["male", "female"], {
   error: "select gender",
@@ -8,6 +9,10 @@ export const genderSchema = z.enum(["male", "female"], {
 
 export const sectionSchema = z.enum([...SECTIONS], {
   error: "select section",
+})
+
+export const departmentSchema = z.enum([...DEPARTMENTS], {
+  error: "select department",
 })
 
 export const memberSchema = z.object({

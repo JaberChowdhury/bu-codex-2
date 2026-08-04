@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS public.registrations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     team_name TEXT NOT NULL,
     team_code TEXT NOT NULL,
+    department TEXT NOT NULL DEFAULT 'Department of Computer Science and Engineering (CSE)',
     members JSONB NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
