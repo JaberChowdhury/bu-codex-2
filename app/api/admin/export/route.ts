@@ -28,6 +28,7 @@ type Registration = {
   id: string
   team_name: string
   team_code: string
+  department?: string
   created_at: string
   members: Member[]
 }
@@ -66,6 +67,7 @@ async function buildWorkbook(registrations: Registration[]) {
     { header: 'Photo', key: 'photo', width: 60 },
     { header: 'Team Name', key: 'teamName', width: 24 },
     { header: 'Team Code', key: 'teamCode', width: 18 },
+    { header: 'Department', key: 'department', width: 40 },
     { header: 'Registered At', key: 'registeredAt', width: 24 },
     { header: 'Member #', key: 'memberNumber', width: 16 },
     { header: 'Full Name', key: 'fullName', width: 24 },
@@ -90,6 +92,7 @@ async function buildWorkbook(registrations: Registration[]) {
         photo: '',
         teamName: reg.team_name,
         teamCode: reg.team_code,
+        department: reg.department ?? '',
         registeredAt: new Date(reg.created_at).toLocaleString('en-US'),
         memberNumber: i + 1,
         fullName: member.fullName,

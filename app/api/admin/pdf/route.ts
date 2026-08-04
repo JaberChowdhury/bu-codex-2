@@ -33,6 +33,7 @@ type Registration = {
   id: string
   team_name: string
   team_code: string
+  department?: string
   created_at: string
   members: Member[]
 }
@@ -105,7 +106,8 @@ function drawTeamHeading(doc: jsPDF, reg: Registration, y: number): number {
   doc.setFontSize(9)
   doc.setTextColor(110, 110, 120)
   doc.text(`Registered: ${new Date(reg.created_at).toLocaleString("en-US")}`, MARGIN, y + 10)
-  return y + 20
+  doc.text(`Department: ${reg.department ?? "—"}`, MARGIN, y + 20)
+  return y + 30
 }
 
 function drawField(doc: jsPDF, label: string, value: string, x: number, y: number) {
