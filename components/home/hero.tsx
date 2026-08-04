@@ -3,10 +3,8 @@
 import Link from "next/link"
 import { IconArrowRight, IconTerminal2 } from "@tabler/icons-react"
 import { usePathname } from "next/navigation"
-import * as React from "react"
 
 import { Button } from "@/components/ui/button"
-import { HeroIllustration } from "@/components/home/hero-illustration"
 import { TerminalBoot } from "@/components/home/terminal-boot"
 import { Countdown } from "@/components/motion/countdown"
 import { THEME_ROOT, themeFromPathname } from "@/components/theme"
@@ -23,9 +21,7 @@ export function Hero() {
         <TerminalBoot />
       </div>
 
-      <div
-        className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:gap-14 rise"
-      >
+      <div className="rise">
         <div className="max-w-3xl">
           <p className="mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted-foreground">
             <span className="pulse-dot text-accent">●</span>
@@ -64,10 +60,6 @@ export function Hero() {
               read --faq
             </Button>
           </div>
-        </div>
-
-        <div className="pointer-events-none lg:sticky lg:top-10">
-          <HeroIllustration />
         </div>
       </div>
     </section>

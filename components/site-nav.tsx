@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -12,6 +13,7 @@ function SiteNav() {
   const pathname = usePathname()
   const theme = themeFromPathname(pathname)
   const base = THEME_ROOT[theme]
+  const [open, setOpen] = useState(false)
 
   const flags = [
     { label: "--home", href: `${base}/` },
@@ -32,29 +34,63 @@ function SiteNav() {
             <span className="hidden sm:inline">bu@codex:~$</span>
             <span className="sm:hidden">$</span>{" "}
           </span>
-          <span className="text-foreground">bu</span>{" "}
-          {flags.map((flag) => (
-            <span key={flag.href}>
+          <span className="text-foreground">bu</span>
+          <span className="hidden md:inline">
+            {flags.map((flag) => (
+              <span key={flag.href}>
+                {" "}
+                <Link
+                  href={flag.href}
+                  className={cn(
+                    "rounded px-1 transition-colors",
+                    isActive(flag.href)
+                      ? "bg-muted text-accent"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  {flag.label}
+                </Link>
+              </span>
+            ))}
+          </span>
+          <span className="terminal-caret" aria-hidden="true" />
+        </p>
+        <div className="flex shrink-0 items-center gap-3">
+          <LiveClock className="hidden shrink-0 md:inline" />
+          <ThemeSwitcher theme={theme} />
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label="menu"
+            className="flex h-8 w-8 items-center justify-center rounded border border-border font-mono text-xs text-muted-foreground transition-colors hover:text-foreground md:hidden"
+          >
+            {open ? "x" : "≡"}
+          </button>
+        </div>
+      </div>
+      {open && (
+        <div id="mobile-nav" className="border-t border-border px-4 py-2 md:hidden">
+          <div className="flex flex-col font-mono text-xs">
+            {flags.map((flag) => (
               <Link
+                key={flag.href}
                 href={flag.href}
+                onClick={() => setOpen(false)}
                 className={cn(
-                  "rounded px-1 transition-colors",
+                  "rounded px-2 py-2 transition-colors",
                   isActive(flag.href)
                     ? "bg-muted text-accent"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
                 {flag.label}
-              </Link>{" "}
-            </span>
-          ))}
-          <span className="terminal-caret" aria-hidden="true" />
-        </p>
-        <div className="flex shrink-0 items-center gap-3">
-          <ThemeSwitcher theme={theme} />
-          <LiveClock className="hidden shrink-0 md:inline" />
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   )
 }
