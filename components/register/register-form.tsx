@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { usePathname, useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -55,6 +56,11 @@ function readStoredDraft(): Draft {
 }
 
 function RegisterForm() {
+  const pathname = usePathname()
+  const router = useRouter()
+  const isHum = pathname.startsWith("/hum")
+  const teamsRoute = isHum ? "/hum/teams" : "/teams"
+
   const [draft, setDraft] = React.useState<Draft>(readStoredDraft)
   const [step, setStep] = React.useState(0)
   const [attempted, setAttempted] = React.useState(false)
@@ -345,10 +351,10 @@ function RegisterForm() {
             <DialogTitle className="font-mono text-accent">
               registration: SUCCESS
             </DialogTitle>
-            <DialogDescription className="font-mono">
-              Your team has been registered successfully. We&apos;ve saved your
-              details and will contact you at the leader&apos;s email with
-              further updates. Keep your team code safe.
+            <DialogDescription className="font-mono space-y-2 mt-2">
+              <p>Your team has been registered successfully. We&apos;ve saved your details.</p>
+              <p className="font-bold text-foreground">Please do not wait for a confirmation email.</p>
+              <p>Keep your team code safe.</p>
             </DialogDescription>
           </DialogHeader>
           <div
@@ -363,9 +369,12 @@ function RegisterForm() {
               {teamCode}
             </p>
           </div>
-          <DialogFooter>
+          <DialogFooter className="flex flex-col sm:flex-row gap-3">
             <Button variant="outline" onClick={() => setDialogOpen(false)}>
               close
+            </Button>
+            <Button variant="default" onClick={() => router.push(teamsRoute)}>
+              view registered teams &gt;
             </Button>
           </DialogFooter>
         </DialogContent>

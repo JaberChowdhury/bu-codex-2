@@ -39,10 +39,10 @@ export function Hero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            A competitive programming contest by the BU CSE club. Round 02 lands
-            {EVENT_DETAILS.MONTH_DAY}, {EVENT_DETAILS.YEAR}. Prelims online on{" "}
-            {EVENT_DETAILS.PLATFORM}. Final onsite.{" "}
-            {EVENT_DETAILS.LONG_PRIZES_TEXT}, and a{" "}
+            A competitive programming contest by the Informatics Club Bangladesh
+            University. Round 02 lands {"  " + EVENT_DETAILS.MONTH_DAY},
+            {EVENT_DETAILS.YEAR}. Prelims online on {EVENT_DETAILS.PLATFORM}.
+            Final onsite. {EVENT_DETAILS.LONG_PRIZES_TEXT}, and a{" "}
             {EVENT_DETAILS.DURATION_HOURS}-hour adrenaline spike. Open to any
             department of Bangladesh University (BU).
           </p>

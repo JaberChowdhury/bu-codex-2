@@ -50,6 +50,12 @@ function SiteFooter() {
               >
                 Register
               </Link>
+              <Link
+                href={`${base}/organisers`}
+                className="text-muted-foreground transition-colors hover:text-accent"
+              >
+                Organising Committee
+              </Link>
               <span className="text-muted-foreground/50">judge on vjudge</span>
               <span className="text-muted-foreground/50">teams of three</span>
             </div>
@@ -79,6 +85,15 @@ function SiteFooter() {
                 1607-025114 (Sourov)
               </a>
               <a
+                href="https://wa.me/8801760089847"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-muted-foreground transition-colors hover:text-primary"
+              >
+                <span className="text-primary"> WhatsApp:</span> +880
+                1760-089847 (Jaber - query)
+              </a>
+              <a
                 href="https://m.facebook.com/ProgrammingCommunityBangladeshUniversity/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -94,7 +109,8 @@ function SiteFooter() {
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-border/40 pt-8 sm:flex-row">
           <p className="font-mono text-xs text-muted-foreground">
-            © 2026 BU CSE CLUB — COMPETE. SOLVE. SIGNAL.
+            © 2026 INFORMATICS CLUB BANGLADESH UNIVERSITY — COMPETE. SOLVE.
+            SIGNAL.
           </p>
           <div className="rounded-full border border-border/40 bg-background/50 px-4 py-1.5 backdrop-blur-md">
             <LiveClock />

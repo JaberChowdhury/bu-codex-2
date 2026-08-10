@@ -48,7 +48,7 @@ export function ThreeBackground() {
 
 export function AmbientCanvas() {
   return (
-    <div className="pointer-events-none fixed inset-0 z-0 h-screen w-screen opacity-40 mix-blend-screen">
+    <div className="pointer-events-none fixed inset-0 z-0 h-screen w-screen opacity-40">
       <Canvas
         camera={{ position: [0, 0, 5] }}
         dpr={[1, 1.5]}

@@ -2,11 +2,13 @@
 
 import * as React from "react"
 import html2canvas from "html2canvas-pro"
+import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { IconList, IconGridDots, IconEdit, IconTrash } from "@tabler/icons-react"
 
 type Member = {
   fullName: string
@@ -35,15 +37,36 @@ export function AdminDashboard({ registrations, error }: { registrations: Regist
 
   const [galleryTitle, setGalleryTitle] = React.useState("")
   const [galleryCategory, setGalleryCategory] = React.useState("general")
+  const [galleryDate, setGalleryDate] = React.useState("")
+  const [galleryPreview, setGalleryPreview] = React.useState<string | null>(null)
   const [tags, setTags] = React.useState<string[]>([])
   const [tagInput, setTagInput] = React.useState("")
+  const [galleryFilter, setGalleryFilter] = React.useState("all")
+  const [galleryViewMode, setGalleryViewMode] = React.useState<"list" | "grid">("grid")
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      if (file.size > 1024 * 1024) {
+        alert("Image exceeds 1MB limit")
+        e.target.value = ""
+        setGalleryPreview(null)
+        return
+      }
+      setGalleryPreview(URL.createObjectURL(file))
+    } else {
+      setGalleryPreview(null)
+    }
+  }
   const [announceTitle, setAnnounceTitle] = React.useState("")
   const [announceCategory, setAnnounceCategory] = React.useState("general")
   const [announceContent, setAnnounceContent] = React.useState("")
   const [editingGalleryId, setEditingGalleryId] = React.useState<string | null>(null)
   const [editingAnnounceId, setEditingAnnounceId] = React.useState<string | null>(null)
-  const [galleryItems, setGalleryItems] = React.useState<Record<string, unknown>[]>([])
-  const [announcements, setAnnouncements] = React.useState<Record<string, unknown>[]>([])
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [galleryItems, setGalleryItems] = React.useState<Record<string, any>[]>([])
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [announcements, setAnnouncements] = React.useState<Record<string, any>[]>([])
 
   const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -167,6 +190,7 @@ export function AdminDashboard({ registrations, error }: { registrations: Regist
       const formData = new FormData()
       formData.append("title", galleryTitle)
       formData.append("category", galleryCategory)
+      if (galleryDate) formData.append("date", galleryDate)
       formData.append("tags", JSON.stringify(tags))
       if (file) formData.append("file", file)
 
@@ -197,6 +221,8 @@ export function AdminDashboard({ registrations, error }: { registrations: Regist
       setGalleryUploadStatus("success")
       form.reset()
       setGalleryTitle("")
+      setGalleryDate("")
+      setGalleryPreview(null)
       setEditingGalleryId(null)
       setTags([])
       setTagInput("")
@@ -218,6 +244,8 @@ export function AdminDashboard({ registrations, error }: { registrations: Regist
     setEditingGalleryId(item.id as string)
     setGalleryTitle(item.title as string)
     setGalleryCategory(item.category as string)
+    setGalleryDate((item.date as string) || "")
+    setGalleryPreview(item.image_url as string || null)
     setTags((item.tags as string[]) || [])
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -289,7 +317,7 @@ export function AdminDashboard({ registrations, error }: { registrations: Regist
   }
 
   return (
-    <div className="space-y-8 relative">
+    <div className="container mx-auto max-w-6xl py-12 px-4 sm:px-6 space-y-8 relative overflow-x-hidden">
       {/* Decorative background element mimicking cyberpunk theme */}
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-background to-background" />
 
@@ -435,8 +463,8 @@ export function AdminDashboard({ registrations, error }: { registrations: Regist
           </div>
         </TabsContent>
 
-        <TabsContent value="gallery" className="space-y-4 outline-none">
-          <Card className="border border-border/50 bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl relative overflow-hidden max-w-2xl">
+        <TabsContent value="gallery" className="space-y-6 outline-none">
+          <Card className="border border-border/50 bg-card/80 backdrop-blur-sm shadow-lg rounded-2xl relative overflow-hidden mx-auto max-w-3xl">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-50 pointer-events-none" />
             <CardHeader>
               <CardTitle className="text-2xl font-heading tracking-wide">
@@ -470,8 +498,21 @@ export function AdminDashboard({ registrations, error }: { registrations: Regist
                       <option value="general">General</option>
                       <option value="event">Event</option>
                       <option value="award">Awards</option>
+                      <option value="round-1">Round-1</option>
+                      <option value="round-2">Round-2</option>
                     </select>
                   </div>
+                </div>
+
+                <div className="space-y-3">
+                  <Label htmlFor="gallery-date" className="text-muted-foreground font-mono text-xs uppercase">Date (Optional)</Label>
+                  <Input 
+                    id="gallery-date" 
+                    type="date"
+                    value={galleryDate}
+                    onChange={(e) => setGalleryDate(e.target.value)}
+                    className="bg-background/50 h-10 border-border/50 focus-visible:border-primary" 
+                  />
                 </div>
 
                 <div className="space-y-3">
@@ -496,17 +537,23 @@ export function AdminDashboard({ registrations, error }: { registrations: Regist
 
                 <div className="space-y-3">
                   <Label htmlFor="image-file" className="text-muted-foreground font-mono text-xs uppercase">File</Label>
-                  <div className="flex items-center justify-center w-full">
-                    <label htmlFor="image-file" className="flex flex-col items-center justify-center w-full h-48 border-2 border-border/50 border-dashed rounded-xl cursor-pointer bg-background/30 hover:bg-background/50 transition-colors hover:border-primary/50 group">
+                  <div className="flex items-center gap-4 w-full">
+                    <label htmlFor="image-file" className="flex flex-col items-center justify-center flex-1 h-48 border-2 border-border/50 border-dashed rounded-xl cursor-pointer bg-background/30 hover:bg-background/50 transition-colors hover:border-primary/50 group">
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
                         <svg className="w-10 h-10 mb-4 text-muted-foreground group-hover:text-primary transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                         </svg>
                         <p className="mb-2 text-sm text-muted-foreground font-mono"><span className="font-semibold text-foreground">Click to upload</span> or drag and drop</p>
-                        <p className="text-xs text-muted-foreground/70 font-mono">PNG, JPG, WEBP (MAX. 5MB)</p>
+                        <p className="text-xs text-muted-foreground/70 font-mono">PNG, JPG, WEBP (MAX. 1MB)</p>
                       </div>
-                      <input id="image-file" type="file" className="hidden" accept="image/*" required={!editingGalleryId} />
+                      <input id="image-file" type="file" className="hidden" accept="image/*" required={!editingGalleryId} onChange={handleFileChange} />
                     </label>
+                    {galleryPreview && (
+                      <div className="w-48 h-48 rounded-xl border border-border/50 overflow-hidden flex-shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={galleryPreview} alt="Preview" className="w-full h-full object-cover" />
+                      </div>
+                    )}
                   </div>
                 </div>
                 
@@ -533,35 +580,135 @@ export function AdminDashboard({ registrations, error }: { registrations: Regist
           </Card>
 
           {/* Existing Gallery Items (CRUD Read/Delete) */}
-          <div className="mt-8 space-y-4 max-w-2xl">
-            <h3 className="font-heading text-lg font-bold">Manage Gallery</h3>
-            {galleryItems.map((item) => (
-              <div key={item.id as string} className="flex items-center justify-between rounded-lg border border-border/50 bg-card/50 p-4 backdrop-blur-sm">
-                <div className="flex gap-4 items-center">
-                  {item.image_url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={item.image_url as string} alt={item.title as string} className="w-16 h-16 object-cover rounded-lg border border-border/50" />
-                  ) : (
-                    <div className="w-16 h-16 bg-muted flex items-center justify-center rounded-lg border border-border/50">
-                      <span className="text-[10px] text-muted-foreground font-mono">No Img</span>
-                    </div>
-                  )}
-                  <div>
-                    <h4 className="font-bold">{item.title as string}</h4>
-                    <div className="flex flex-wrap gap-2 mt-1">
-                      <span className="rounded bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground capitalize">{item.category as string}</span>
-                      {(item.tags as string[])?.map((tag: string) => (
-                        <span key={tag} className="rounded bg-primary/10 px-2 py-0.5 font-mono text-xs text-primary">#{tag}</span>
-                      ))}
-                    </div>
-                  </div>
+          <div className="mt-12 space-y-6 w-full">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-card/50 p-4 rounded-xl border border-border/50 backdrop-blur-sm">
+              <h3 className="font-heading text-lg font-bold">Manage Gallery</h3>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div className="flex flex-wrap gap-2">
+                  {["all", "general", "event", "award", "round-1", "round-2"].map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setGalleryFilter(cat)}
+                      className={`rounded-full px-3 py-1.5 font-mono text-xs font-bold capitalize transition-all ${
+                        galleryFilter === cat
+                          ? "bg-primary text-primary-foreground shadow-sm"
+                          : "bg-background border border-border/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
                 </div>
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" onClick={() => startEditGallery(item as Record<string, string | string[]>)}>Edit</Button>
-                  <Button variant="destructive" size="sm" onClick={() => handleDeleteGallery(item.id as string)}>Delete</Button>
+                
+                <div className="flex bg-background p-1 rounded-lg border border-border/50">
+                  <button 
+                    onClick={() => setGalleryViewMode("list")} 
+                    className={`p-1.5 rounded-md transition-colors ${galleryViewMode === "list" ? "bg-muted text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    <IconList size={18} />
+                  </button>
+                  <button 
+                    onClick={() => setGalleryViewMode("grid")} 
+                    className={`p-1.5 rounded-md transition-colors ${galleryViewMode === "grid" ? "bg-muted text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    <IconGridDots size={18} />
+                  </button>
                 </div>
               </div>
-            ))}
+            </div>
+            
+            {galleryViewMode === "grid" ? (
+              <motion.div layout className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4 min-h-[400px]">
+                <AnimatePresence>
+                  {galleryItems
+                    .filter(item => galleryFilter === "all" || item.category === galleryFilter)
+                    .map((item) => (
+                      <motion.div 
+                        layout
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                        key={item.id as string} 
+                        className="group relative rounded-xl border border-border/50 bg-card overflow-hidden shadow-sm hover:shadow-lg transition-all hover:border-primary/50 break-inside-avoid"
+                      >
+                        <div className="relative w-full overflow-hidden bg-muted">
+                          {item.image_url ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={item.image_url as string} alt={item.title as string} className="w-full h-auto min-h-[150px] object-cover transition-transform duration-500 group-hover:scale-105" />
+                          ) : (
+                            <div className="w-full h-40 flex items-center justify-center">
+                              <span className="text-[10px] text-muted-foreground font-mono">No Img</span>
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                            <Button variant="secondary" size="icon" onClick={() => startEditGallery(item as Record<string, string | string[]>)} className="rounded-full shadow-lg">
+                              <IconEdit size={16} />
+                            </Button>
+                            <Button variant="destructive" size="icon" onClick={() => handleDeleteGallery(item.id as string)} className="rounded-full shadow-lg">
+                              <IconTrash size={16} />
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="p-4">
+                          <h4 className="font-bold text-sm leading-tight mb-2">{item.title as string}</h4>
+                          <div className="flex flex-wrap gap-1">
+                            <span className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] text-primary capitalize">{item.category as string}</span>
+                            {item.date && (
+                              <span className="rounded bg-accent/10 px-1.5 py-0.5 font-mono text-[10px] text-emerald-400">{item.date as string}</span>
+                            )}
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                </AnimatePresence>
+              </motion.div>
+            ) : (
+              <motion.div layout className="space-y-3 min-h-[400px]">
+                <AnimatePresence>
+                  {galleryItems
+                    .filter(item => galleryFilter === "all" || item.category === galleryFilter)
+                    .map((item) => (
+                    <motion.div 
+                      layout
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                      key={item.id as string} 
+                      className="flex items-center justify-between rounded-xl border border-border/50 bg-card/50 p-3 backdrop-blur-sm hover:bg-card hover:border-primary/50 transition-colors"
+                    >
+                      <div className="flex gap-4 items-center">
+                        {item.image_url ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={item.image_url as string} alt={item.title as string} className="w-16 h-16 object-cover rounded-lg border border-border/50" />
+                        ) : (
+                          <div className="w-16 h-16 bg-muted flex items-center justify-center rounded-lg border border-border/50">
+                            <span className="text-[10px] text-muted-foreground font-mono">No Img</span>
+                          </div>
+                        )}
+                        <div>
+                          <h4 className="font-bold">{item.title as string}</h4>
+                          <div className="flex flex-wrap gap-2 mt-1">
+                            <span className="rounded bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground capitalize">{item.category as string}</span>
+                            {(item.tags as string[])?.map((tag: string) => (
+                              <span key={tag} className="rounded bg-primary/10 px-2 py-0.5 font-mono text-xs text-primary">#{tag}</span>
+                            ))}
+                            {item.date && (
+                              <span className="rounded bg-accent/10 px-2 py-0.5 font-mono text-xs text-emerald-400 border border-accent/20">{item.date as string}</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm" onClick={() => startEditGallery(item as Record<string, string | string[]>)}>Edit</Button>
+                        <Button variant="destructive" size="sm" onClick={() => handleDeleteGallery(item.id as string)}>Delete</Button>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+            )}
           </div>
         </TabsContent>
 

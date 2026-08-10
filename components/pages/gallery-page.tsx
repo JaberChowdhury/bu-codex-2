@@ -11,7 +11,7 @@ export default function GalleryPage() {
           GALLERY // ROUND_02
         </h1>
         <p className="text-sm text-muted-foreground">
-          Stills from Round 01. Fresh frames from Round 02 land after Sep 12.
+          Stills from Round 01. Fresh frames from Round 02 land soon.
         </p>
         <p className="tnum font-mono text-xs text-muted-foreground">
           <span className="text-accent">09</span> frames indexed · 03 categories
@@ -21,7 +21,7 @@ export default function GalleryPage() {
       <GalleryGrid />
 
       <footer className="border-t border-border pt-6 font-mono text-xs text-muted-foreground">
-        archive: more frames → after round_02 · photos: bu cse club
+        archive: more frames → after round_02 · photos: informatics club
       </footer>
     </div>
   )

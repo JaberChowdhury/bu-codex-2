@@ -44,9 +44,8 @@ export const memberSchema = z.object({
   gmail: z
     .string()
     .trim()
-    .min(1, "gmail is required")
-    .email("enter a valid gmail address")
-    .regex(/@gmail\.com$/i, "must be a gmail address"),
+    .min(1, "email is required")
+    .email("enter a valid email address"),
   mobile: z
     .string()
     .trim()

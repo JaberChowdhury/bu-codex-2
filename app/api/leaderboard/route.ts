@@ -7,7 +7,7 @@ export async function GET() {
   const leaderboardData = [
     {
       rank: 1,
-      team: "BU_CodeX_15",
+      team: "The Threads",
       solved: 9,
       penalty: 734,
       results: [
@@ -26,7 +26,7 @@ export async function GET() {
     },
     {
       rank: 2,
-      team: "BU_CodeX_02",
+      team: "mora_ganger",
       solved: 9,
       penalty: 914,
       results: [
@@ -45,7 +45,7 @@ export async function GET() {
     },
     {
       rank: 3,
-      team: "BU_CodeX_04",
+      team: "Bug_Master",
       solved: 7,
       penalty: 1039,
       results: [
@@ -64,7 +64,7 @@ export async function GET() {
     },
     {
       rank: 4,
-      team: "BU_CodeX_18",
+      team: "TAS coders",
       solved: 7,
       penalty: 1102,
       results: [
@@ -83,7 +83,7 @@ export async function GET() {
     },
     {
       rank: 5,
-      team: "BU_CodeX_07",
+      team: "Team 71",
       solved: 5,
       penalty: 796,
       results: [
@@ -102,7 +102,7 @@ export async function GET() {
     },
     {
       rank: 6,
-      team: "BU_CodeX_20",
+      team: "TechnoTitans",
       solved: 5,
       penalty: 1094,
       results: [
@@ -121,7 +121,7 @@ export async function GET() {
     },
     {
       rank: 7,
-      team: "BU_CodeX_05",
+      team: "Dunno",
       solved: 4,
       penalty: 551,
       results: [
@@ -140,7 +140,7 @@ export async function GET() {
     },
     {
       rank: 8,
-      team: "BU_CodeX_06",
+      team: "Weak team",
       solved: 4,
       penalty: 681,
       results: [
@@ -159,7 +159,7 @@ export async function GET() {
     },
     {
       rank: 9,
-      team: "BU_CodeX_03",
+      team: "Break Coder",
       solved: 4,
       penalty: 772,
       results: [
@@ -178,11 +178,125 @@ export async function GET() {
     },
     {
       rank: 10,
-      team: "BU_CodeX_11",
+      team: "Team Natsi",
       solved: 3,
       penalty: 419,
       results: [
         { p: "A", status: "failed", tries: 5 },
+        { p: "B", status: "none" },
+        { p: "C", status: "none" },
+        { p: "D", status: "none" },
+        { p: "E", status: "none" },
+        { p: "F", status: "none" },
+        { p: "G", status: "none" },
+        { p: "H", status: "none" },
+        { p: "I", status: "none" },
+        { p: "J", status: "none" },
+        { p: "K", status: "none" },
+      ],
+    },
+    {
+      rank: 11,
+      team: "TLE Titans",
+      solved: 0,
+      penalty: 0,
+      results: [
+        { p: "A", status: "none" },
+        { p: "B", status: "none" },
+        { p: "C", status: "none" },
+        { p: "D", status: "none" },
+        { p: "E", status: "none" },
+        { p: "F", status: "none" },
+        { p: "G", status: "none" },
+        { p: "H", status: "none" },
+        { p: "I", status: "none" },
+        { p: "J", status: "none" },
+        { p: "K", status: "none" },
+      ],
+    },
+    {
+      rank: 12,
+      team: "AlgoStorm",
+      solved: 0,
+      penalty: 0,
+      results: [
+        { p: "A", status: "none" },
+        { p: "B", status: "none" },
+        { p: "C", status: "none" },
+        { p: "D", status: "none" },
+        { p: "E", status: "none" },
+        { p: "F", status: "none" },
+        { p: "G", status: "none" },
+        { p: "H", status: "none" },
+        { p: "I", status: "none" },
+        { p: "J", status: "none" },
+        { p: "K", status: "none" },
+      ],
+    },
+    {
+      rank: 13,
+      team: "TripleBytes",
+      solved: 0,
+      penalty: 0,
+      results: [
+        { p: "A", status: "none" },
+        { p: "B", status: "none" },
+        { p: "C", status: "none" },
+        { p: "D", status: "none" },
+        { p: "E", status: "none" },
+        { p: "F", status: "none" },
+        { p: "G", status: "none" },
+        { p: "H", status: "none" },
+        { p: "I", status: "none" },
+        { p: "J", status: "none" },
+        { p: "K", status: "none" },
+      ],
+    },
+    {
+      rank: 14,
+      team: "Elite Code Crusher",
+      solved: 0,
+      penalty: 0,
+      results: [
+        { p: "A", status: "none" },
+        { p: "B", status: "none" },
+        { p: "C", status: "none" },
+        { p: "D", status: "none" },
+        { p: "E", status: "none" },
+        { p: "F", status: "none" },
+        { p: "G", status: "none" },
+        { p: "H", status: "none" },
+        { p: "I", status: "none" },
+        { p: "J", status: "none" },
+        { p: "K", status: "none" },
+      ],
+    },
+    {
+      rank: 15,
+      team: "MiniByte",
+      solved: 0,
+      penalty: 0,
+      results: [
+        { p: "A", status: "none" },
+        { p: "B", status: "none" },
+        { p: "C", status: "none" },
+        { p: "D", status: "none" },
+        { p: "E", status: "none" },
+        { p: "F", status: "none" },
+        { p: "G", status: "none" },
+        { p: "H", status: "none" },
+        { p: "I", status: "none" },
+        { p: "J", status: "none" },
+        { p: "K", status: "none" },
+      ],
+    },
+    {
+      rank: 16,
+      team: "Alpha 72",
+      solved: 0,
+      penalty: 0,
+      results: [
+        { p: "A", status: "none" },
         { p: "B", status: "none" },
         { p: "C", status: "none" },
         { p: "D", status: "none" },

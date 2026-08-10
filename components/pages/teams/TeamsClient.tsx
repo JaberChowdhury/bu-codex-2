@@ -26,9 +26,9 @@ export default function TeamsClient({
 
   if (!teams || teams.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-3xl border border-white/5 bg-white/[0.02] py-32 backdrop-blur-md">
-        <IconUsers size={48} className="mb-4 text-white/20" />
-        <p className="text-lg text-white/40">No teams have registered yet.</p>
+      <div className="flex flex-col items-center justify-center rounded-3xl border border-border bg-card/50 py-32 backdrop-blur-md">
+        <IconUsers size={48} className="mb-4 text-muted-foreground/50" />
+        <p className="text-lg text-muted-foreground">No teams have registered yet.</p>
       </div>
     )
   }

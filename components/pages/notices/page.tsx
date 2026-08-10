@@ -1,22 +1,26 @@
 "use client"
 
 import * as React from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import {
   IconBellRinging,
   IconCalendarStats,
   IconArrowRight,
+  IconX,
 } from "@tabler/icons-react"
 
+type Notice = {
+  id: string
+  category: string
+  created_at: string
+  title: string
+  content: string
+}
+
 export default function NoticesPage() {
-  const [notices, setNotices] = React.useState<{
-    id: string
-    category: string
-    created_at: string
-    title: string
-    content: string
-  }[]>([])
+  const [notices, setNotices] = React.useState<Notice[]>([])
   const [loading, setLoading] = React.useState(true)
+  const [selectedNotice, setSelectedNotice] = React.useState<Notice | null>(null)
 
   React.useEffect(() => {
     const fetchNotices = async () => {
@@ -33,6 +37,15 @@ export default function NoticesPage() {
       }
     }
     fetchNotices()
+  }, [])
+
+  // Close modal on escape key
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedNotice(null)
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
   }, [])
 
   return (
@@ -111,7 +124,8 @@ export default function NoticesPage() {
                     transition: { duration: 0.5, ease: "easeOut" },
                   },
                 }}
-                className="group relative"
+                className="group relative cursor-pointer"
+                onClick={() => setSelectedNotice(notice)}
               >
                 <div
                   data-slot="card"
@@ -135,7 +149,8 @@ export default function NoticesPage() {
                         {notice.title}
                       </h2>
 
-                      <p className="leading-relaxed whitespace-pre-wrap text-muted-foreground">
+                      {/* line-clamp-3 ensures it stays compact in the list view */}
+                      <p className="leading-relaxed line-clamp-3 whitespace-pre-wrap break-words overflow-hidden text-muted-foreground">
                         {notice.content}
                       </p>
                     </div>
@@ -155,6 +170,60 @@ export default function NoticesPage() {
           </motion.div>
         )}
       </div>
+
+      {/* Animated Full Description Modal */}
+      <AnimatePresence>
+        {selectedNotice && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedNotice(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 p-4 backdrop-blur-sm sm:p-6"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-3xl border border-border bg-card shadow-2xl flex flex-col"
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between border-b border-border bg-muted/30 p-6">
+                <div className="flex items-center gap-3">
+                  <span className="rounded-md border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-xs font-bold tracking-widest text-primary uppercase">
+                    {selectedNotice.category}
+                  </span>
+                  <div className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
+                    <IconCalendarStats size={14} />
+                    {new Date(selectedNotice.created_at).toLocaleDateString()}
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedNotice(null)}
+                  className="rounded-full bg-background/50 p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground border border-border"
+                >
+                  <IconX size={20} />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="overflow-y-auto p-6 sm:p-10 space-y-6">
+                <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground">
+                  {selectedNotice.title}
+                </h2>
+                
+                <div className="prose prose-sm sm:prose-base dark:prose-invert max-w-none">
+                  <p className="whitespace-pre-wrap leading-relaxed break-words text-muted-foreground">
+                    {selectedNotice.content}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   )
 }

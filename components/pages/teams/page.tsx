@@ -35,16 +35,16 @@ export default async function TeamsPage() {
 
       <div className="relative z-10 container mx-auto max-w-6xl px-6 py-24">
         <div className="mb-16 space-y-4 text-center">
-          <div className="mb-4 inline-flex items-center justify-center space-x-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-md">
-            <IconTrophy size={16} className="text-indigo-400" />
-            <span className="text-sm font-medium tracking-wide text-white/80 uppercase">
+          <div className="mb-4 inline-flex items-center justify-center space-x-2 rounded-full border border-border/50 bg-muted/30 px-4 py-1.5 backdrop-blur-md">
+            <IconTrophy size={16} className="text-primary" />
+            <span className="text-sm font-medium tracking-wide text-foreground/80 uppercase font-mono">
               Contestants
             </span>
           </div>
-          <h1 className="bg-gradient-to-r from-white via-white to-white/60 bg-clip-text pb-2 text-5xl font-bold tracking-tight text-transparent md:text-6xl">
+          <h1 className="bg-gradient-to-r from-foreground via-foreground to-foreground/60 bg-clip-text pb-2 text-5xl font-bold tracking-tight text-transparent md:text-6xl font-heading">
             Registered Teams
           </h1>
-          <p className="mx-auto max-w-2xl text-lg text-white/50">
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-mono">
             Meet the brilliant minds competing in this year&apos;s BU CodeX.
             Here are the successfully registered teams and their members.
           </p>
