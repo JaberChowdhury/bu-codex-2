@@ -23,7 +23,13 @@ function crossThemeHref(currentPathname: string, nextTheme: Theme): string {
   return `${THEME_ROOT[nextTheme]}${suffix}` || "/"
 }
 
-function ThemeSwitcher({ theme, className }: { theme: Theme; className?: string }) {
+function ThemeSwitcher({
+  theme,
+  className,
+}: {
+  theme: Theme
+  className?: string
+}) {
   const router = useRouter()
   const pathname = usePathname()
 
@@ -38,13 +44,18 @@ function ThemeSwitcher({ theme, className }: { theme: Theme; className?: string 
       <SelectTrigger
         size="sm"
         aria-label="theme"
-        className={cn("font-mono text-xs uppercase text-muted-foreground", className)}
+        className={cn(
+          "font-mono text-xs text-muted-foreground uppercase",
+          className
+        )}
       >
         <SelectValue suppressHydrationWarning>--{theme}</SelectValue>
       </SelectTrigger>
       <SelectContent align="end">
         <SelectGroup>
-          <SelectLabel className="font-mono text-xs uppercase">theme</SelectLabel>
+          <SelectLabel className="font-mono text-xs uppercase">
+            theme
+          </SelectLabel>
           {(["terminal", "hum"] as const).map((value) => (
             <SelectItem key={value} value={value} className="font-mono text-xs">
               --{value}

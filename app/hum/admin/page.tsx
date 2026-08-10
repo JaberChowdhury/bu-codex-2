@@ -25,7 +25,9 @@ export default async function AdminPage() {
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+  const supabaseKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
   const supabase = createClient(supabaseUrl, supabaseKey)
 
   const { data, error } = await supabase
@@ -34,7 +36,7 @@ export default async function AdminPage() {
     .order("created_at", { ascending: false })
 
   return (
-    <main className="mx-auto max-w-6xl p-4 sm:p-8 pt-20">
+    <main className="mx-auto max-w-6xl p-4 pt-20 sm:p-8">
       <AdminDashboard registrations={data || []} error={error?.message} />
     </main>
   )

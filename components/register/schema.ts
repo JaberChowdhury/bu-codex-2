@@ -16,7 +16,12 @@ export const departmentSchema = z.enum([...DEPARTMENTS], {
 })
 
 export const memberSchema = z.object({
-  photo: z.any().refine((val) => val !== null && typeof val !== "string", "photo is required"),
+  photo: z
+    .any()
+    .refine(
+      (val) => val !== null && typeof val !== "string",
+      "photo is required"
+    ),
   fullName: z
     .string()
     .trim()
@@ -46,15 +51,19 @@ export const memberSchema = z.object({
     .string()
     .trim()
     .min(1, "mobile is required")
-    .regex(/^01[3-9]\d{8}$/, "enter a valid BD mobile number, e.g. 01712345678"),
+    .regex(
+      /^01[3-9]\d{8}$/,
+      "enter a valid BD mobile number, e.g. 01712345678"
+    ),
   emergencyContact: z
     .string()
     .trim()
     .min(1, "emergency contact is required")
-    .regex(/^01[3-9]\d{8}$/, "enter a valid BD mobile number, e.g. 01712345678"),
-  relation: z
-    .string()
-    .min(1, "relation to team leader is required"),
+    .regex(
+      /^01[3-9]\d{8}$/,
+      "enter a valid BD mobile number, e.g. 01712345678"
+    ),
+  relation: z.string().min(1, "relation to team leader is required"),
   tshirt: z.enum([...TSHIRTS], { error: "select t-shirt size" }),
   experience: z.number().int().min(1).max(3),
 })
@@ -67,4 +76,6 @@ export const teamNameSchema = z
   .max(24, "team name must be 24 characters or fewer")
   .regex(/^[A-Za-z0-9 _-]+$/, "only letters, numbers, spaces, - and _ allowed")
 
-export type MemberErrorMap = Partial<Record<keyof z.infer<typeof memberSchema>, string>>
+export type MemberErrorMap = Partial<
+  Record<keyof z.infer<typeof memberSchema>, string>
+>

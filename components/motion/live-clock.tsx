@@ -30,7 +30,7 @@ export function LiveClock({
 
   return (
     <span
-      className={`font-mono text-xs tnum tracking-widest text-muted-foreground ${className ?? ""}`}
+      className={`tnum font-mono text-xs tracking-widest text-muted-foreground ${className ?? ""}`}
     >
       [{showDate ? `${date} · ` : ""}
       {time} {timezone}]

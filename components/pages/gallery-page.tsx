@@ -4,7 +4,7 @@ export default function GalleryPage() {
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 py-16">
       <header className="flex flex-col gap-3">
-        <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
           &gt; ls gallery/
         </p>
         <h1 className="font-heading text-3xl font-semibold tracking-tight text-foreground">

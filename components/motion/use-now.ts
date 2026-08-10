@@ -17,14 +17,15 @@ export function useNow(interval = 1000) {
     (callback: () => void) => {
       store.now = Date.now()
       callback()
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return () => {}
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+        return () => {}
       const id = window.setInterval(() => {
         store.now = Date.now()
         callback()
       }, interval)
       return () => window.clearInterval(id)
     },
-    [interval, store],
+    [interval, store]
   )
 
   return React.useSyncExternalStore(subscribe, getSnapshot, () => null)

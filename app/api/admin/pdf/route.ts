@@ -83,7 +83,12 @@ function drawFooter(doc: jsPDF) {
     doc.setFont("helvetica", "normal")
     doc.setFontSize(8)
     doc.setTextColor(150, 150, 160)
-    doc.text(`BU CODEX 2026 · ${i} / ${pageCount}`, PAGE_WIDTH / 2, PAGE_HEIGHT - 18, { align: "center" })
+    doc.text(
+      `BU CODEX 2026 · ${i} / ${pageCount}`,
+      PAGE_WIDTH / 2,
+      PAGE_HEIGHT - 18,
+      { align: "center" }
+    )
   }
 }
 
@@ -99,18 +104,36 @@ function drawTeamHeading(doc: jsPDF, reg: Registration, y: number): number {
   doc.setDrawColor(180, 160, 230)
   doc.setLineWidth(0.5)
   const codeW = doc.getTextWidth(code)
-  doc.roundedRect(PAGE_WIDTH - MARGIN - codeW - 16, y - 11, codeW + 16, 14, 3, 3, "FD")
+  doc.roundedRect(
+    PAGE_WIDTH - MARGIN - codeW - 16,
+    y - 11,
+    codeW + 16,
+    14,
+    3,
+    3,
+    "FD"
+  )
   doc.text(code, PAGE_WIDTH - MARGIN - codeW - 8, y + 1, { align: "center" })
 
   doc.setFont("helvetica", "normal")
   doc.setFontSize(9)
   doc.setTextColor(110, 110, 120)
-  doc.text(`Registered: ${new Date(reg.created_at).toLocaleString("en-US")}`, MARGIN, y + 10)
+  doc.text(
+    `Registered: ${new Date(reg.created_at).toLocaleString("en-US")}`,
+    MARGIN,
+    y + 10
+  )
   doc.text(`Department: ${reg.department ?? "—"}`, MARGIN, y + 20)
   return y + 30
 }
 
-function drawField(doc: jsPDF, label: string, value: string, x: number, y: number) {
+function drawField(
+  doc: jsPDF,
+  label: string,
+  value: string,
+  x: number,
+  y: number
+) {
   doc.setFont("helvetica", "bold")
   doc.setFontSize(7)
   doc.setTextColor(140, 130, 165)
@@ -135,7 +158,12 @@ function drawSizeBadge(doc: jsPDF, size: string, x: number, y: number) {
 
 const CARD_H = 108
 
-async function drawMemberCard(doc: jsPDF, member: Member, index: number, y: number): Promise<number> {
+async function drawMemberCard(
+  doc: jsPDF,
+  member: Member,
+  index: number,
+  y: number
+): Promise<number> {
   const x = MARGIN
   const w = PAGE_WIDTH - MARGIN * 2
 
@@ -170,7 +198,14 @@ async function drawMemberCard(doc: jsPDF, member: Member, index: number, y: numb
         pw = 78
         ph = 78 / ratio
       }
-      doc.addImage(photo.data, photo.format, photoX, y + (CARD_H - ph) / 2, pw, ph)
+      doc.addImage(
+        photo.data,
+        photo.format,
+        photoX,
+        y + (CARD_H - ph) / 2,
+        pw,
+        ph
+      )
       textX = photoX + pw + 14
     } catch {
       drawNoPhoto(doc, photoX, photoY)
@@ -184,12 +219,21 @@ async function drawMemberCard(doc: jsPDF, member: Member, index: number, y: numb
   doc.setFontSize(11.5)
   doc.text(member.fullName, textX, y + 24)
 
-  drawSizeBadge(doc, member.tshirt, x + w - 16 - doc.getTextWidth(member.tshirt) - 14, y + 24)
+  drawSizeBadge(
+    doc,
+    member.tshirt,
+    x + w - 16 - doc.getTextWidth(member.tshirt) - 14,
+    y + 24
+  )
 
   doc.setFont("helvetica", "normal")
   doc.setFontSize(8.5)
   doc.setTextColor(120, 112, 145)
-  doc.text(`${member.studentId}  ·  SEC ${member.section} / BATCH ${member.batch}`, textX, y + 38)
+  doc.text(
+    `${member.studentId}  ·  SEC ${member.section} / BATCH ${member.batch}`,
+    textX,
+    y + 38
+  )
 
   drawField(doc, "Email", member.gmail, textX, y + 58)
   drawField(doc, "Mobile", member.mobile, textX, y + 80)
@@ -236,12 +280,25 @@ async function buildFullListPdf(doc: jsPDF, registrations: Registration[]) {
       y = MARGIN + 16
     }
     y = drawTeamHeading(doc, reg, y)
-    const photos = await Promise.all(reg.members.map((m) => fetchPhoto(m.photo || "")))
+    const photos = await Promise.all(
+      reg.members.map((m) => fetchPhoto(m.photo || ""))
+    )
     autoTable(doc, {
       startY: y,
       margin: { left: MARGIN, right: MARGIN },
       theme: "grid",
-      head: [["Photo", "#", "Name", "Student ID", "Sec/Batch", "Email", "Phone", "T-Shirt"]],
+      head: [
+        [
+          "Photo",
+          "#",
+          "Name",
+          "Student ID",
+          "Sec/Batch",
+          "Email",
+          "Phone",
+          "T-Shirt",
+        ],
+      ],
       body: reg.members.map((m, i) => [
         "",
         String(i + 1),
@@ -253,7 +310,12 @@ async function buildFullListPdf(doc: jsPDF, registrations: Registration[]) {
         m.tshirt,
       ]),
       styles: { fontSize: 7.5, cellPadding: 3, overflow: "linebreak" },
-      headStyles: { fillColor: [96, 55, 200], textColor: 255, fontSize: 7.5, fontStyle: "bold" },
+      headStyles: {
+        fillColor: [96, 55, 200],
+        textColor: 255,
+        fontSize: 7.5,
+        fontStyle: "bold",
+      },
       alternateRowStyles: { fillColor: [245, 242, 252] },
       columnStyles: {
         0: { cellWidth: 24, halign: "center" },
@@ -282,7 +344,9 @@ async function buildFullListPdf(doc: jsPDF, registrations: Registration[]) {
         }
       },
     })
-    y = ((doc as unknown as { lastAutoTable?: { finalY?: number } }).lastAutoTable?.finalY ?? y) + 22
+    y =
+      ((doc as unknown as { lastAutoTable?: { finalY?: number } }).lastAutoTable
+        ?.finalY ?? y) + 22
   }
 
   drawFooter(doc)
@@ -303,7 +367,8 @@ export async function GET(req: Request) {
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey =
-    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
   if (!supabaseUrl || !supabaseKey) {
     return NextResponse.json({ error: "Server misconfigured" }, { status: 500 })
   }
@@ -319,7 +384,10 @@ export async function GET(req: Request) {
 
   const registrations = (data ?? []) as unknown as Registration[]
   if (registrations.length === 0) {
-    return NextResponse.json({ error: "No registrations found" }, { status: 404 })
+    return NextResponse.json(
+      { error: "No registrations found" },
+      { status: 404 }
+    )
   }
 
   const doc = new jsPDF({ unit: "pt", format: "a4" })

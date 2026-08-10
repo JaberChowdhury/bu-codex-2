@@ -102,7 +102,8 @@ export function sanitizeDraft(raw: unknown): Draft {
     // photo cannot be reliably restored from JSON, so we skip it (it stays null)
     if (typeof source.fullName === "string") member.fullName = source.fullName
     if (typeof source.gender === "string") member.gender = source.gender
-    if (typeof source.studentId === "string") member.studentId = source.studentId
+    if (typeof source.studentId === "string")
+      member.studentId = source.studentId
     if (typeof source.batch === "string") member.batch = source.batch
     if (typeof source.section === "string") member.section = source.section
     if (typeof source.gmail === "string") member.gmail = source.gmail

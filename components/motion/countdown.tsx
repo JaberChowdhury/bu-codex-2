@@ -5,7 +5,9 @@ import * as React from "react"
 import { useNow } from "@/components/motion/use-now"
 import { EVENT_DETAILS } from "@/lib/constants"
 
-export const REG_CLOSE_TARGET = new Date(EVENT_DETAILS.REG_CLOSE_TARGET_ISO).getTime()
+export const REG_CLOSE_TARGET = new Date(
+  EVENT_DETAILS.REG_CLOSE_TARGET_ISO
+).getTime()
 
 function diff(target: number, now: number) {
   let ms = Math.max(0, target - now)
@@ -38,7 +40,7 @@ export function Countdown({
 
   if (live) {
     return (
-      <span className={`font-mono text-sm tnum ${className ?? ""}`}>
+      <span className={`tnum font-mono text-sm ${className ?? ""}`}>
         <span className="pulse-dot text-accent">●</span>{" "}
         <span className="text-accent">registration_closed</span>
       </span>
@@ -55,17 +57,17 @@ export function Countdown({
   if (size === "xl") {
     return (
       <div
-        className={`grid grid-cols-4 gap-2 sm:gap-4 w-full max-w-2xl ${className ?? ""}`}
+        className={`grid w-full max-w-2xl grid-cols-4 gap-2 sm:gap-4 ${className ?? ""}`}
       >
         {units.map((unit) => (
           <div
             key={unit.label}
-            className="flex flex-col items-center justify-center rounded-xl border border-border/50 bg-card/40 backdrop-blur-md p-3 sm:p-5 shadow-sm transition-colors hover:bg-card/60"
+            className="flex flex-col items-center justify-center rounded-xl border border-border/50 bg-card/40 p-3 shadow-sm backdrop-blur-md transition-colors hover:bg-card/60 sm:p-5"
           >
-            <span className="tnum font-heading text-3xl sm:text-5xl lg:text-6xl font-extrabold text-foreground tracking-tight drop-shadow-sm">
+            <span className="tnum font-heading text-3xl font-extrabold tracking-tight text-foreground drop-shadow-sm sm:text-5xl lg:text-6xl">
               {unit.value}
             </span>
-            <span className="mt-1 sm:mt-2 font-mono text-[0.6rem] sm:text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            <span className="mt-1 font-mono text-[0.6rem] tracking-[0.2em] text-muted-foreground uppercase sm:mt-2 sm:text-xs">
               {unit.label}
             </span>
           </div>
@@ -76,7 +78,7 @@ export function Countdown({
 
   return (
     <span
-      className={`inline-flex items-baseline gap-1 font-heading text-lg font-bold tnum sm:text-xl ${className ?? ""}`}
+      className={`tnum inline-flex items-baseline gap-1 font-heading text-lg font-bold sm:text-xl ${className ?? ""}`}
     >
       <span className="text-accent">{pad(days)}</span>
       <span className="text-muted-foreground">d</span>

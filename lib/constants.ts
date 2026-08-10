@@ -1,16 +1,16 @@
 // Registration deadline (UTC). The register page disables itself once this moment is reached.
-export const REGISTRATION_DEADLINE_ISO = "2026-08-13T17:59:00Z"
+export const REGISTRATION_DEADLINE_ISO = "2026-09-25T17:59:00Z"
 
 export const EVENT_DETAILS = {
   // Dates & Deadlines
   REGISTRATION_OPENS: "AUG 02",
-  REGISTRATION_CLOSES: "AUG 13",
+  REGISTRATION_CLOSES: "SEP 25",
   REG_CLOSE_TARGET_ISO: REGISTRATION_DEADLINE_ISO,
-  PRELIMS_DATE: "SEP 08",
-  ONSITE_FINAL_DATE: "SEP 12",
-  AWARDS_DATE: "SEP 12 · evening",
+  PRELIMS_DATE: "OCT 02",
+  ONSITE_FINAL_DATE: "OCT 03",
+  AWARDS_DATE: "OCT 03 · evening",
   YEAR: "2026",
-  MONTH_DAY: "Sept 12",
+  MONTH_DAY: "Oct 03",
 
   // Logistics
   TEAM_SLOTS: 20,
@@ -19,13 +19,13 @@ export const EVENT_DETAILS = {
   ENTRY_FEE_TEXT: "400tk per team",
   DURATION_TEXT: "5h 00m",
   DURATION_HOURS: 5,
-  PROBLEMS_COUNT: 7,
+  PROBLEMS_COUNT: 11,
 
   // Locations / Platforms
-  PRELIMS_LOCATION: "Online, on toph.co",
+  PRELIMS_LOCATION: "Online, on vjudge",
   ONSITE_LOCATION: "Bangladesh University, Dhaka",
-  PLATFORM: "toph.co",
-  PLATFORM_TEXT: "Online, on toph",
+  PLATFORM: "vjudge",
+  PLATFORM_TEXT: "Online, on vjudge",
 
   // Prizes
   PRIZE_POOL_TEXT: "cash: 0, medals: yes, certificates: yes",
@@ -34,7 +34,7 @@ export const EVENT_DETAILS = {
   FINALIST_PRIZES: "t-shirt + goodies",
 
   // Misc
-  SNACKS_INFO: "snacks + food at start and midpoint"
+  SNACKS_INFO: "snacks + food at start and midpoint",
 }
 
 // T-shirt sizes offered at registration. Edit this list to add/remove sizes
@@ -76,4 +76,5 @@ export const DEPARTMENTS = FACULTIES.flatMap(
   (faculty) => faculty.departments
 ) as readonly string[]
 
-export const DEFAULT_DEPARTMENT = "Department of Computer Science and Engineering (CSE)"
+export const DEFAULT_DEPARTMENT =
+  "Department of Computer Science and Engineering (CSE)"

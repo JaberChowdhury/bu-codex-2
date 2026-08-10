@@ -13,8 +13,7 @@ import { EVENT_DETAILS } from "@/lib/constants"
 const faqs = [
   {
     question: "Who can participate?",
-    answer:
-      `Any student of Bangladesh University (BU), from any department. Teams of exactly ${EVENT_DETAILS.TEAM_SIZE}.`,
+    answer: `Any student of Bangladesh University (BU), from any department. Teams of exactly ${EVENT_DETAILS.TEAM_SIZE}.`,
   },
   {
     question: "I don't have a team yet.",
@@ -27,18 +26,15 @@ const faqs = [
   },
   {
     question: "What should I bring?",
-    answer:
-      "Student ID and a valid photo ID. Laptops optional; a computer is provided at the venue.",
+    answer: "Student ID and a valid photo ID.",
   },
   {
     question: "Is there an entry fee?",
-    answer:
-      `Yes — ${EVENT_DETAILS.ENTRY_FEE_TEXT}, paid once at registration. Covers the contest kit, refreshments, and venue costs.`,
+    answer: `Yes — ${EVENT_DETAILS.ENTRY_FEE_TEXT}, paid once at registration. Covers the contest kit, refreshments, and venue costs.`,
   },
   {
     question: "How is the contest scored?",
-    answer:
-      `ICPC-style on ${EVENT_DETAILS.PLATFORM}. Correct submissions are ranked by problems solved, then total penalty time.`,
+    answer: `ICPC-style on ${EVENT_DETAILS.PLATFORM}. Correct submissions are ranked by problems solved, then total penalty time.`,
   },
 ]
 
@@ -47,7 +43,7 @@ export function Faq() {
     <section id="faq" className="py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading label="faq · queries">
-          <h2 className="mt-3 font-heading text-2xl font-bold tnum sm:text-3xl">
+          <h2 className="tnum mt-3 font-heading text-2xl font-bold sm:text-3xl">
             FAQ
           </h2>
         </SectionHeading>

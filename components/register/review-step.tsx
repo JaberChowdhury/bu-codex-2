@@ -17,18 +17,20 @@ function ReviewStep({ draft, ready, onEdit }: ReviewStepProps) {
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
           team
         </p>
         <p className="font-heading text-lg font-medium">{draft.teamName}</p>
-        <p className="font-mono text-xs text-muted-foreground">{draft.department}</p>
+        <p className="font-mono text-xs text-muted-foreground">
+          {draft.department}
+        </p>
       </div>
 
       <div className="space-y-3">
         {draft.members.map((member, index) => (
           <div key={index} className="rounded-lg border border-border p-4">
             <div className="mb-3 flex items-center justify-between gap-2">
-              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
                 member {String(index + 1).padStart(2, "0")}
               </p>
               <Button
@@ -46,7 +48,10 @@ function ReviewStep({ draft, ready, onEdit }: ReviewStepProps) {
               <Row k="sid" v={member.studentId} />
               <Row
                 k="batch / section"
-                v={[member.batch, member.section].filter(Boolean).join(" / ") || "—"}
+                v={
+                  [member.batch, member.section].filter(Boolean).join(" / ") ||
+                  "—"
+                }
               />
               <Row k="gmail" v={member.gmail} />
               <Row k="mobile" v={member.mobile} />
@@ -61,7 +66,7 @@ function ReviewStep({ draft, ready, onEdit }: ReviewStepProps) {
         ))}
       </div>
 
-      <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+      <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
         status:{" "}
         <span className={cn(ready ? "text-accent" : "text-muted-foreground")}>
           {ready ? "ready" : "incomplete — use edit to finish"}

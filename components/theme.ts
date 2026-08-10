@@ -22,7 +22,7 @@ export function buildThemeScript(): string {
     .filter((theme) => THEME_ROOT[theme] !== "")
     .map(
       (theme) =>
-        `if(p==="${THEME_ROOT[theme]}"||p.indexOf("${THEME_ROOT[theme]}/")===0){t="${theme}"}`,
+        `if(p==="${THEME_ROOT[theme]}"||p.indexOf("${THEME_ROOT[theme]}/")===0){t="${theme}"}`
     )
     .join("")
 

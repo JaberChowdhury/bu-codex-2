@@ -28,7 +28,7 @@ export function Ticker({ className }: { className?: string }) {
     <div
       className={cn(
         "relative overflow-hidden border-y border-border bg-muted/40 py-2",
-        className,
+        className
       )}
       aria-label="Contest highlights"
     >
@@ -38,11 +38,14 @@ export function Ticker({ className }: { className?: string }) {
       {!reduced && (
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent" />
       )}
-      <div className="ticker-track font-mono text-xs uppercase tracking-widest text-muted-foreground">
+      <div className="ticker-track font-mono text-xs tracking-widest text-muted-foreground uppercase">
         {[0, 1].map((copy) => (
           <div key={copy} aria-hidden={copy === 1}>
             {ITEMS.map((item, i) => (
-              <span key={`${copy}-${i}`} className="mx-6 inline-flex items-center">
+              <span
+                key={`${copy}-${i}`}
+                className="mx-6 inline-flex items-center"
+              >
                 <span className="text-accent">✦</span>
                 <span className="ml-3">{item}</span>
               </span>

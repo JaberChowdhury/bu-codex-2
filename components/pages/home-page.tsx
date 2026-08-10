@@ -3,6 +3,7 @@ import { Fuel } from "@/components/home/fuel"
 import { Hero } from "@/components/home/hero"
 import { Prizes } from "@/components/home/prizes"
 import { Stats } from "@/components/home/stats"
+import { Sponsors } from "@/components/home/sponsors"
 import { Timeline } from "@/components/home/timeline"
 import { Tracks } from "@/components/home/tracks"
 import { Reveal } from "@/components/motion/reveal"
@@ -22,6 +23,9 @@ export default function HomePage() {
       </Reveal>
       <Reveal>
         <Prizes />
+      </Reveal>
+      <Reveal>
+        <Sponsors />
       </Reveal>
       <Reveal>
         <Fuel />

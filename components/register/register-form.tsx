@@ -87,12 +87,12 @@ function RegisterForm() {
 
   const teamNameError = React.useMemo(() => {
     const result = teamNameSchema.safeParse(draft.teamName)
-    return result.success ? "" : result.error.issues[0]?.message ?? ""
+    return result.success ? "" : (result.error.issues[0]?.message ?? "")
   }, [draft.teamName])
 
   const departmentError = React.useMemo(() => {
     const result = departmentSchema.safeParse(draft.department)
-    return result.success ? "" : result.error.issues[0]?.message ?? ""
+    return result.success ? "" : (result.error.issues[0]?.message ?? "")
   }, [draft.department])
 
   const teamStepValid = !teamNameError && !departmentError
@@ -109,7 +109,11 @@ function RegisterForm() {
   }, [draft, teamStepValid])
 
   const stepValid =
-    step === 0 ? teamStepValid : step >= 1 && step <= 3 ? memberStepValid : overallValid
+    step === 0
+      ? teamStepValid
+      : step >= 1 && step <= 3
+        ? memberStepValid
+        : overallValid
 
   const handleNext = () => {
     if (!stepValid) {
@@ -134,18 +138,19 @@ function RegisterForm() {
     setIsSubmitting(true)
 
     const code = makeTeamCode(draft.teamName)
-    
+
     try {
       const formData = new FormData()
       formData.append("teamName", draft.teamName)
       formData.append("teamCode", code)
       formData.append("department", draft.department)
-      
+
       draft.members.forEach((member, index) => {
         if (member.photo) {
           formData.append(`photo_${index}`, member.photo)
         }
         // Send the rest of the member data as JSON string
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { photo, ...rest } = member
         formData.append(`member_${index}`, JSON.stringify(rest))
       })
@@ -170,8 +175,10 @@ function RegisterForm() {
       }
       setDraft(emptyDraft())
       setDialogOpen(true)
-    } catch (err: any) {
-      setSubmitError(err.message || "An unexpected error occurred.")
+    } catch (err: unknown) {
+      setSubmitError(
+        err instanceof Error ? err.message : "An unexpected error occurred."
+      )
     } finally {
       setIsSubmitting(false)
     }
@@ -187,7 +194,7 @@ function RegisterForm() {
         </div>
       )}
       <Progress value={percent} className="flex flex-col gap-2">
-        <div className="flex items-baseline justify-between gap-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+        <div className="flex items-baseline justify-between gap-3 font-mono text-xs tracking-widest text-muted-foreground uppercase">
           <span>
             step {String(step + 1).padStart(2, "0")}/
             {String(TOTAL_STEPS).padStart(2, "0")} — {STEP_LABELS[step]}
@@ -203,7 +210,7 @@ function RegisterForm() {
               <div className="space-y-2">
                 <Label
                   htmlFor="team-name"
-                  className="font-mono text-xs uppercase tracking-widest text-muted-foreground"
+                  className="font-mono text-xs tracking-widest text-muted-foreground uppercase"
                 >
                   team name
                   <span className="text-accent"> *</span>
@@ -212,7 +219,10 @@ function RegisterForm() {
                   id="team-name"
                   value={draft.teamName}
                   onChange={(event) =>
-                    setDraft((prev) => ({ ...prev, teamName: event.target.value }))
+                    setDraft((prev) => ({
+                      ...prev,
+                      teamName: event.target.value,
+                    }))
                   }
                   aria-invalid={!!teamNameError}
                   placeholder="BU_CODEX_TEAM"
@@ -220,7 +230,10 @@ function RegisterForm() {
                   aria-required="true"
                 />
                 {attempted && teamNameError ? (
-                  <p role="alert" className="font-mono text-xs text-destructive">
+                  <p
+                    role="alert"
+                    className="font-mono text-xs text-destructive"
+                  >
                     {teamNameError}
                   </p>
                 ) : null}
@@ -228,7 +241,7 @@ function RegisterForm() {
               <div className="space-y-2">
                 <Label
                   htmlFor="department"
-                  className="font-mono text-xs uppercase tracking-widest text-muted-foreground"
+                  className="font-mono text-xs tracking-widest text-muted-foreground uppercase"
                 >
                   department
                   <span className="text-accent"> *</span>
@@ -236,12 +249,18 @@ function RegisterForm() {
                 <Select
                   value={draft.department || null}
                   onValueChange={(value) => {
-                    setDraft((prev) => ({ ...prev, department: value ?? DEFAULT_DEPARTMENT }))
+                    setDraft((prev) => ({
+                      ...prev,
+                      department: value ?? DEFAULT_DEPARTMENT,
+                    }))
                   }}
                 >
                   <SelectTrigger
                     id="department"
-                    className={cn("w-full", departmentError && "border-destructive")}
+                    className={cn(
+                      "w-full",
+                      departmentError && "border-destructive"
+                    )}
                   >
                     <SelectValue placeholder="select department" />
                   </SelectTrigger>
@@ -259,7 +278,10 @@ function RegisterForm() {
                   </SelectContent>
                 </Select>
                 {attempted && departmentError ? (
-                  <p role="alert" className="font-mono text-xs text-destructive">
+                  <p
+                    role="alert"
+                    className="font-mono text-xs text-destructive"
+                  >
                     {departmentError}
                   </p>
                 ) : null}
@@ -290,15 +312,27 @@ function RegisterForm() {
         </CardContent>
 
         <CardFooter className="justify-between">
-          <Button variant="outline" onClick={handleBack} disabled={step === 0 || isSubmitting}>
+          <Button
+            variant="outline"
+            onClick={handleBack}
+            disabled={step === 0 || isSubmitting}
+          >
             {"< back"}
           </Button>
           {step < TOTAL_STEPS - 1 ? (
-            <Button variant="default" onClick={handleNext} disabled={isSubmitting}>
+            <Button
+              variant="default"
+              onClick={handleNext}
+              disabled={isSubmitting}
+            >
               {"> next"}
             </Button>
           ) : (
-            <Button variant="default" onClick={handleSubmit} disabled={isSubmitting}>
+            <Button
+              variant="default"
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+            >
               {isSubmitting ? "> submitting..." : "> submit"}
             </Button>
           )}
@@ -322,7 +356,7 @@ function RegisterForm() {
             aria-live="polite"
             className="space-y-2 rounded-lg border border-border bg-muted/50 p-4"
           >
-            <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
               team code
             </p>
             <p className="tnum font-mono text-xl tracking-wider text-accent">

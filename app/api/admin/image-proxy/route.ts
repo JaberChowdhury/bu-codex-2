@@ -13,7 +13,10 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const url = searchParams.get("url")
   if (!url) {
-    return NextResponse.json({ error: "Missing url parameter" }, { status: 400 })
+    return NextResponse.json(
+      { error: "Missing url parameter" },
+      { status: 400 }
+    )
   }
 
   let target: URL
@@ -33,14 +36,21 @@ export async function GET(req: Request) {
     res = await fetch(target.toString(), { signal: controller.signal })
     clearTimeout(timer)
   } catch {
-    return NextResponse.json({ error: "Failed to fetch image" }, { status: 502 })
+    return NextResponse.json(
+      { error: "Failed to fetch image" },
+      { status: 502 }
+    )
   }
 
   if (!res.ok) {
-    return NextResponse.json({ error: "Failed to fetch image" }, { status: 502 })
+    return NextResponse.json(
+      { error: "Failed to fetch image" },
+      { status: 502 }
+    )
   }
 
-  const contentType = res.headers.get("content-type") || "application/octet-stream"
+  const contentType =
+    res.headers.get("content-type") || "application/octet-stream"
   const bytes = await res.arrayBuffer()
 
   return new NextResponse(new Blob([bytes], { type: contentType }), {

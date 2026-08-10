@@ -11,7 +11,7 @@ export function Fuel() {
     <section className="py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading label="fuel · logistics">
-          <h2 className="mt-3 font-mono text-sm text-accent tnum sm:text-base">
+          <h2 className="tnum mt-3 font-mono text-sm text-accent sm:text-base">
             fuel: snacks + simple food
           </h2>
         </SectionHeading>
@@ -25,7 +25,7 @@ export function Fuel() {
               key={stop.at}
               className="group border border-border bg-card px-4 py-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/70"
             >
-              <dt className="flex items-center gap-2 font-mono text-xs text-accent tnum">
+              <dt className="tnum flex items-center gap-2 font-mono text-xs text-accent">
                 <span className="pulse-dot">●</span>
                 {stop.at}
               </dt>

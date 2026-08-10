@@ -6,9 +6,9 @@ import { useTypedLine } from "@/components/motion/use-typed-line"
 
 const LINES = [
   "> bu codex --run round_02",
-  "[ OK ] problemset.load ........ 07",
+  "[ OK ] problemset.load ........ 11",
   "[ OK ] slots.allocate .......... 020",
-  "[ OK ] judge.spinup ............ toph.co",
+  "[ OK ] judge.spinup ............ vjudge",
 ]
 
 function BootLine({
@@ -35,18 +35,14 @@ function BootLine({
   }, [complete, onComplete])
 
   return (
-    <p className="whitespace-pre font-mono text-xs text-muted-foreground sm:text-sm">
+    <p className="font-mono text-xs whitespace-pre text-muted-foreground sm:text-sm">
       <span className={complete ? "text-foreground" : ""}>{typed}</span>
       {!complete && <span className="terminal-caret" />}
     </p>
   )
 }
 
-export function TerminalBoot({
-  onDone,
-}: {
-  onDone?: () => void
-}) {
+export function TerminalBoot({ onDone }: { onDone?: () => void }) {
   const [visible, setVisible] = React.useState(1)
   const doneRef = React.useRef(false)
 

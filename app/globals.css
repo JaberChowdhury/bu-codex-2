@@ -5,46 +5,46 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    --font-heading: var(--font-mono);
-    --font-sans: var(--font-sans);
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
-    --color-chart-5: var(--chart-5);
-    --color-chart-4: var(--chart-4);
-    --color-chart-3: var(--chart-3);
-    --color-chart-2: var(--chart-2);
-    --color-chart-1: var(--chart-1);
-    --color-ring: var(--ring);
-    --color-input: var(--input);
-    --color-border: var(--border);
-    --color-destructive: var(--destructive);
-    --color-accent-foreground: var(--accent-foreground);
-    --color-accent: var(--accent);
-    --color-muted-foreground: var(--muted-foreground);
-    --color-muted: var(--muted);
-    --color-secondary-foreground: var(--secondary-foreground);
-    --color-secondary: var(--secondary);
-    --color-primary-foreground: var(--primary-foreground);
-    --color-primary: var(--primary);
-    --color-popover-foreground: var(--popover-foreground);
-    --color-popover: var(--popover);
-    --color-card-foreground: var(--card-foreground);
-    --color-card: var(--card);
-    --color-foreground: var(--foreground);
-    --color-background: var(--background);
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
-    --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
+  --font-heading: var(--font-mono);
+  --font-sans: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 /* Shared base for the BU CODEX site. Per-theme design tokens + component
@@ -54,132 +54,132 @@
  */
 
 @layer base {
-    * {
-        @apply border-border outline-ring/50;
-    }
-    html {
-        @apply font-sans overflow-x-clip;
-    }
-    body {
-        @apply bg-background text-foreground overflow-x-clip;
-    }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply overflow-x-clip font-sans;
+  }
+  body {
+    @apply overflow-x-clip bg-background text-foreground;
+  }
 }
 
 @layer utilities {
-    .tnum {
-        font-variant-numeric: tabular-nums;
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  .terminal-caret {
+    display: inline-block;
+    width: 1ch;
+    height: 1.1em;
+    vertical-align: text-bottom;
+    background: var(--accent);
+    animation: terminal-blink 1.05s steps(2, start) infinite;
+  }
+  @keyframes terminal-blink {
+    50% {
+      opacity: 0;
     }
-    .terminal-caret {
-        display: inline-block;
-        width: 1ch;
-        height: 1.1em;
-        vertical-align: text-bottom;
-        background: var(--accent);
-        animation: terminal-blink 1.05s steps(2, start) infinite;
-    }
-    @keyframes terminal-blink {
-        50% {
-            opacity: 0;
-        }
-    }
+  }
 
-    .reveal {
-        opacity: 0;
-        transform: translateY(14px);
-        transition:
-            opacity 0.6s ease-out,
-            transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .reveal.is-visible {
-        opacity: 1;
-        transform: none;
-    }
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
 
-    .ticker-track {
-        display: flex;
-        width: max-content;
-        animation: ticker-scroll var(--ticker-duration, 28s) linear infinite;
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker-scroll var(--ticker-duration, 28s) linear infinite;
+  }
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
+  @keyframes ticker-scroll {
+    to {
+      transform: translateX(-50%);
     }
-    .ticker-track:hover {
-        animation-play-state: paused;
-    }
-    @keyframes ticker-scroll {
-        to {
-            transform: translateX(-50%);
-        }
-    }
+  }
 
-    .pulse-dot {
-        animation: pulse-dot 2s ease-in-out infinite;
+  .pulse-dot {
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
     }
-    @keyframes pulse-dot {
-        0%,
-        100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.35;
-        }
+    50% {
+      opacity: 0.35;
     }
+  }
 
-    .float-slow {
-        animation: float-slow 7s ease-in-out infinite;
+  .float-slow {
+    animation: float-slow 7s ease-in-out infinite;
+  }
+  @keyframes float-slow {
+    0%,
+    100% {
+      transform: translateY(0);
     }
-    @keyframes float-slow {
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-        50% {
-            transform: translateY(-8px);
-        }
+    50% {
+      transform: translateY(-8px);
     }
+  }
 
-    .rise {
-        animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  .rise {
+    animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .rise-delay-1 {
+    animation-delay: 0.08s;
+  }
+  .rise-delay-2 {
+    animation-delay: 0.16s;
+  }
+  .rise-delay-3 {
+    animation-delay: 0.24s;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
     }
-    .rise-delay-1 {
-        animation-delay: 0.08s;
+    to {
+      opacity: 1;
+      transform: none;
     }
-    .rise-delay-2 {
-        animation-delay: 0.16s;
-    }
-    .rise-delay-3 {
-        animation-delay: 0.24s;
-    }
-    @keyframes rise {
-        from {
-            opacity: 0;
-            transform: translateY(12px);
-        }
-        to {
-            opacity: 1;
-            transform: none;
-        }
-    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .terminal-caret,
-    .ticker-track,
-    .pulse-dot,
-    .float-slow,
-    .rise {
-        animation: none;
-        opacity: 1;
-        transform: none;
-    }
-    .reveal {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
+  .terminal-caret,
+  .ticker-track,
+  .pulse-dot,
+  .float-slow,
+  .rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

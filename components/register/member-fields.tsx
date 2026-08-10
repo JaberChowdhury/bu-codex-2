@@ -43,7 +43,12 @@ function computeErrors(member: Member): MemberErrorMap {
   return map
 }
 
-function MemberFields({ member, index, onChange, attempted }: MemberFieldsProps) {
+function MemberFields({
+  member,
+  index,
+  onChange,
+  attempted,
+}: MemberFieldsProps) {
   const id = `m${index}`
   const errors = React.useMemo(() => computeErrors(member), [member])
   const [touched, setTouched] = React.useState<Set<string>>(new Set())
@@ -58,9 +63,7 @@ function MemberFields({ member, index, onChange, attempted }: MemberFieldsProps)
   }
 
   const show = (key: keyof Member): string | undefined =>
-    (touched.has(key) || attempted) && errors[key]
-      ? errors[key]
-      : undefined
+    (touched.has(key) || attempted) && errors[key] ? errors[key] : undefined
 
   return (
     <div className="space-y-5">
@@ -72,7 +75,12 @@ function MemberFields({ member, index, onChange, attempted }: MemberFieldsProps)
       />
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="full name" id={`${id}-name`} required error={show("fullName")}>
+        <Field
+          label="full name"
+          id={`${id}-name`}
+          required
+          error={show("fullName")}
+        >
           <Input
             id={`${id}-name`}
             value={member.fullName}
@@ -84,7 +92,12 @@ function MemberFields({ member, index, onChange, attempted }: MemberFieldsProps)
             aria-required="true"
           />
         </Field>
-        <Field label="gender" id={`${id}-gender`} required error={show("gender")}>
+        <Field
+          label="gender"
+          id={`${id}-gender`}
+          required
+          error={show("gender")}
+        >
           <Select
             value={member.gender || null}
             onValueChange={(value) => {
@@ -107,7 +120,12 @@ function MemberFields({ member, index, onChange, attempted }: MemberFieldsProps)
             </SelectContent>
           </Select>
         </Field>
-        <Field label="student id" id={`${id}-sid`} required error={show("studentId")}>
+        <Field
+          label="student id"
+          id={`${id}-sid`}
+          required
+          error={show("studentId")}
+        >
           <Input
             id={`${id}-sid`}
             value={member.studentId}
@@ -135,7 +153,12 @@ function MemberFields({ member, index, onChange, attempted }: MemberFieldsProps)
             aria-required="true"
           />
         </Field>
-        <Field label="section" id={`${id}-section`} required error={show("section")}>
+        <Field
+          label="section"
+          id={`${id}-section`}
+          required
+          error={show("section")}
+        >
           <Select
             value={member.section || null}
             onValueChange={(value) => {
@@ -171,7 +194,12 @@ function MemberFields({ member, index, onChange, attempted }: MemberFieldsProps)
             aria-required="true"
           />
         </Field>
-        <Field label="mobile" id={`${id}-mobile`} required error={show("mobile")}>
+        <Field
+          label="mobile"
+          id={`${id}-mobile`}
+          required
+          error={show("mobile")}
+        >
           <Input
             id={`${id}-mobile`}
             type="tel"
@@ -237,7 +265,12 @@ function MemberFields({ member, index, onChange, attempted }: MemberFieldsProps)
             </SelectContent>
           </Select>
         </Field>
-        <Field label="t-shirt size" id={`${id}-tshirt`} required error={show("tshirt")}>
+        <Field
+          label="t-shirt size"
+          id={`${id}-tshirt`}
+          required
+          error={show("tshirt")}
+        >
           <Select
             value={member.tshirt || null}
             onValueChange={(value) => {
@@ -263,7 +296,7 @@ function MemberFields({ member, index, onChange, attempted }: MemberFieldsProps)
       </div>
 
       <div className="space-y-2">
-        <Label className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+        <Label className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
           competitive programming experience
           <span className="text-accent"> *</span>
         </Label>
@@ -306,7 +339,7 @@ function Field({
     <div className={cn("space-y-2", className)}>
       <Label
         htmlFor={id}
-        className="font-mono text-xs uppercase tracking-widest text-muted-foreground"
+        className="font-mono text-xs tracking-widest text-muted-foreground uppercase"
       >
         {label}
         {required ? <span className="text-accent"> *</span> : null}

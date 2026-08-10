@@ -1,1041 +1,2336 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BU CODEX // ROUND 02</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#F2EDFB;
-    --bg-soft:#E8DEF9;
-    --bg-band:#EDE4FA;
-    --line:#CBB9EE;
-    --line-soft:#DCCEF4;
-    --ink:#1C1726;
-    --ink-2:#241D33;
-    --ink-3:#2F2645;
-    --ink-4:#3A2F55;
-    --text-hi:#EFEAFA;
-    --text-dim:#B3A4D6;
-    --text-dim-2:#8E7EB8;
-    --accent:#2ED191;
-    --accent-deep:#1E9E6C;
-    --accent-glow:rgba(46,209,145,.35);
-    --warn:#FFB454;
-    --error:#FF6B7A;
-    --radius-sm:6px;
-    --radius:12px;
-    --radius-lg:20px;
-    --mono:'JetBrains Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
-    --sans:'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;--s9:96px;
-    --ease:cubic-bezier(.16,1,.3,1);
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BU CODEX // ROUND 02</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f2edfb;
+        --bg-soft: #e8def9;
+        --bg-band: #ede4fa;
+        --line: #cbb9ee;
+        --line-soft: #dccef4;
+        --ink: #1c1726;
+        --ink-2: #241d33;
+        --ink-3: #2f2645;
+        --ink-4: #3a2f55;
+        --text-hi: #efeafa;
+        --text-dim: #b3a4d6;
+        --text-dim-2: #8e7eb8;
+        --accent: #2ed191;
+        --accent-deep: #1e9e6c;
+        --accent-glow: rgba(46, 209, 145, 0.35);
+        --warn: #ffb454;
+        --error: #ff6b7a;
+        --radius-sm: 6px;
+        --radius: 12px;
+        --radius-lg: 20px;
+        --mono:
+          "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+        --sans: "Sora", system-ui, -apple-system, "Segoe UI", sans-serif;
+        --s1: 4px;
+        --s2: 8px;
+        --s3: 12px;
+        --s4: 16px;
+        --s5: 24px;
+        --s6: 32px;
+        --s7: 48px;
+        --s8: 64px;
+        --s9: 96px;
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      }
 
-  *,*::before,*::after{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:
-      linear-gradient(var(--line-soft) 1px, transparent 1px) 0 0/100% 42px,
-      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px) 0 0/42px 100%,
-      var(--bg);
-    background-attachment:fixed;
-    color:var(--ink);
-    font-family:var(--sans);
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-  @media (prefers-color-scheme: dark){ body{ background-color:var(--bg); } }
-  h1,h2,h3{margin:0;font-family:var(--mono);letter-spacing:-0.01em;}
-  p{margin:0;}
-  a{color:inherit;}
-  button{font-family:inherit;cursor:pointer;}
-  input,select{font-family:inherit;}
-  ::selection{background:var(--accent);color:var(--ink);}
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background:
+          linear-gradient(var(--line-soft) 1px, transparent 1px) 0 0/100% 42px,
+          linear-gradient(90deg, var(--line-soft) 1px, transparent 1px) 0 0/42px
+            100%,
+          var(--bg);
+        background-attachment: fixed;
+        color: var(--ink);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: var(--bg);
+        }
+      }
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-family: var(--mono);
+        letter-spacing: -0.01em;
+      }
+      p {
+        margin: 0;
+      }
+      a {
+        color: inherit;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+      }
+      input,
+      select {
+        font-family: inherit;
+      }
+      ::selection {
+        background: var(--accent);
+        color: var(--ink);
+      }
 
-  .wrap{max-width:1180px;margin:0 auto;padding:0 var(--s6);}
-  @media (max-width:720px){ .wrap{padding:0 var(--s4);} }
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 var(--s6);
+      }
+      @media (max-width: 720px) {
+        .wrap {
+          padding: 0 var(--s4);
+        }
+      }
 
-  .eyebrow{
-    font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--text-dim-2);display:flex;align-items:center;gap:var(--s2);margin-bottom:var(--s4);
-  }
-  .eyebrow::before{content:"$";color:var(--accent-deep);font-weight:700;}
+      .eyebrow {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-dim-2);
+        display: flex;
+        align-items: center;
+        gap: var(--s2);
+        margin-bottom: var(--s4);
+      }
+      .eyebrow::before {
+        content: "$";
+        color: var(--accent-deep);
+        font-weight: 700;
+      }
 
-  .cursor{display:inline-block;width:.55em;height:1em;background:var(--accent);vertical-align:-0.15em;margin-left:2px;animation:blink 1s steps(1) infinite;}
-  @keyframes blink{ 50%{opacity:0;} }
+      .cursor {
+        display: inline-block;
+        width: 0.55em;
+        height: 1em;
+        background: var(--accent);
+        vertical-align: -0.15em;
+        margin-left: 2px;
+        animation: blink 1s steps(1) infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
 
-  /* ---------- buttons ---------- */
-  .btn{
-    font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:.02em;
-    padding:14px 22px;border-radius:var(--radius-sm);border:1.5px solid transparent;
-    display:inline-flex;align-items:center;gap:10px;transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .25s ease;
-    white-space:nowrap;
-  }
-  .btn--primary{background:var(--accent);color:var(--ink);box-shadow:0 0 0 0 var(--accent-glow);}
-  .btn--primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px -8px var(--accent-glow);}
-  .btn--ghost{background:transparent;border-color:var(--ink-3);color:var(--ink);}
-  .btn--ghost:hover{border-color:var(--ink);transform:translateY(-2px);}
-  .btn--dark{background:var(--ink);color:var(--text-hi);border-color:var(--ink);}
-  .btn--dark:hover{transform:translateY(-2px);box-shadow:0 10px 24px -10px rgba(28,23,38,.4);}
-  .btn:active{transform:translateY(0);}
-  .btn[disabled]{opacity:.45;pointer-events:none;}
+      /* ---------- buttons ---------- */
+      .btn {
+        font-family: var(--mono);
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        padding: 14px 22px;
+        border-radius: var(--radius-sm);
+        border: 1.5px solid transparent;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition:
+          transform 0.35s var(--ease),
+          box-shadow 0.35s var(--ease),
+          background 0.25s ease;
+        white-space: nowrap;
+      }
+      .btn--primary {
+        background: var(--accent);
+        color: var(--ink);
+        box-shadow: 0 0 0 0 var(--accent-glow);
+      }
+      .btn--primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px -8px var(--accent-glow);
+      }
+      .btn--ghost {
+        background: transparent;
+        border-color: var(--ink-3);
+        color: var(--ink);
+      }
+      .btn--ghost:hover {
+        border-color: var(--ink);
+        transform: translateY(-2px);
+      }
+      .btn--dark {
+        background: var(--ink);
+        color: var(--text-hi);
+        border-color: var(--ink);
+      }
+      .btn--dark:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px -10px rgba(28, 23, 38, 0.4);
+      }
+      .btn:active {
+        transform: translateY(0);
+      }
+      .btn[disabled] {
+        opacity: 0.45;
+        pointer-events: none;
+      }
 
-  /* ---------- terminal window chrome ---------- */
-  .term{
-    background:var(--ink-2);border-radius:var(--radius-lg);
-    box-shadow:0 30px 60px -20px rgba(28,23,38,.35), 0 2px 0 rgba(255,255,255,.4) inset;
-    overflow:hidden;border:1px solid rgba(255,255,255,.05);
-  }
-  .term__bar{
-    display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--ink-3);
-    border-bottom:1px solid rgba(255,255,255,.06);
-  }
-  .term__dot{width:10px;height:10px;border-radius:50%;}
-  .term__dot--r{background:#FF6B6B;} .term__dot--y{background:#FFC15E;} .term__dot--g{background:#3FE39A;}
-  .term__title{margin-left:8px;font-family:var(--mono);font-size:12px;color:var(--text-dim);}
-  .term__body{padding:var(--s6);font-family:var(--mono);color:var(--text-hi);}
+      /* ---------- terminal window chrome ---------- */
+      .term {
+        background: var(--ink-2);
+        border-radius: var(--radius-lg);
+        box-shadow:
+          0 30px 60px -20px rgba(28, 23, 38, 0.35),
+          0 2px 0 rgba(255, 255, 255, 0.4) inset;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .term__bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        background: var(--ink-3);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .term__dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .term__dot--r {
+        background: #ff6b6b;
+      }
+      .term__dot--y {
+        background: #ffc15e;
+      }
+      .term__dot--g {
+        background: #3fe39a;
+      }
+      .term__title {
+        margin-left: 8px;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+      .term__body {
+        padding: var(--s6);
+        font-family: var(--mono);
+        color: var(--text-hi);
+      }
 
-  /* ---------- reveal on scroll ---------- */
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease), transform .8s var(--ease);}
-  .reveal.is-visible{opacity:1;transform:none;}
-  @media (prefers-reduced-motion:reduce){
-    .reveal{opacity:1;transform:none;transition:none;}
-    .cursor{animation:none;}
-    *{animation-duration:.001ms !important;}
-  }
+      /* ---------- reveal on scroll ---------- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.8s var(--ease),
+          transform 0.8s var(--ease);
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .cursor {
+          animation: none;
+        }
+        * {
+          animation-duration: 0.001ms !important;
+        }
+      }
 
-  /* ================= NAV (terminal tab bar) ================= */
-  .termbar{
-    position:sticky;top:0;z-index:60;
-    background:rgba(242,237,251,.82);backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  .termbar__inner{max-width:1180px;margin:0 auto;padding:0 var(--s6);display:flex;align-items:center;height:56px;gap:var(--s6);}
-  .termbar__logo{font-family:var(--mono);font-weight:700;font-size:14.5px;display:flex;align-items:center;gap:8px;flex:0 0 auto;background:none;border:none;color:var(--ink);padding:0;}
-  .termbar__logo b{color:var(--accent-deep);}
-  .termbar__tabs{display:flex;gap:2px;margin-left:auto;background:var(--bg-soft);padding:3px;border-radius:9px;border:1px solid var(--line);}
-  .termbar__tab{
-    font-family:var(--mono);font-size:13px;font-weight:600;color:var(--text-dim-2);
-    background:transparent;border:none;padding:8px 16px;border-radius:7px;transition:all .25s ease;
-  }
-  .termbar__tab:hover{color:var(--ink);}
-  .termbar__tab.is-active{background:var(--ink);color:var(--accent);}
-  @media (max-width:640px){
-    .termbar__inner{padding:0 var(--s4);gap:var(--s3);}
-    .termbar__tab{padding:7px 10px;font-size:12px;}
-  }
+      /* ================= NAV (terminal tab bar) ================= */
+      .termbar {
+        position: sticky;
+        top: 0;
+        z-index: 60;
+        background: rgba(242, 237, 251, 0.82);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+      }
+      .termbar__inner {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 var(--s6);
+        display: flex;
+        align-items: center;
+        height: 56px;
+        gap: var(--s6);
+      }
+      .termbar__logo {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: 14.5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 0 0 auto;
+        background: none;
+        border: none;
+        color: var(--ink);
+        padding: 0;
+      }
+      .termbar__logo b {
+        color: var(--accent-deep);
+      }
+      .termbar__tabs {
+        display: flex;
+        gap: 2px;
+        margin-left: auto;
+        background: var(--bg-soft);
+        padding: 3px;
+        border-radius: 9px;
+        border: 1px solid var(--line);
+      }
+      .termbar__tab {
+        font-family: var(--mono);
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-dim-2);
+        background: transparent;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 7px;
+        transition: all 0.25s ease;
+      }
+      .termbar__tab:hover {
+        color: var(--ink);
+      }
+      .termbar__tab.is-active {
+        background: var(--ink);
+        color: var(--accent);
+      }
+      @media (max-width: 640px) {
+        .termbar__inner {
+          padding: 0 var(--s4);
+          gap: var(--s3);
+        }
+        .termbar__tab {
+          padding: 7px 10px;
+          font-size: 12px;
+        }
+      }
 
-  /* ================= VIEWS ================= */
-  .view{display:none;}
-  .view.is-active{display:block;animation:viewin .5s var(--ease);}
-  @keyframes viewin{ from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:none;} }
+      /* ================= VIEWS ================= */
+      .view {
+        display: none;
+      }
+      .view.is-active {
+        display: block;
+        animation: viewin 0.5s var(--ease);
+      }
+      @keyframes viewin {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
 
-  /* ================= HERO ================= */
-  .hero{padding:var(--s9) 0 var(--s7);}
-  .hero__grid{display:grid;grid-template-columns:1.32fr .68fr;gap:var(--s7);align-items:start;}
-  @media (max-width:900px){ .hero__grid{grid-template-columns:1fr;} }
+      /* ================= HERO ================= */
+      .hero {
+        padding: var(--s9) 0 var(--s7);
+      }
+      .hero__grid {
+        display: grid;
+        grid-template-columns: 1.32fr 0.68fr;
+        gap: var(--s7);
+        align-items: start;
+      }
+      @media (max-width: 900px) {
+        .hero__grid {
+          grid-template-columns: 1fr;
+        }
+      }
 
-  .hero__boot{font-size:13px;line-height:1.9;color:var(--text-dim);margin-bottom:var(--s5);min-height:5.7em;}
-  .hero__boot .ok{color:var(--accent);}
-  .hero__headline{
-    font-size:clamp(42px,7vw,84px);line-height:.98;font-weight:800;color:var(--ink);
-    margin-bottom:var(--s5);min-height:1.9em;
-  }
-  .hero__headline .accent{color:var(--accent-deep);}
-  .hero__sub{
-    font-family:var(--sans);font-size:17px;line-height:1.65;color:var(--ink-4);max-width:56ch;margin-bottom:var(--s6);
-  }
-  .hero__cta{display:flex;gap:var(--s3);flex-wrap:wrap;}
+      .hero__boot {
+        font-size: 13px;
+        line-height: 1.9;
+        color: var(--text-dim);
+        margin-bottom: var(--s5);
+        min-height: 5.7em;
+      }
+      .hero__boot .ok {
+        color: var(--accent);
+      }
+      .hero__headline {
+        font-size: clamp(42px, 7vw, 84px);
+        line-height: 0.98;
+        font-weight: 800;
+        color: var(--ink);
+        margin-bottom: var(--s5);
+        min-height: 1.9em;
+      }
+      .hero__headline .accent {
+        color: var(--accent-deep);
+      }
+      .hero__sub {
+        font-family: var(--sans);
+        font-size: 17px;
+        line-height: 1.65;
+        color: var(--ink-4);
+        max-width: 56ch;
+        margin-bottom: var(--s6);
+      }
+      .hero__cta {
+        display: flex;
+        gap: var(--s3);
+        flex-wrap: wrap;
+      }
 
-  .stat-panel{position:sticky;top:80px;}
-  .stat-panel .term__body{padding:var(--s5) var(--s5);}
-  .stat-row{display:flex;justify-content:space-between;font-size:13.5px;padding:9px 0;border-bottom:1px dashed rgba(255,255,255,.1);}
-  .stat-row:last-child{border-bottom:none;}
-  .stat-row span:first-child{color:var(--text-dim);}
-  .stat-row span:last-child{color:var(--accent);font-weight:700;}
-  .stat-panel__note{margin-top:var(--s4);font-size:11.5px;color:var(--text-dim-2);line-height:1.6;}
+      .stat-panel {
+        position: sticky;
+        top: 80px;
+      }
+      .stat-panel .term__body {
+        padding: var(--s5) var(--s5);
+      }
+      .stat-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13.5px;
+        padding: 9px 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+      }
+      .stat-row:last-child {
+        border-bottom: none;
+      }
+      .stat-row span:first-child {
+        color: var(--text-dim);
+      }
+      .stat-row span:last-child {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .stat-panel__note {
+        margin-top: var(--s4);
+        font-size: 11.5px;
+        color: var(--text-dim-2);
+        line-height: 1.6;
+      }
 
-  /* ================= SECTION HEADERS ================= */
-  .band{padding:var(--s8) 0;}
-  .band--soft{background:var(--bg-band);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  .band__head{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s5);margin-bottom:var(--s7);flex-wrap:wrap;}
-  .band__title{font-size:clamp(26px,3.4vw,38px);font-weight:800;}
+      /* ================= SECTION HEADERS ================= */
+      .band {
+        padding: var(--s8) 0;
+      }
+      .band--soft {
+        background: var(--bg-band);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .band__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: var(--s5);
+        margin-bottom: var(--s7);
+        flex-wrap: wrap;
+      }
+      .band__title {
+        font-size: clamp(26px, 3.4vw, 38px);
+        font-weight: 800;
+      }
 
-  /* ================= TIMELINE ================= */
-  .timeline{list-style:none;margin:0;padding:0;}
-  .timeline li{
-    display:grid;grid-template-columns:64px 1fr auto;gap:var(--s5);align-items:baseline;
-    padding:var(--s5) 0;border-top:1px solid var(--line);
-  }
-  .timeline li:last-child{border-bottom:1px solid var(--line);}
-  .timeline__n{font-family:var(--mono);font-weight:800;font-size:20px;color:var(--accent-deep);}
-  .timeline__label{font-weight:700;font-size:17px;font-family:var(--sans);}
-  .timeline__date{font-family:var(--mono);font-size:13px;color:var(--text-dim-2);}
+      /* ================= TIMELINE ================= */
+      .timeline {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .timeline li {
+        display: grid;
+        grid-template-columns: 64px 1fr auto;
+        gap: var(--s5);
+        align-items: baseline;
+        padding: var(--s5) 0;
+        border-top: 1px solid var(--line);
+      }
+      .timeline li:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      .timeline__n {
+        font-family: var(--mono);
+        font-weight: 800;
+        font-size: 20px;
+        color: var(--accent-deep);
+      }
+      .timeline__label {
+        font-weight: 700;
+        font-size: 17px;
+        font-family: var(--sans);
+      }
+      .timeline__date {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--text-dim-2);
+      }
 
-  /* ================= TRACKS ================= */
-  .tracks{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s4);}
-  .track{
-    border:1px solid var(--line);background:var(--bg-soft);border-radius:var(--radius);
-    padding:var(--s5);transition:transform .35s var(--ease), border-color .3s ease;
-  }
-  .track:hover{transform:translateY(-4px);border-color:var(--accent-deep);}
-  .track h3{font-size:15.5px;line-height:1.4;font-weight:700;}
-  .track span{font-family:var(--mono);font-size:11px;color:var(--text-dim-2);}
-  .track--a{grid-column:span 3;}
-  .track--b{grid-column:span 2;}
-  .track--c{grid-column:span 1;}
-  @media (max-width:900px){ .tracks{grid-template-columns:repeat(2,1fr);} .track--a,.track--b,.track--c{grid-column:span 1;} }
+      /* ================= TRACKS ================= */
+      .tracks {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: var(--s4);
+      }
+      .track {
+        border: 1px solid var(--line);
+        background: var(--bg-soft);
+        border-radius: var(--radius);
+        padding: var(--s5);
+        transition:
+          transform 0.35s var(--ease),
+          border-color 0.3s ease;
+      }
+      .track:hover {
+        transform: translateY(-4px);
+        border-color: var(--accent-deep);
+      }
+      .track h3 {
+        font-size: 15.5px;
+        line-height: 1.4;
+        font-weight: 700;
+      }
+      .track span {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--text-dim-2);
+      }
+      .track--a {
+        grid-column: span 3;
+      }
+      .track--b {
+        grid-column: span 2;
+      }
+      .track--c {
+        grid-column: span 1;
+      }
+      @media (max-width: 900px) {
+        .tracks {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .track--a,
+        .track--b,
+        .track--c {
+          grid-column: span 1;
+        }
+      }
 
-  .judge-note{margin-top:var(--s6);font-family:var(--mono);font-size:13px;color:var(--ink-4);border-left:3px solid var(--accent-deep);padding-left:var(--s4);}
+      .judge-note {
+        margin-top: var(--s6);
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--ink-4);
+        border-left: 3px solid var(--accent-deep);
+        padding-left: var(--s4);
+      }
 
-  /* ================= PRIZES ================= */
-  .prizes{display:grid;grid-template-columns:.9fr 1.2fr .9fr;gap:var(--s5);align-items:end;}
-  @media (max-width:800px){ .prizes{grid-template-columns:1fr;} }
-  .prize{border:1px solid var(--line);border-radius:var(--radius);padding:var(--s6) var(--s5);background:var(--bg-soft);text-align:center;}
-  .prize--1{background:var(--ink);color:var(--text-hi);transform:scale(1.06);position:relative;z-index:2;box-shadow:0 24px 50px -22px rgba(28,23,38,.35);}
-  .prize__place{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--text-dim-2);}
-  .prize--1 .prize__place{color:var(--accent);}
-  .prize__amount{font-family:var(--mono);font-weight:800;font-size:clamp(24px,3vw,34px);margin:var(--s3) 0;}
+      /* ================= PRIZES ================= */
+      .prizes {
+        display: grid;
+        grid-template-columns: 0.9fr 1.2fr 0.9fr;
+        gap: var(--s5);
+        align-items: end;
+      }
+      @media (max-width: 800px) {
+        .prizes {
+          grid-template-columns: 1fr;
+        }
+      }
+      .prize {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: var(--s6) var(--s5);
+        background: var(--bg-soft);
+        text-align: center;
+      }
+      .prize--1 {
+        background: var(--ink);
+        color: var(--text-hi);
+        transform: scale(1.06);
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 24px 50px -22px rgba(28, 23, 38, 0.35);
+      }
+      .prize__place {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        color: var(--text-dim-2);
+      }
+      .prize--1 .prize__place {
+        color: var(--accent);
+      }
+      .prize__amount {
+        font-family: var(--mono);
+        font-weight: 800;
+        font-size: clamp(24px, 3vw, 34px);
+        margin: var(--s3) 0;
+      }
 
-  /* ================= FAQ ================= */
-  .faq{max-width:760px;}
-  .faq details{border-top:1px solid var(--line);padding:var(--s4) 0;}
-  .faq details:last-child{border-bottom:1px solid var(--line);}
-  .faq summary{cursor:pointer;font-weight:700;font-size:15.5px;list-style:none;display:flex;justify-content:space-between;gap:var(--s4);}
-  .faq summary::-webkit-details-marker{display:none;}
-  .faq summary::after{content:"+";font-family:var(--mono);color:var(--accent-deep);font-size:20px;transition:transform .3s ease;}
-  .faq details[open] summary::after{transform:rotate(45deg);}
-  .faq p{margin-top:var(--s3);color:var(--ink-4);line-height:1.65;font-size:14.5px;max-width:62ch;}
+      /* ================= FAQ ================= */
+      .faq {
+        max-width: 760px;
+      }
+      .faq details {
+        border-top: 1px solid var(--line);
+        padding: var(--s4) 0;
+      }
+      .faq details:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      .faq summary {
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 15.5px;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        gap: var(--s4);
+      }
+      .faq summary::-webkit-details-marker {
+        display: none;
+      }
+      .faq summary::after {
+        content: "+";
+        font-family: var(--mono);
+        color: var(--accent-deep);
+        font-size: 20px;
+        transition: transform 0.3s ease;
+      }
+      .faq details[open] summary::after {
+        transform: rotate(45deg);
+      }
+      .faq p {
+        margin-top: var(--s3);
+        color: var(--ink-4);
+        line-height: 1.65;
+        font-size: 14.5px;
+        max-width: 62ch;
+      }
 
-  /* ================= FOOTER ================= */
-  .footer{padding:var(--s7) 0;border-top:1px solid var(--line);}
-  .footer__row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--s4);font-family:var(--mono);font-size:12.5px;color:var(--text-dim-2);}
+      /* ================= FOOTER ================= */
+      .footer {
+        padding: var(--s7) 0;
+        border-top: 1px solid var(--line);
+      }
+      .footer__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--s4);
+        font-family: var(--mono);
+        font-size: 12.5px;
+        color: var(--text-dim-2);
+      }
 
-  /* ================= GALLERY ================= */
-  .gallery-head{padding-top:var(--s8);}
-  .filters{display:flex;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s7);}
-  .filter{
-    font-family:var(--mono);font-size:12.5px;font-weight:600;padding:9px 16px;border-radius:20px;
-    border:1px solid var(--ink-3);background:transparent;color:var(--ink-4);transition:all .25s ease;
-  }
-  .filter.is-active{background:var(--ink);color:var(--accent);border-color:var(--ink);}
-  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);padding-bottom:var(--s9);}
-  @media (max-width:860px){ .gallery-grid{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:560px){ .gallery-grid{grid-template-columns:1fr;} }
-  .gtile{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:var(--ink-2);transition:transform .4s var(--ease);}
-  .gtile:hover{transform:translateY(-6px);}
-  .gtile.is-hidden{display:none;}
-  .gtile__bar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:var(--ink-3);}
-  .gtile__bar span{width:7px;height:7px;border-radius:50%;background:var(--text-dim-2);opacity:.5;}
-  .gtile__img{
-    aspect-ratio:4/3;position:relative;overflow:hidden;
-    background-image:
-      repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 2px, transparent 2px 14px),
-      linear-gradient(155deg, var(--g1), var(--g2));
-  }
-  .gtile__img::after{
-    content:attr(data-glyph);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    font-family:var(--mono);font-size:38px;color:rgba(255,255,255,.35);
-  }
-  .gtile__cap{padding:12px 14px 16px;font-family:var(--mono);font-size:12px;color:var(--text-dim);line-height:1.5;}
-  .gtile__cap b{color:var(--text-hi);font-size:12.5px;display:block;margin-bottom:2px;}
+      /* ================= GALLERY ================= */
+      .gallery-head {
+        padding-top: var(--s8);
+      }
+      .filters {
+        display: flex;
+        gap: var(--s2);
+        flex-wrap: wrap;
+        margin-bottom: var(--s7);
+      }
+      .filter {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        font-weight: 600;
+        padding: 9px 16px;
+        border-radius: 20px;
+        border: 1px solid var(--ink-3);
+        background: transparent;
+        color: var(--ink-4);
+        transition: all 0.25s ease;
+      }
+      .filter.is-active {
+        background: var(--ink);
+        color: var(--accent);
+        border-color: var(--ink);
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--s5);
+        padding-bottom: var(--s9);
+      }
+      @media (max-width: 860px) {
+        .gallery-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 560px) {
+        .gallery-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .gtile {
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: var(--ink-2);
+        transition: transform 0.4s var(--ease);
+      }
+      .gtile:hover {
+        transform: translateY(-6px);
+      }
+      .gtile.is-hidden {
+        display: none;
+      }
+      .gtile__bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 9px 12px;
+        background: var(--ink-3);
+      }
+      .gtile__bar span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--text-dim-2);
+        opacity: 0.5;
+      }
+      .gtile__img {
+        aspect-ratio: 4/3;
+        position: relative;
+        overflow: hidden;
+        background-image:
+          repeating-linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.05) 0 2px,
+            transparent 2px 14px
+          ),
+          linear-gradient(155deg, var(--g1), var(--g2));
+      }
+      .gtile__img::after {
+        content: attr(data-glyph);
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--mono);
+        font-size: 38px;
+        color: rgba(255, 255, 255, 0.35);
+      }
+      .gtile__cap {
+        padding: 12px 14px 16px;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+      .gtile__cap b {
+        color: var(--text-hi);
+        font-size: 12.5px;
+        display: block;
+        margin-bottom: 2px;
+      }
 
-  /* ================= REGISTER ================= */
-  .reg-head{padding-top:var(--s8);}
-  .progress{margin-bottom:var(--s6);}
-  .progress__track{height:3px;background:var(--line-soft);border-radius:3px;overflow:hidden;margin-bottom:var(--s4);}
-  .progress__fill{height:100%;width:20%;background:var(--accent-deep);transition:width .5s var(--ease);}
-  .steps{display:flex;gap:6px;flex-wrap:wrap;}
-  .step{
-    font-family:var(--mono);font-size:12px;font-weight:600;padding:8px 14px;border-radius:7px;
-    background:var(--bg-soft);border:1px solid var(--line);color:var(--text-dim-2);transition:all .25s ease;
-  }
-  .step.is-active{background:var(--ink);color:var(--accent);border-color:var(--ink);}
-  .step.is-done::before{content:"✓ ";color:var(--accent-deep);}
+      /* ================= REGISTER ================= */
+      .reg-head {
+        padding-top: var(--s8);
+      }
+      .progress {
+        margin-bottom: var(--s6);
+      }
+      .progress__track {
+        height: 3px;
+        background: var(--line-soft);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: var(--s4);
+      }
+      .progress__fill {
+        height: 100%;
+        width: 20%;
+        background: var(--accent-deep);
+        transition: width 0.5s var(--ease);
+      }
+      .steps {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .step {
+        font-family: var(--mono);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 8px 14px;
+        border-radius: 7px;
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        color: var(--text-dim-2);
+        transition: all 0.25s ease;
+      }
+      .step.is-active {
+        background: var(--ink);
+        color: var(--accent);
+        border-color: var(--ink);
+      }
+      .step.is-done::before {
+        content: "✓ ";
+        color: var(--accent-deep);
+      }
 
-  .reg-term{margin-bottom:var(--s9);}
-  .panel{display:none;}
-  .panel.is-active{display:block;animation:viewin .4s var(--ease);}
+      .reg-term {
+        margin-bottom: var(--s9);
+      }
+      .panel {
+        display: none;
+      }
+      .panel.is-active {
+        display: block;
+        animation: viewin 0.4s var(--ease);
+      }
 
-  .field{margin-bottom:var(--s5);}
-  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);}
-  @media (max-width:640px){ .field-row{grid-template-columns:1fr;} }
-  label{
-    display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--text-dim);margin-bottom:8px;
-  }
-  label .req{color:var(--accent);margin-left:3px;}
-  input[type=text],input[type=email],input[type=tel],select{
-    width:100%;background:var(--ink);border:1.5px solid var(--ink-4);color:var(--text-hi);
-    padding:13px 14px;border-radius:var(--radius-sm);font-family:var(--mono);font-size:14px;
-    transition:border-color .2s ease, box-shadow .2s ease;
-  }
-  input::placeholder{color:var(--text-dim-2);}
-  input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
-  input.is-error,select.is-error{border-color:var(--error);}
-  .err-msg{font-family:var(--mono);font-size:11.5px;color:var(--error);margin-top:6px;display:none;}
-  .err-msg.show{display:block;}
-  select{appearance:none;background-image:linear-gradient(45deg,transparent 50%, var(--text-dim) 50%),linear-gradient(135deg, var(--text-dim) 50%, transparent 50%);background-position:calc(100% - 18px) center, calc(100% - 13px) center;background-size:5px 5px,5px 5px;background-repeat:no-repeat;}
+      .field {
+        margin-bottom: var(--s5);
+      }
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--s5);
+      }
+      @media (max-width: 640px) {
+        .field-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      label {
+        display: block;
+        font-family: var(--mono);
+        font-size: 11.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        margin-bottom: 8px;
+      }
+      label .req {
+        color: var(--accent);
+        margin-left: 3px;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      select {
+        width: 100%;
+        background: var(--ink);
+        border: 1.5px solid var(--ink-4);
+        color: var(--text-hi);
+        padding: 13px 14px;
+        border-radius: var(--radius-sm);
+        font-family: var(--mono);
+        font-size: 14px;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      input::placeholder {
+        color: var(--text-dim-2);
+      }
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-glow);
+      }
+      input.is-error,
+      select.is-error {
+        border-color: var(--error);
+      }
+      .err-msg {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: var(--error);
+        margin-top: 6px;
+        display: none;
+      }
+      .err-msg.show {
+        display: block;
+      }
+      select {
+        appearance: none;
+        background-image:
+          linear-gradient(45deg, transparent 50%, var(--text-dim) 50%),
+          linear-gradient(135deg, var(--text-dim) 50%, transparent 50%);
+        background-position:
+          calc(100% - 18px) center,
+          calc(100% - 13px) center;
+        background-size:
+          5px 5px,
+          5px 5px;
+        background-repeat: no-repeat;
+      }
 
-  .team-name-block{max-width:480px;}
-  .team-name-block input{font-size:22px;padding:18px 16px;font-weight:700;}
+      .team-name-block {
+        max-width: 480px;
+      }
+      .team-name-block input {
+        font-size: 22px;
+        padding: 18px 16px;
+        font-weight: 700;
+      }
 
-  /* experience slider */
-  .xp{padding:var(--s3) 4px 0;}
-  input[type=range]{
-    -webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;
-    background:linear-gradient(90deg, var(--accent-deep) 0%, var(--accent-deep) var(--fill,50%), var(--ink-4) var(--fill,50%), var(--ink-4) 100%);
-  }
-  input[type=range]::-webkit-slider-thumb{
-    -webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);
-    border:3px solid var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.3);cursor:pointer;margin-top:-8px;
-  }
-  input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);border:3px solid var(--ink);cursor:pointer;}
-  input[type=range]::-moz-range-track{height:4px;background:var(--ink-4);border-radius:4px;}
-  .xp__labels{display:flex;justify-content:space-between;margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--text-dim-2);}
-  .xp__labels span{width:33%;text-align:center;}
-  .xp__labels span:first-child{text-align:left;}
-  .xp__labels span:last-child{text-align:right;}
-  .xp__labels span.is-current{color:var(--accent);font-weight:700;}
-  .xp__current{font-family:var(--mono);font-size:13px;color:var(--accent);margin-top:var(--s2);text-align:center;font-weight:700;}
+      /* experience slider */
+      .xp {
+        padding: var(--s3) 4px 0;
+      }
+      input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 4px;
+        border-radius: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--accent-deep) 0%,
+          var(--accent-deep) var(--fill, 50%),
+          var(--ink-4) var(--fill, 50%),
+          var(--ink-4) 100%
+        );
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--accent);
+        border: 3px solid var(--ink);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        margin-top: -8px;
+      }
+      input[type="range"]::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--accent);
+        border: 3px solid var(--ink);
+        cursor: pointer;
+      }
+      input[type="range"]::-moz-range-track {
+        height: 4px;
+        background: var(--ink-4);
+        border-radius: 4px;
+      }
+      .xp__labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--text-dim-2);
+      }
+      .xp__labels span {
+        width: 33%;
+        text-align: center;
+      }
+      .xp__labels span:first-child {
+        text-align: left;
+      }
+      .xp__labels span:last-child {
+        text-align: right;
+      }
+      .xp__labels span.is-current {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .xp__current {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--accent);
+        margin-top: var(--s2);
+        text-align: center;
+        font-weight: 700;
+      }
 
-  /* upload */
-  .upload{
-    display:flex;align-items:center;gap:var(--s5);border:1.5px dashed var(--ink-4);border-radius:var(--radius);
-    padding:var(--s5);transition:border-color .25s ease, background .25s ease;cursor:pointer;
-  }
-  .upload:hover, .upload.is-drag{border-color:var(--accent);background:rgba(46,209,145,.05);}
-  .upload__preview{
-    width:64px;height:64px;border-radius:50%;background:var(--ink-4);flex:0 0 auto;overflow:hidden;
-    display:flex;align-items:center;justify-content:center;font-family:var(--mono);color:var(--text-dim-2);font-size:10px;
-  }
-  .upload__preview img{width:100%;height:100%;object-fit:cover;}
-  .upload__text b{display:block;font-family:var(--mono);font-size:13.5px;color:var(--text-hi);}
-  .upload__text span{font-family:var(--mono);font-size:11.5px;color:var(--text-dim-2);}
-  .upload input[type=file]{display:none;}
+      /* upload */
+      .upload {
+        display: flex;
+        align-items: center;
+        gap: var(--s5);
+        border: 1.5px dashed var(--ink-4);
+        border-radius: var(--radius);
+        padding: var(--s5);
+        transition:
+          border-color 0.25s ease,
+          background 0.25s ease;
+        cursor: pointer;
+      }
+      .upload:hover,
+      .upload.is-drag {
+        border-color: var(--accent);
+        background: rgba(46, 209, 145, 0.05);
+      }
+      .upload__preview {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: var(--ink-4);
+        flex: 0 0 auto;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--mono);
+        color: var(--text-dim-2);
+        font-size: 10px;
+      }
+      .upload__preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .upload__text b {
+        display: block;
+        font-family: var(--mono);
+        font-size: 13.5px;
+        color: var(--text-hi);
+      }
+      .upload__text span {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: var(--text-dim-2);
+      }
+      .upload input[type="file"] {
+        display: none;
+      }
 
-  .panel-nav{display:flex;justify-content:space-between;margin-top:var(--s7);}
+      .panel-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: var(--s7);
+      }
 
-  /* review */
-  .review-card{border:1px solid var(--ink-4);border-radius:var(--radius);padding:var(--s5);margin-bottom:var(--s4);}
-  .review-card__head{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--s4);}
-  .review-card__head b{font-family:var(--mono);color:var(--accent);font-size:13px;letter-spacing:.05em;text-transform:uppercase;}
-  .review-card__edit{font-family:var(--mono);font-size:11.5px;color:var(--text-dim);background:none;border:none;text-decoration:underline;}
-  .review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);font-family:var(--mono);font-size:12.5px;}
-  @media (max-width:700px){ .review-grid{grid-template-columns:1fr 1fr;} }
-  .review-grid div span{display:block;color:var(--text-dim-2);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
-  .review-grid div b{color:var(--text-hi);font-weight:600;}
-  .review-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;margin-bottom:var(--s3);background:var(--ink-4);}
+      /* review */
+      .review-card {
+        border: 1px solid var(--ink-4);
+        border-radius: var(--radius);
+        padding: var(--s5);
+        margin-bottom: var(--s4);
+      }
+      .review-card__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--s4);
+      }
+      .review-card__head b {
+        font-family: var(--mono);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .review-card__edit {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: var(--text-dim);
+        background: none;
+        border: none;
+        text-decoration: underline;
+      }
+      .review-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--s4);
+        font-family: var(--mono);
+        font-size: 12.5px;
+      }
+      @media (max-width: 700px) {
+        .review-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .review-grid div span {
+        display: block;
+        color: var(--text-dim-2);
+        font-size: 10.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 4px;
+      }
+      .review-grid div b {
+        color: var(--text-hi);
+        font-weight: 600;
+      }
+      .review-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: var(--s3);
+        background: var(--ink-4);
+      }
 
-  /* confirmation overlay */
-  .confirm-overlay{
-    position:fixed;inset:0;background:rgba(28,23,38,.55);backdrop-filter:blur(6px);z-index:100;
-    display:none;align-items:center;justify-content:center;padding:var(--s5);
-  }
-  .confirm-overlay.is-open{display:flex;}
-  .confirm-card{width:100%;max-width:560px;}
-  .confirm-card .term__body{min-height:220px;font-size:14px;line-height:2;}
-  .confirm-card .ok{color:var(--accent);}
-  .confirm-id{font-size:20px;font-weight:800;color:var(--accent);margin:var(--s3) 0;}
-  .confirm-actions{display:flex;gap:var(--s3);margin-top:var(--s5);flex-wrap:wrap;}
+      /* confirmation overlay */
+      .confirm-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(28, 23, 38, 0.55);
+        backdrop-filter: blur(6px);
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: var(--s5);
+      }
+      .confirm-overlay.is-open {
+        display: flex;
+      }
+      .confirm-card {
+        width: 100%;
+        max-width: 560px;
+      }
+      .confirm-card .term__body {
+        min-height: 220px;
+        font-size: 14px;
+        line-height: 2;
+      }
+      .confirm-card .ok {
+        color: var(--accent);
+      }
+      .confirm-id {
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--accent);
+        margin: var(--s3) 0;
+      }
+      .confirm-actions {
+        display: flex;
+        gap: var(--s3);
+        margin-top: var(--s5);
+        flex-wrap: wrap;
+      }
 
-  ::-webkit-scrollbar{width:10px;}
-  ::-webkit-scrollbar-track{background:var(--bg);}
-  ::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px;}
-</style>
-</head>
-<body>
-
-<nav class="termbar">
-  <div class="termbar__inner">
-    <button class="termbar__logo" data-nav="home" aria-label="BU Codex, go home">bu@codex<span style="color:var(--text-dim-2)">:</span><b>~/round_02$</b><span class="cursor"></span></button>
-    <div class="termbar__tabs" role="tablist">
-      <button class="termbar__tab is-active" data-nav="home">home</button>
-      <button class="termbar__tab" data-nav="gallery">gallery</button>
-      <button class="termbar__tab" data-nav="register">register</button>
-    </div>
-  </div>
-</nav>
-
-<main>
-
-<!-- ============================================================= HOME ============================================================= -->
-<section id="view-home" class="view is-active">
-
-  <div class="wrap hero">
-    <div class="hero__grid">
-      <div>
-        <div class="hero__boot" id="bootLines"></div>
-        <h1 class="hero__headline" id="typedHeadline"></h1>
-        <p class="hero__sub">Three-person teams. Five hours. Seven problems that don't forgive guesswork. The second round of BU's flagship algorithmic championship is now open for registration — bring your fastest debugger.</p>
-        <div class="hero__cta">
-          <button class="btn btn--primary" data-nav="register">register_team.sh <span aria-hidden="true">↵</span></button>
-          <button class="btn btn--ghost" data-nav="gallery">cat gallery.log</button>
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--line);
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="termbar">
+      <div class="termbar__inner">
+        <button
+          class="termbar__logo"
+          data-nav="home"
+          aria-label="BU Codex, go home"
+        >
+          bu@codex<span style="color: var(--text-dim-2)">:</span
+          ><b>~/round_02$</b><span class="cursor"></span>
+        </button>
+        <div class="termbar__tabs" role="tablist">
+          <button class="termbar__tab is-active" data-nav="home">home</button>
+          <button class="termbar__tab" data-nav="gallery">gallery</button>
+          <button class="termbar__tab" data-nav="register">register</button>
         </div>
       </div>
+    </nav>
 
-      <div class="stat-panel reveal">
+    <main>
+      <!-- ============================================================= HOME ============================================================= -->
+      <section id="view-home" class="view is-active">
+        <div class="wrap hero">
+          <div class="hero__grid">
+            <div>
+              <div class="hero__boot" id="bootLines"></div>
+              <h1 class="hero__headline" id="typedHeadline"></h1>
+              <p class="hero__sub">
+                Three-person teams. Five hours. Seven problems that don't
+                forgive guesswork. The second round of BU's flagship algorithmic
+                championship is now open for registration — bring your fastest
+                debugger.
+              </p>
+              <div class="hero__cta">
+                <button class="btn btn--primary" data-nav="register">
+                  register_team.sh <span aria-hidden="true">↵</span>
+                </button>
+                <button class="btn btn--ghost" data-nav="gallery">
+                  cat gallery.log
+                </button>
+              </div>
+            </div>
+
+            <div class="stat-panel reveal">
+              <div class="term">
+                <div class="term__bar">
+                  <span class="term__dot term__dot--r"></span
+                  ><span class="term__dot term__dot--y"></span
+                  ><span class="term__dot term__dot--g"></span>
+                  <span class="term__title">system_status.log</span>
+                </div>
+                <div class="term__body">
+                  <div class="stat-row">
+                    <span>TEAM_SLOTS</span><span>128</span>
+                  </div>
+                  <div class="stat-row">
+                    <span>PROBLEMS</span><span>07</span>
+                  </div>
+                  <div class="stat-row">
+                    <span>DURATION</span><span>5h 00m</span>
+                  </div>
+                  <div class="stat-row">
+                    <span>PRIZE_POOL</span><span>৳50,000</span>
+                  </div>
+                  <div class="stat-row">
+                    <span>JUDGE</span><span>toph.co</span>
+                  </div>
+                  <div class="stat-row">
+                    <span>REG_CLOSES</span><span>SEP 05</span>
+                  </div>
+                  <div class="stat-panel__note">
+                    Onsite final at BU Computer Lab Complex. Preliminary round
+                    runs online — same weekend, no travel required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="band">
+          <div class="wrap">
+            <div class="band__head reveal">
+              <div>
+                <div class="eyebrow">cat schedule.log</div>
+                <h2 class="band__title">Execution order</h2>
+              </div>
+            </div>
+            <ul class="timeline reveal">
+              <li>
+                <span class="timeline__n">01</span
+                ><span class="timeline__label">Registration opens</span
+                ><span class="timeline__date">AUG 02, 2026</span>
+              </li>
+              <li>
+                <span class="timeline__n">02</span
+                ><span class="timeline__label">Registration closes</span
+                ><span class="timeline__date">SEP 05, 2026</span>
+              </li>
+              <li>
+                <span class="timeline__n">03</span
+                ><span class="timeline__label"
+                  >Preliminary round — online (Toph)</span
+                ><span class="timeline__date">SEP 08, 2026</span>
+              </li>
+              <li>
+                <span class="timeline__n">04</span
+                ><span class="timeline__label">Onsite final</span
+                ><span class="timeline__date">SEP 12, 2026</span>
+              </li>
+              <li>
+                <span class="timeline__n">05</span
+                ><span class="timeline__label">Award ceremony</span
+                ><span class="timeline__date">SEP 12, 2026 · evening</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TRACKS -->
+        <div class="band band--soft">
+          <div class="wrap">
+            <div class="band__head reveal">
+              <div>
+                <div class="eyebrow">ls ./problem_domains</div>
+                <h2 class="band__title">What you'll be up against</h2>
+              </div>
+            </div>
+            <div class="tracks reveal">
+              <div class="track track--a">
+                <h3>Data Structures &amp; Algorithms</h3>
+                <span>core</span>
+              </div>
+              <div class="track track--b">
+                <h3>Graph Theory &amp; Trees</h3>
+                <span>core</span>
+              </div>
+              <div class="track track--c">
+                <h3>Dynamic Programming</h3>
+                <span>heavy</span>
+              </div>
+              <div class="track track--c">
+                <h3>Number Theory</h3>
+                <span>medium</span>
+              </div>
+              <div class="track track--b">
+                <h3>Greedy &amp; Ad-hoc</h3>
+                <span>mixed</span>
+              </div>
+              <div class="track track--a">
+                <h3>Implementation-heavy Simulation</h3>
+                <span>patience required</span>
+              </div>
+            </div>
+            <p class="judge-note">
+              Allowed languages: C++17/20, Java, Python3. Preliminary round is
+              judged live on Toph; the onsite final runs on a local mirror judge
+              with the same rule set.
+            </p>
+          </div>
+        </div>
+
+        <!-- PRIZES -->
+        <div class="band">
+          <div class="wrap">
+            <div class="band__head reveal">
+              <div>
+                <div class="eyebrow">cat prizes.json</div>
+                <h2 class="band__title">What's on the line</h2>
+              </div>
+            </div>
+            <div class="prizes reveal">
+              <div class="prize">
+                <div class="prize__place">2ND PLACE</div>
+                <div class="prize__amount">৳15,000</div>
+                <p style="font-size: 13px; color: var(--ink-4)">
+                  + certificates
+                </p>
+              </div>
+              <div class="prize prize--1">
+                <div class="prize__place">1ST PLACE</div>
+                <div class="prize__amount">৳25,000</div>
+                <p style="font-size: 13px; color: var(--text-dim)">
+                  + trophy &amp; certificates
+                </p>
+              </div>
+              <div class="prize">
+                <div class="prize__place">3RD PLACE</div>
+                <div class="prize__amount">৳10,000</div>
+                <p style="font-size: 13px; color: var(--ink-4)">
+                  + certificates
+                </p>
+              </div>
+            </div>
+            <p class="judge-note">
+              All onsite finalist teams receive event T-shirts and goodies,
+              regardless of standing.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="band band--soft">
+          <div class="wrap">
+            <div class="band__head reveal">
+              <div>
+                <div class="eyebrow">man bu_codex</div>
+                <h2 class="band__title">Read before you compile</h2>
+              </div>
+            </div>
+            <div class="faq reveal">
+              <details open>
+                <summary>Who can participate?</summary>
+                <p>
+                  Any current BU student, in teams of exactly three. Mixed-batch
+                  and mixed-department teams are welcome.
+                </p>
+              </details>
+              <details>
+                <summary>
+                  I don't have two teammates yet — can I still register?
+                </summary>
+                <p>
+                  Registration requires a full team of three. Post in the
+                  department's programming-club channel to find teammates before
+                  the window closes on Sep 05.
+                </p>
+              </details>
+              <details>
+                <summary>Is the onsite final mandatory?</summary>
+                <p>
+                  Yes. The preliminary round is online and remote; teams that
+                  clear it must attend the final in person at the BU Computer
+                  Lab Complex.
+                </p>
+              </details>
+              <details>
+                <summary>What do I need to bring on finals day?</summary>
+                <p>
+                  Student ID and a valid photo ID. Laptops are optional —
+                  contest machines are provided at each station.
+                </p>
+              </details>
+              <details>
+                <summary>
+                  Something changed after I registered — who do I contact?
+                </summary>
+                <p>
+                  Email the organizing committee before the event with your team
+                  name and the correction.
+                </p>
+              </details>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="wrap footer__row">
+            <span>bu@codex:~$ logout</span>
+            <span
+              >© 2026 BU Competitive Programming Society — problems reserved,
+              debugging encouraged</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================= GALLERY ============================================================= -->
+      <section id="view-gallery" class="view">
+        <div class="wrap gallery-head">
+          <div class="eyebrow reveal">ls -la ./gallery</div>
+          <h2 class="band__title reveal" style="margin-bottom: var(--s6)">
+            Round one, in retrospect
+          </h2>
+          <div class="filters reveal">
+            <button class="is-active filter" data-filter="all">--all</button>
+            <button class="filter" data-filter="ceremony">--ceremony</button>
+            <button class="filter" data-filter="contest">--contest</button>
+            <button class="filter" data-filter="awards">--awards</button>
+          </div>
+          <div class="gallery-grid" id="galleryGrid">
+            <!-- tiles injected by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================= REGISTER ============================================================= -->
+      <section id="view-register" class="view">
+        <div class="wrap reg-head">
+          <div class="eyebrow reveal">./register_team.sh --interactive</div>
+          <h2 class="band__title reveal" style="margin-bottom: var(--s6)">
+            Register your team
+          </h2>
+
+          <div class="progress reveal">
+            <div class="progress__track">
+              <div class="progress__fill" id="progressFill"></div>
+            </div>
+            <div class="steps" id="stepTabs">
+              <button class="step is-active" data-step="0">team</button>
+              <button class="step" data-step="1">member_1.info</button>
+              <button class="step" data-step="2">member_2.info</button>
+              <button class="step" data-step="3">member_3.info</button>
+              <button class="step" data-step="4">review</button>
+            </div>
+          </div>
+
+          <div class="term reg-term reveal">
+            <div class="term__bar">
+              <span class="term__dot term__dot--r"></span
+              ><span class="term__dot term__dot--y"></span
+              ><span class="term__dot term__dot--g"></span>
+              <span class="term__title" id="panelTitle">team_name.sh</span>
+            </div>
+            <div class="term__body">
+              <!-- PANEL 0: TEAM -->
+              <div class="panel is-active" data-panel="0">
+                <div class="field team-name-block">
+                  <label for="teamName"
+                    >team_name <span class="req">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="teamName"
+                    placeholder="e.g. segfault_squad"
+                  />
+                  <div class="err-msg" id="err-teamName">
+                    A team name is required.
+                  </div>
+                </div>
+                <p
+                  style="
+                    font-family: var(--mono);
+                    font-size: 13px;
+                    color: var(--text-dim);
+                    max-width: 52ch;
+                    line-height: 1.7;
+                  "
+                >
+                  Next, we'll collect information for all three members — ID,
+                  contact details, and a profile picture for each. Have that
+                  ready before you continue.
+                </p>
+                <div class="panel-nav">
+                  <span></span>
+                  <button class="btn btn--primary" data-next="1">
+                    next: member_1.info →
+                  </button>
+                </div>
+              </div>
+
+              <!-- MEMBER PANELS 1-3 (structure repeated per member) -->
+              <template id="memberTemplate"></template>
+
+              <div class="panel" data-panel="1" id="memberPanel-1"></div>
+              <div class="panel" data-panel="2" id="memberPanel-2"></div>
+              <div class="panel" data-panel="3" id="memberPanel-3"></div>
+
+              <!-- PANEL 4: REVIEW -->
+              <div class="panel" data-panel="4">
+                <div id="reviewArea"></div>
+                <div class="panel-nav">
+                  <button class="btn btn--ghost" data-prev="3">← back</button>
+                  <button class="btn btn--primary" id="submitBtn">
+                    ./submit_registration --confirm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- CONFIRMATION OVERLAY -->
+    <div class="confirm-overlay" id="confirmOverlay">
+      <div class="confirm-card">
         <div class="term">
           <div class="term__bar">
-            <span class="term__dot term__dot--r"></span><span class="term__dot term__dot--y"></span><span class="term__dot term__dot--g"></span>
-            <span class="term__title">system_status.log</span>
+            <span class="term__dot term__dot--r"></span
+            ><span class="term__dot term__dot--y"></span
+            ><span class="term__dot term__dot--g"></span>
+            <span class="term__title">registration_confirmed.log</span>
           </div>
-          <div class="term__body">
-            <div class="stat-row"><span>TEAM_SLOTS</span><span>128</span></div>
-            <div class="stat-row"><span>PROBLEMS</span><span>07</span></div>
-            <div class="stat-row"><span>DURATION</span><span>5h 00m</span></div>
-            <div class="stat-row"><span>PRIZE_POOL</span><span>৳50,000</span></div>
-            <div class="stat-row"><span>JUDGE</span><span>toph.co</span></div>
-            <div class="stat-row"><span>REG_CLOSES</span><span>SEP 05</span></div>
-            <div class="stat-panel__note">Onsite final at BU Computer Lab Complex. Preliminary round runs online — same weekend, no travel required.</div>
-          </div>
+          <div class="term__body" id="confirmBody"></div>
+        </div>
+        <div class="confirm-actions">
+          <button class="btn btn--primary" id="confirmClose">
+            back to home
+          </button>
+          <button class="btn btn--ghost" id="confirmAnother">
+            register another team
+          </button>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- TIMELINE -->
-  <div class="band">
-    <div class="wrap">
-      <div class="band__head reveal">
-        <div>
-          <div class="eyebrow">cat schedule.log</div>
-          <h2 class="band__title">Execution order</h2>
-        </div>
-      </div>
-      <ul class="timeline reveal">
-        <li><span class="timeline__n">01</span><span class="timeline__label">Registration opens</span><span class="timeline__date">AUG 02, 2026</span></li>
-        <li><span class="timeline__n">02</span><span class="timeline__label">Registration closes</span><span class="timeline__date">SEP 05, 2026</span></li>
-        <li><span class="timeline__n">03</span><span class="timeline__label">Preliminary round — online (Toph)</span><span class="timeline__date">SEP 08, 2026</span></li>
-        <li><span class="timeline__n">04</span><span class="timeline__label">Onsite final</span><span class="timeline__date">SEP 12, 2026</span></li>
-        <li><span class="timeline__n">05</span><span class="timeline__label">Award ceremony</span><span class="timeline__date">SEP 12, 2026 · evening</span></li>
-      </ul>
-    </div>
-  </div>
+    <script>
+      ;(function () {
+        "use strict"
+        var reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches
 
-  <!-- TRACKS -->
-  <div class="band band--soft">
-    <div class="wrap">
-      <div class="band__head reveal">
-        <div>
-          <div class="eyebrow">ls ./problem_domains</div>
-          <h2 class="band__title">What you'll be up against</h2>
-        </div>
-      </div>
-      <div class="tracks reveal">
-        <div class="track track--a"><h3>Data Structures &amp; Algorithms</h3><span>core</span></div>
-        <div class="track track--b"><h3>Graph Theory &amp; Trees</h3><span>core</span></div>
-        <div class="track track--c"><h3>Dynamic Programming</h3><span>heavy</span></div>
-        <div class="track track--c"><h3>Number Theory</h3><span>medium</span></div>
-        <div class="track track--b"><h3>Greedy &amp; Ad-hoc</h3><span>mixed</span></div>
-        <div class="track track--a"><h3>Implementation-heavy Simulation</h3><span>patience required</span></div>
-      </div>
-      <p class="judge-note">Allowed languages: C++17/20, Java, Python3. Preliminary round is judged live on Toph; the onsite final runs on a local mirror judge with the same rule set.</p>
-    </div>
-  </div>
+        /* ---------------- NAV ---------------- */
+        var views = document.querySelectorAll(".view")
+        var navBtns = document.querySelectorAll("[data-nav]")
+        function showView(name) {
+          views.forEach(function (v) {
+            v.classList.toggle("is-active", v.id === "view-" + name)
+          })
+          document.querySelectorAll(".termbar__tab").forEach(function (t) {
+            t.classList.toggle("is-active", t.getAttribute("data-nav") === name)
+          })
+          window.scrollTo({
+            top: 0,
+            behavior: reduceMotion ? "auto" : "smooth",
+          })
+        }
+        navBtns.forEach(function (b) {
+          b.addEventListener("click", function () {
+            showView(b.getAttribute("data-nav"))
+          })
+        })
+        showView("home")
 
-  <!-- PRIZES -->
-  <div class="band">
-    <div class="wrap">
-      <div class="band__head reveal">
-        <div>
-          <div class="eyebrow">cat prizes.json</div>
-          <h2 class="band__title">What's on the line</h2>
-        </div>
-      </div>
-      <div class="prizes reveal">
-        <div class="prize"><div class="prize__place">2ND PLACE</div><div class="prize__amount">৳15,000</div><p style="font-size:13px;color:var(--ink-4)">+ certificates</p></div>
-        <div class="prize prize--1"><div class="prize__place">1ST PLACE</div><div class="prize__amount">৳25,000</div><p style="font-size:13px;color:var(--text-dim)">+ trophy &amp; certificates</p></div>
-        <div class="prize"><div class="prize__place">3RD PLACE</div><div class="prize__amount">৳10,000</div><p style="font-size:13px;color:var(--ink-4)">+ certificates</p></div>
-      </div>
-      <p class="judge-note">All onsite finalist teams receive event T-shirts and goodies, regardless of standing.</p>
-    </div>
-  </div>
+        /* ---------------- HERO TYPING ---------------- */
+        var bootEl = document.getElementById("bootLines")
+        var headEl = document.getElementById("typedHeadline")
+        var bootLines = [
+          "$ ./bu_codex --round 2",
+          '> booting event kernel ................ <span class="ok">done</span>',
+          '> loading problem set .................. <span class="ok">done</span>',
+          "> teams online: 128/128 slots open",
+        ]
 
-  <!-- FAQ -->
-  <div class="band band--soft">
-    <div class="wrap">
-      <div class="band__head reveal">
-        <div>
-          <div class="eyebrow">man bu_codex</div>
-          <h2 class="band__title">Read before you compile</h2>
-        </div>
-      </div>
-      <div class="faq reveal">
-        <details open>
-          <summary>Who can participate?</summary>
-          <p>Any current BU student, in teams of exactly three. Mixed-batch and mixed-department teams are welcome.</p>
-        </details>
-        <details>
-          <summary>I don't have two teammates yet — can I still register?</summary>
-          <p>Registration requires a full team of three. Post in the department's programming-club channel to find teammates before the window closes on Sep 05.</p>
-        </details>
-        <details>
-          <summary>Is the onsite final mandatory?</summary>
-          <p>Yes. The preliminary round is online and remote; teams that clear it must attend the final in person at the BU Computer Lab Complex.</p>
-        </details>
-        <details>
-          <summary>What do I need to bring on finals day?</summary>
-          <p>Student ID and a valid photo ID. Laptops are optional — contest machines are provided at each station.</p>
-        </details>
-        <details>
-          <summary>Something changed after I registered — who do I contact?</summary>
-          <p>Email the organizing committee before the event with your team name and the correction.</p>
-        </details>
-      </div>
-    </div>
-  </div>
+        function typeSequence(el, lines, cb) {
+          if (reduceMotion) {
+            el.innerHTML = lines.join("<br>")
+            if (cb) cb()
+            return
+          }
+          var li = 0
+          function nextLine() {
+            if (li >= lines.length) {
+              if (cb) cb()
+              return
+            }
+            var raw = lines[li]
+            var div = document.createElement("div")
+            el.appendChild(div)
+            var i = 0
+            var usesHtml = raw.indexOf("<span") !== -1
+            if (usesHtml) {
+              div.innerHTML = raw
+              li++
+              setTimeout(nextLine, 220)
+              return
+            }
+            var iv = setInterval(function () {
+              div.textContent = raw.slice(0, i + 1)
+              i++
+              if (i >= raw.length) {
+                clearInterval(iv)
+                li++
+                setTimeout(nextLine, 180)
+              }
+            }, 16)
+          }
+          nextLine()
+        }
 
-  <div class="footer">
-    <div class="wrap footer__row">
-      <span>bu@codex:~$ logout</span>
-      <span>© 2026 BU Competitive Programming Society — problems reserved, debugging encouraged</span>
-    </div>
-  </div>
-</section>
+        function typeHeadline() {
+          var parts = ["BU CODEX", "ROUND_02"]
+          if (reduceMotion) {
+            headEl.innerHTML =
+              'BU CODEX<br><span class="accent">ROUND_02</span><span class="cursor"></span>'
+            return
+          }
+          var full = parts[0] + "\n" + parts[1]
+          var i = 0
+          var iv = setInterval(function () {
+            var chunk = full.slice(0, i + 1)
+            var lines = chunk.split("\n")
+            var html = lines[0]
+            if (lines.length > 1) {
+              html += '<br><span class="accent">' + lines[1] + "</span>"
+            }
+            headEl.innerHTML = html + '<span class="cursor"></span>'
+            i++
+            if (i >= full.length) {
+              clearInterval(iv)
+            }
+          }, 38)
+        }
 
-<!-- ============================================================= GALLERY ============================================================= -->
-<section id="view-gallery" class="view">
-  <div class="wrap gallery-head">
-    <div class="eyebrow reveal">ls -la ./gallery</div>
-    <h2 class="band__title reveal" style="margin-bottom:var(--s6)">Round one, in retrospect</h2>
-    <div class="filters reveal">
-      <button class="filter is-active" data-filter="all">--all</button>
-      <button class="filter" data-filter="ceremony">--ceremony</button>
-      <button class="filter" data-filter="contest">--contest</button>
-      <button class="filter" data-filter="awards">--awards</button>
-    </div>
-    <div class="gallery-grid" id="galleryGrid">
-      <!-- tiles injected by JS -->
-    </div>
-  </div>
-</section>
+        typeSequence(bootEl, bootLines, typeHeadline)
 
-<!-- ============================================================= REGISTER ============================================================= -->
-<section id="view-register" class="view">
-  <div class="wrap reg-head">
-    <div class="eyebrow reveal">./register_team.sh --interactive</div>
-    <h2 class="band__title reveal" style="margin-bottom:var(--s6)">Register your team</h2>
+        /* ---------------- SCROLL REVEAL ---------------- */
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                e.target.classList.add("is-visible")
+                io.unobserve(e.target)
+              }
+            })
+          },
+          { threshold: 0.15 }
+        )
+        document.querySelectorAll(".reveal").forEach(function (el) {
+          io.observe(el)
+        })
 
-    <div class="progress reveal">
-      <div class="progress__track"><div class="progress__fill" id="progressFill"></div></div>
-      <div class="steps" id="stepTabs">
-        <button class="step is-active" data-step="0">team</button>
-        <button class="step" data-step="1">member_1.info</button>
-        <button class="step" data-step="2">member_2.info</button>
-        <button class="step" data-step="3">member_3.info</button>
-        <button class="step" data-step="4">review</button>
-      </div>
-    </div>
+        /* ---------------- GALLERY ---------------- */
+        var galleryData = [
+          {
+            cat: "ceremony",
+            glyph: "#",
+            title: "Opening Ceremony",
+            desc: "Round 1 kickoff — welcome remarks",
+            file: "ceremony_open_01.png",
+          },
+          {
+            cat: "contest",
+            glyph: "{}",
+            title: "Contest Floor",
+            desc: "Team Alpha, two hours in",
+            file: "floor_alpha_02.png",
+          },
+          {
+            cat: "contest",
+            glyph: "∑",
+            title: "Whiteboard Math",
+            desc: "Working out a DP transition live",
+            file: "floor_dp_03.png",
+          },
+          {
+            cat: "contest",
+            glyph: "</>",
+            title: "Last Submission",
+            desc: "Fifteen minutes on the clock",
+            file: "floor_clock_04.png",
+          },
+          {
+            cat: "ceremony",
+            glyph: "#",
+            title: "Rules Briefing",
+            desc: "Judges walking through the ruleset",
+            file: "ceremony_brief_05.png",
+          },
+          {
+            cat: "awards",
+            glyph: "★",
+            title: "Top 3 Announced",
+            desc: "Round 1 podium moment",
+            file: "awards_podium_06.png",
+          },
+          {
+            cat: "contest",
+            glyph: "∞",
+            title: "Graph Round",
+            desc: "Mid-contest, problem E in progress",
+            file: "floor_graph_07.png",
+          },
+          {
+            cat: "awards",
+            glyph: "★",
+            title: "Certificates",
+            desc: "Handing out finalist certificates",
+            file: "awards_certs_08.png",
+          },
+          {
+            cat: "contest",
+            glyph: "01",
+            title: "Focus Mode",
+            desc: "Two hours of pure silence",
+            file: "floor_focus_09.png",
+          },
+        ]
+        var hues = [
+          "#3A2F6A,#241D33",
+          "#5B3A7A,#2B1F3F",
+          "#2F5B6A,#1F2B3F",
+          "#6A3A5B,#331F2B",
+        ]
+        var grid = document.getElementById("galleryGrid")
+        galleryData.forEach(function (g, idx) {
+          var pair = hues[idx % hues.length].split(",")
+          var tile = document.createElement("div")
+          tile.className = "gtile reveal"
+          tile.setAttribute("data-cat", g.cat)
+          tile.innerHTML =
+            '<div class="gtile__bar"><span></span><span></span><span></span></div>' +
+            '<div class="gtile__img" data-glyph="' +
+            g.glyph +
+            '" style="--g1:' +
+            pair[0] +
+            ";--g2:" +
+            pair[1] +
+            '"></div>' +
+            '<div class="gtile__cap"><b>' +
+            g.title +
+            "</b>" +
+            g.desc +
+            " — " +
+            g.file +
+            "</div>"
+          grid.appendChild(tile)
+          io.observe(tile)
+        })
+        document.querySelectorAll(".filter").forEach(function (f) {
+          f.addEventListener("click", function () {
+            document.querySelectorAll(".filter").forEach(function (x) {
+              x.classList.remove("is-active")
+            })
+            f.classList.add("is-active")
+            var val = f.getAttribute("data-filter")
+            document.querySelectorAll(".gtile").forEach(function (t) {
+              t.classList.toggle(
+                "is-hidden",
+                val !== "all" && t.getAttribute("data-cat") !== val
+              )
+            })
+          })
+        })
 
-    <div class="term reg-term reveal">
-      <div class="term__bar">
-        <span class="term__dot term__dot--r"></span><span class="term__dot term__dot--y"></span><span class="term__dot term__dot--g"></span>
-        <span class="term__title" id="panelTitle">team_name.sh</span>
-      </div>
-      <div class="term__body">
+        /* ---------------- REGISTER: build member panels ---------------- */
+        var xpLabels = ["Beginner Programmer", "Regular Programmer", "Expert"]
+        var relations = [
+          "Father",
+          "Mother",
+          "Guardian",
+          "Sibling",
+          "Relative",
+          "Friend",
+          "Other",
+        ]
+        var tshirts = ["S", "M", "L", "XL", "XXL"]
 
-        <!-- PANEL 0: TEAM -->
-        <div class="panel is-active" data-panel="0">
-          <div class="field team-name-block">
-            <label for="teamName">team_name <span class="req">*</span></label>
-            <input type="text" id="teamName" placeholder="e.g. segfault_squad">
-            <div class="err-msg" id="err-teamName">A team name is required.</div>
-          </div>
-          <p style="font-family:var(--mono);font-size:13px;color:var(--text-dim);max-width:52ch;line-height:1.7;">Next, we'll collect information for all three members — ID, contact details, and a profile picture for each. Have that ready before you continue.</p>
-          <div class="panel-nav">
-            <span></span>
-            <button class="btn btn--primary" data-next="1">next: member_1.info →</button>
-          </div>
-        </div>
+        function memberPanelHTML(n) {
+          var relOpts = relations
+            .map(function (r) {
+              return '<option value="' + r + '">' + r + "</option>"
+            })
+            .join("")
+          var tOpts = tshirts
+            .map(function (t) {
+              return '<option value="' + t + '">' + t + "</option>"
+            })
+            .join("")
+          return (
+            "" +
+            '<div class="upload" id="upload-' +
+            n +
+            '" tabindex="0">' +
+            '<div class="upload__preview" id="preview-' +
+            n +
+            '">IMG</div>' +
+            '<div class="upload__text"><b>member_' +
+            n +
+            "_photo.jpg</b><span>Click or drag a profile picture here</span></div>" +
+            '<input type="file" id="file-' +
+            n +
+            '" accept="image/*">' +
+            "</div>" +
+            '<div class="field-row" style="margin-top:var(--s5)">' +
+            '<div class="field"><label for="name-' +
+            n +
+            '">Full name <span class="req">*</span></label><input type="text" id="name-' +
+            n +
+            '" placeholder="Full name"><div class="err-msg" id="err-name-' +
+            n +
+            '">Required.</div></div>' +
+            '<div class="field"><label for="sid-' +
+            n +
+            '">Student ID <span class="req">*</span></label><input type="text" id="sid-' +
+            n +
+            '" placeholder="e.g. 22-CSE-041"><div class="err-msg" id="err-sid-' +
+            n +
+            '">Required.</div></div>' +
+            "</div>" +
+            '<div class="field-row">' +
+            '<div class="field"><label for="batch-' +
+            n +
+            '">Batch <span class="req">*</span></label><input type="text" id="batch-' +
+            n +
+            '" placeholder="e.g. 22nd"><div class="err-msg" id="err-batch-' +
+            n +
+            '">Required.</div></div>' +
+            '<div class="field"><label for="section-' +
+            n +
+            '">Section <span class="req">*</span></label><input type="text" id="section-' +
+            n +
+            '" placeholder="e.g. A"><div class="err-msg" id="err-section-' +
+            n +
+            '">Required.</div></div>' +
+            "</div>" +
+            '<div class="field-row">' +
+            '<div class="field"><label for="gmail-' +
+            n +
+            '">Gmail <span class="req">*</span></label><input type="email" id="gmail-' +
+            n +
+            '" placeholder="name@gmail.com"><div class="err-msg" id="err-gmail-' +
+            n +
+            '">Enter a valid Gmail address.</div></div>' +
+            '<div class="field"><label for="mobile-' +
+            n +
+            '">Mobile number <span class="req">*</span></label><input type="tel" id="mobile-' +
+            n +
+            '" placeholder="01XXXXXXXXX"><div class="err-msg" id="err-mobile-' +
+            n +
+            '">Enter a valid mobile number.</div></div>' +
+            "</div>" +
+            '<div class="field-row">' +
+            '<div class="field"><label for="ename-' +
+            n +
+            '">Emergency contact number <span class="req">*</span></label><input type="tel" id="ename-' +
+            n +
+            '" placeholder="01XXXXXXXXX"><div class="err-msg" id="err-ename-' +
+            n +
+            '">Enter a valid number.</div></div>' +
+            '<div class="field"><label for="erel-' +
+            n +
+            '">Relation to you <span class="req">*</span></label><select id="erel-' +
+            n +
+            '"><option value="">select…</option>' +
+            relOpts +
+            '</select><div class="err-msg" id="err-erel-' +
+            n +
+            '">Please select a relation.</div></div>' +
+            "</div>" +
+            '<div class="field-row">' +
+            '<div class="field"><label for="tshirt-' +
+            n +
+            '">T-shirt size <span class="req">*</span></label><select id="tshirt-' +
+            n +
+            '"><option value="">select…</option>' +
+            tOpts +
+            '</select><div class="err-msg" id="err-tshirt-' +
+            n +
+            '">Please select a size.</div></div>' +
+            '<div class="field">' +
+            '<label>Experience level <span class="req">*</span></label>' +
+            '<div class="xp">' +
+            '<input type="range" min="0" max="2" step="1" value="1" id="xp-' +
+            n +
+            '" style="--fill:50%">' +
+            '<div class="xp__labels"><span>Beginner</span><span>Regular</span><span>Expert</span></div>' +
+            '<div class="xp__current" id="xpcur-' +
+            n +
+            '">Regular Programmer</div>' +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            '<div class="panel-nav">' +
+            '<button class="btn btn--ghost" data-prev="' +
+            (n - 1) +
+            '">← back</button>' +
+            '<button class="btn btn--primary" data-next="' +
+            (n + 1) +
+            '">next: ' +
+            (n < 3 ? "member_" + (n + 1) + ".info" : "review") +
+            " →</button>" +
+            "</div>"
+          )
+        }
 
-        <!-- MEMBER PANELS 1-3 (structure repeated per member) -->
-        <template id="memberTemplate"></template>
+        for (var m = 1; m <= 3; m++) {
+          document.getElementById("memberPanel-" + m).innerHTML =
+            memberPanelHTML(m)
+        }
 
-        <div class="panel" data-panel="1" id="memberPanel-1"></div>
-        <div class="panel" data-panel="2" id="memberPanel-2"></div>
-        <div class="panel" data-panel="3" id="memberPanel-3"></div>
+        /* experience slider live update */
+        for (var m2 = 1; m2 <= 3; m2++) {
+          ;(function (n) {
+            var rng = document.getElementById("xp-" + n)
+            var cur = document.getElementById("xpcur-" + n)
+            rng.addEventListener("input", function () {
+              var v = parseInt(rng.value, 10)
+              rng.style.setProperty("--fill", (v / 2) * 100 + "%")
+              cur.textContent = xpLabels[v]
+            })
+          })(m2)
+        }
 
-        <!-- PANEL 4: REVIEW -->
-        <div class="panel" data-panel="4">
-          <div id="reviewArea"></div>
-          <div class="panel-nav">
-            <button class="btn btn--ghost" data-prev="3">← back</button>
-            <button class="btn btn--primary" id="submitBtn">./submit_registration --confirm</button>
-          </div>
-        </div>
+        /* upload handling: resize to dataURL, store on window state */
+        var memberPhotos = { 1: null, 2: null, 3: null }
+        function handleFile(n, file) {
+          if (!file || !file.type.startsWith("image/")) return
+          var reader = new FileReader()
+          reader.onload = function (e) {
+            var img = new Image()
+            img.onload = function () {
+              var maxDim = 220
+              var scale = Math.min(1, maxDim / Math.max(img.width, img.height))
+              var w = Math.round(img.width * scale),
+                h = Math.round(img.height * scale)
+              var canvas = document.createElement("canvas")
+              canvas.width = w
+              canvas.height = h
+              var ctx = canvas.getContext("2d")
+              ctx.drawImage(img, 0, 0, w, h)
+              var dataUrl = canvas.toDataURL("image/jpeg", 0.75)
+              memberPhotos[n] = dataUrl
+              var prev = document.getElementById("preview-" + n)
+              prev.innerHTML =
+                '<img src="' +
+                dataUrl +
+                '" alt="Member ' +
+                n +
+                ' profile preview">'
+            }
+            img.src = e.target.result
+          }
+          reader.readAsDataURL(file)
+        }
+        for (var m3 = 1; m3 <= 3; m3++) {
+          ;(function (n) {
+            var zone = document.getElementById("upload-" + n)
+            var input = document.getElementById("file-" + n)
+            zone.addEventListener("click", function () {
+              input.click()
+            })
+            zone.addEventListener("keypress", function (ev) {
+              if (ev.key === "Enter") input.click()
+            })
+            input.addEventListener("change", function () {
+              handleFile(n, input.files[0])
+            })
+            ;["dragover", "dragenter"].forEach(function (evt) {
+              zone.addEventListener(evt, function (e) {
+                e.preventDefault()
+                zone.classList.add("is-drag")
+              })
+            })
+            ;["dragleave", "drop"].forEach(function (evt) {
+              zone.addEventListener(evt, function (e) {
+                e.preventDefault()
+                zone.classList.remove("is-drag")
+              })
+            })
+            zone.addEventListener("drop", function (e) {
+              var f = e.dataTransfer.files[0]
+              handleFile(n, f)
+            })
+          })(m3)
+        }
 
-      </div>
-    </div>
-  </div>
-</section>
+        /* ---------------- REGISTER: step navigation ---------------- */
+        var stepTitles = [
+          "team_name.sh",
+          "member_1.info",
+          "member_2.info",
+          "member_3.info",
+          "review.log",
+        ]
+        var panelTitleEl = document.getElementById("panelTitle")
+        var progressFill = document.getElementById("progressFill")
+        var currentStep = 0
 
-</main>
+        function goToStep(i) {
+          currentStep = i
+          document.querySelectorAll(".panel").forEach(function (p) {
+            p.classList.toggle(
+              "is-active",
+              parseInt(p.getAttribute("data-panel"), 10) === i
+            )
+          })
+          document.querySelectorAll(".step").forEach(function (s) {
+            var si = parseInt(s.getAttribute("data-step"), 10)
+            s.classList.toggle("is-active", si === i)
+            s.classList.toggle("is-done", si < i)
+          })
+          progressFill.style.width = ((i + 1) / 5) * 100 + "%"
+          panelTitleEl.textContent = stepTitles[i]
+          if (i === 4) {
+            renderReview()
+          }
+          document
+            .querySelector(".reg-term")
+            .scrollIntoView({
+              behavior: reduceMotion ? "auto" : "smooth",
+              block: "start",
+            })
+        }
 
-<!-- CONFIRMATION OVERLAY -->
-<div class="confirm-overlay" id="confirmOverlay">
-  <div class="confirm-card">
-    <div class="term">
-      <div class="term__bar">
-        <span class="term__dot term__dot--r"></span><span class="term__dot term__dot--y"></span><span class="term__dot term__dot--g"></span>
-        <span class="term__title">registration_confirmed.log</span>
-      </div>
-      <div class="term__body" id="confirmBody"></div>
-    </div>
-    <div class="confirm-actions">
-      <button class="btn btn--primary" id="confirmClose">back to home</button>
-      <button class="btn btn--ghost" id="confirmAnother">register another team</button>
-    </div>
-  </div>
-</div>
+        document
+          .getElementById("stepTabs")
+          .addEventListener("click", function (e) {
+            var btn = e.target.closest(".step")
+            if (btn) goToStep(parseInt(btn.getAttribute("data-step"), 10))
+          })
 
-<script>
-(function(){
-  "use strict";
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.querySelector("main").addEventListener("click", function (e) {
+          var nb = e.target.closest("[data-next]")
+          var pb = e.target.closest("[data-prev]")
+          if (nb) {
+            var target = parseInt(nb.getAttribute("data-next"), 10)
+            if (validateStep(currentStep)) goToStep(target)
+          } else if (pb) {
+            goToStep(parseInt(pb.getAttribute("data-prev"), 10))
+          }
+        })
 
-  /* ---------------- NAV ---------------- */
-  var views = document.querySelectorAll('.view');
-  var navBtns = document.querySelectorAll('[data-nav]');
-  function showView(name){
-    views.forEach(function(v){ v.classList.toggle('is-active', v.id === 'view-' + name); });
-    document.querySelectorAll('.termbar__tab').forEach(function(t){
-      t.classList.toggle('is-active', t.getAttribute('data-nav') === name);
-    });
-    window.scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'});
-  }
-  navBtns.forEach(function(b){
-    b.addEventListener('click', function(){ showView(b.getAttribute('data-nav')); });
-  });
-  showView('home');
+        /* ---------------- validation ---------------- */
+        function setError(inputId, show) {
+          var input = document.getElementById(inputId)
+          var err = document.getElementById("err-" + inputId)
+          if (input) input.classList.toggle("is-error", show)
+          if (err) err.classList.toggle("show", show)
+        }
 
-  /* ---------------- HERO TYPING ---------------- */
-  var bootEl = document.getElementById('bootLines');
-  var headEl = document.getElementById('typedHeadline');
-  var bootLines = [
-    '$ ./bu_codex --round 2',
-    '> booting event kernel ................ <span class="ok">done</span>',
-    '> loading problem set .................. <span class="ok">done</span>',
-    '> teams online: 128/128 slots open'
-  ];
+        function validateStep(i) {
+          var ok = true
+          if (i === 0) {
+            var teamName = document.getElementById("teamName").value.trim()
+            var bad = teamName.length < 2
+            setError("teamName", bad)
+            if (bad) ok = false
+          } else if (i >= 1 && i <= 3) {
+            var n = i
+            var checks = [
+              [
+                "name-" + n,
+                document.getElementById("name-" + n).value.trim().length > 1,
+              ],
+              [
+                "sid-" + n,
+                document.getElementById("sid-" + n).value.trim().length > 1,
+              ],
+              [
+                "batch-" + n,
+                document.getElementById("batch-" + n).value.trim().length > 0,
+              ],
+              [
+                "section-" + n,
+                document.getElementById("section-" + n).value.trim().length > 0,
+              ],
+              [
+                "gmail-" + n,
+                /^[^\s@]+@gmail\.com$/i.test(
+                  document.getElementById("gmail-" + n).value.trim()
+                ),
+              ],
+              [
+                "mobile-" + n,
+                /^[0-9+\s-]{7,14}$/.test(
+                  document.getElementById("mobile-" + n).value.trim()
+                ),
+              ],
+              [
+                "ename-" + n,
+                /^[0-9+\s-]{7,14}$/.test(
+                  document.getElementById("ename-" + n).value.trim()
+                ),
+              ],
+              ["erel-" + n, document.getElementById("erel-" + n).value !== ""],
+              [
+                "tshirt-" + n,
+                document.getElementById("tshirt-" + n).value !== "",
+              ],
+            ]
+            checks.forEach(function (c) {
+              var valid = c[1]
+              setError(c[0], !valid)
+              if (!valid) ok = false
+            })
+          }
+          if (!ok) {
+            var firstBad = document.querySelector(".is-error")
+            if (firstBad)
+              firstBad.scrollIntoView({
+                behavior: reduceMotion ? "auto" : "smooth",
+                block: "center",
+              })
+          }
+          return ok
+        }
 
-  function typeSequence(el, lines, cb){
-    if(reduceMotion){
-      el.innerHTML = lines.join('<br>');
-      if(cb) cb();
-      return;
-    }
-    var li = 0;
-    function nextLine(){
-      if(li >= lines.length){ if(cb) cb(); return; }
-      var raw = lines[li];
-      var div = document.createElement('div');
-      el.appendChild(div);
-      var i = 0;
-      var usesHtml = raw.indexOf('<span') !== -1;
-      if(usesHtml){
-        div.innerHTML = raw;
-        li++; setTimeout(nextLine, 220); return;
-      }
-      var iv = setInterval(function(){
-        div.textContent = raw.slice(0, i+1);
-        i++;
-        if(i >= raw.length){ clearInterval(iv); li++; setTimeout(nextLine, 180); }
-      }, 16);
-    }
-    nextLine();
-  }
+        /* ---------------- review render ---------------- */
+        function memberSummary(n) {
+          return {
+            name: document.getElementById("name-" + n).value.trim(),
+            sid: document.getElementById("sid-" + n).value.trim(),
+            batch: document.getElementById("batch-" + n).value.trim(),
+            section: document.getElementById("section-" + n).value.trim(),
+            gmail: document.getElementById("gmail-" + n).value.trim(),
+            mobile: document.getElementById("mobile-" + n).value.trim(),
+            ename: document.getElementById("ename-" + n).value.trim(),
+            erel: document.getElementById("erel-" + n).value,
+            tshirt: document.getElementById("tshirt-" + n).value,
+            xp: xpLabels[
+              parseInt(document.getElementById("xp-" + n).value, 10)
+            ],
+            photo: memberPhotos[n],
+          }
+        }
 
-  function typeHeadline(){
-    var parts = ['BU CODEX', 'ROUND_02'];
-    if(reduceMotion){
-      headEl.innerHTML = 'BU CODEX<br><span class="accent">ROUND_02</span><span class="cursor"></span>';
-      return;
-    }
-    var full = parts[0] + '\n' + parts[1];
-    var i = 0;
-    var iv = setInterval(function(){
-      var chunk = full.slice(0, i+1);
-      var lines = chunk.split('\n');
-      var html = lines[0];
-      if(lines.length > 1){ html += '<br><span class="accent">' + lines[1] + '</span>'; }
-      headEl.innerHTML = html + '<span class="cursor"></span>';
-      i++;
-      if(i >= full.length){ clearInterval(iv); }
-    }, 38);
-  }
+        function renderReview() {
+          var area = document.getElementById("reviewArea")
+          var team = document.getElementById("teamName").value.trim()
+          var html =
+            '<div class="review-card"><div class="review-card__head"><b>team</b><button class="review-card__edit" data-jump="0">edit</button></div><p style="font-family:var(--mono);font-size:15px;">' +
+            (team || "—") +
+            "</p></div>"
+          for (var n = 1; n <= 3; n++) {
+            var s = memberSummary(n)
+            html +=
+              '<div class="review-card">' +
+              '<div class="review-card__head"><b>member_' +
+              n +
+              '</b><button class="review-card__edit" data-jump="' +
+              n +
+              '">edit</button></div>' +
+              (s.photo
+                ? '<img class="review-avatar" src="' +
+                  s.photo +
+                  '" alt="Member ' +
+                  n +
+                  ' preview">'
+                : "") +
+              '<div class="review-grid">' +
+              "<div><span>Name</span><b>" +
+              (s.name || "—") +
+              "</b></div>" +
+              "<div><span>Student ID</span><b>" +
+              (s.sid || "—") +
+              "</b></div>" +
+              "<div><span>Batch / Section</span><b>" +
+              (s.batch || "—") +
+              " / " +
+              (s.section || "—") +
+              "</b></div>" +
+              "<div><span>Gmail</span><b>" +
+              (s.gmail || "—") +
+              "</b></div>" +
+              "<div><span>Mobile</span><b>" +
+              (s.mobile || "—") +
+              "</b></div>" +
+              "<div><span>Emergency contact</span><b>" +
+              (s.ename || "—") +
+              " (" +
+              (s.erel || "—") +
+              ")</b></div>" +
+              "<div><span>T-shirt</span><b>" +
+              (s.tshirt || "—") +
+              "</b></div>" +
+              "<div><span>Experience</span><b>" +
+              (s.xp || "—") +
+              "</b></div>" +
+              "</div>" +
+              "</div>"
+          }
+          area.innerHTML = html
+          area.querySelectorAll("[data-jump]").forEach(function (b) {
+            b.addEventListener("click", function () {
+              goToStep(parseInt(b.getAttribute("data-jump"), 10))
+            })
+          })
+        }
 
-  typeSequence(bootEl, bootLines, typeHeadline);
+        /* ---------------- submit ---------------- */
+        document
+          .getElementById("submitBtn")
+          .addEventListener("click", function () {
+            for (var i = 0; i <= 3; i++) {
+              if (!validateStep(i)) {
+                goToStep(i)
+                return
+              }
+            }
+            submitBtn.disabled = true
+            submitBtn.textContent = "submitting…"
 
-  /* ---------------- SCROLL REVEAL ---------------- */
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
-    });
-  }, {threshold:0.15});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+            var payload = {
+              teamName: document.getElementById("teamName").value.trim(),
+              members: [memberSummary(1), memberSummary(2), memberSummary(3)],
+              submittedAt: new Date().toISOString(),
+            }
+            var code =
+              "CODEX2-" + Math.random().toString(36).slice(2, 7).toUpperCase()
 
-  /* ---------------- GALLERY ---------------- */
-  var galleryData = [
-    {cat:'ceremony', glyph:'#', title:'Opening Ceremony', desc:'Round 1 kickoff — welcome remarks', file:'ceremony_open_01.png'},
-    {cat:'contest',  glyph:'{}', title:'Contest Floor', desc:'Team Alpha, two hours in', file:'floor_alpha_02.png'},
-    {cat:'contest',  glyph:'∑', title:'Whiteboard Math', desc:'Working out a DP transition live', file:'floor_dp_03.png'},
-    {cat:'contest',  glyph:'</>', title:'Last Submission', desc:'Fifteen minutes on the clock', file:'floor_clock_04.png'},
-    {cat:'ceremony', glyph:'#', title:'Rules Briefing', desc:'Judges walking through the ruleset', file:'ceremony_brief_05.png'},
-    {cat:'awards',   glyph:'★', title:'Top 3 Announced', desc:'Round 1 podium moment', file:'awards_podium_06.png'},
-    {cat:'contest',  glyph:'∞', title:'Graph Round', desc:'Mid-contest, problem E in progress', file:'floor_graph_07.png'},
-    {cat:'awards',   glyph:'★', title:'Certificates', desc:'Handing out finalist certificates', file:'awards_certs_08.png'},
-    {cat:'contest',  glyph:'01', title:'Focus Mode', desc:'Two hours of pure silence', file:'floor_focus_09.png'}
-  ];
-  var hues = ['#3A2F6A,#241D33','#5B3A7A,#2B1F3F','#2F5B6A,#1F2B3F','#6A3A5B,#331F2B'];
-  var grid = document.getElementById('galleryGrid');
-  galleryData.forEach(function(g, idx){
-    var pair = hues[idx % hues.length].split(',');
-    var tile = document.createElement('div');
-    tile.className = 'gtile reveal';
-    tile.setAttribute('data-cat', g.cat);
-    tile.innerHTML =
-      '<div class="gtile__bar"><span></span><span></span><span></span></div>' +
-      '<div class="gtile__img" data-glyph="' + g.glyph + '" style="--g1:' + pair[0] + ';--g2:' + pair[1] + '"></div>' +
-      '<div class="gtile__cap"><b>' + g.title + '</b>' + g.desc + ' — ' + g.file + '</div>';
-    grid.appendChild(tile);
-    io.observe(tile);
-  });
-  document.querySelectorAll('.filter').forEach(function(f){
-    f.addEventListener('click', function(){
-      document.querySelectorAll('.filter').forEach(function(x){ x.classList.remove('is-active'); });
-      f.classList.add('is-active');
-      var val = f.getAttribute('data-filter');
-      document.querySelectorAll('.gtile').forEach(function(t){
-        t.classList.toggle('is-hidden', val !== 'all' && t.getAttribute('data-cat') !== val);
-      });
-    });
-  });
+            function finish(count) {
+              showConfirmation(code, payload, count)
+              submitBtn.disabled = false
+              submitBtn.textContent = "./submit_registration --confirm"
+            }
 
-  /* ---------------- REGISTER: build member panels ---------------- */
-  var xpLabels = ['Beginner Programmer','Regular Programmer','Expert'];
-  var relations = ['Father','Mother','Guardian','Sibling','Relative','Friend','Other'];
-  var tshirts = ['S','M','L','XL','XXL'];
+            try {
+              window.storage
+                .set("teams:" + code, JSON.stringify(payload), true)
+                .then(function () {
+                  return window.storage.list("teams:", true)
+                })
+                .then(function (res) {
+                  var count = res && res.keys ? res.keys.length : 1
+                  finish(count)
+                })
+                .catch(function () {
+                  finish(null)
+                })
+            } catch (e) {
+              finish(null)
+            }
+          })
 
-  function memberPanelHTML(n){
-    var relOpts = relations.map(function(r){ return '<option value="'+r+'">'+r+'</option>'; }).join('');
-    var tOpts = tshirts.map(function(t){ return '<option value="'+t+'">'+t+'</option>'; }).join('');
-    return ''+
-    '<div class="upload" id="upload-'+n+'" tabindex="0">'+
-      '<div class="upload__preview" id="preview-'+n+'">IMG</div>'+
-      '<div class="upload__text"><b>member_'+n+'_photo.jpg</b><span>Click or drag a profile picture here</span></div>'+
-      '<input type="file" id="file-'+n+'" accept="image/*">'+
-    '</div>'+
-    '<div class="field-row" style="margin-top:var(--s5)">'+
-      '<div class="field"><label for="name-'+n+'">Full name <span class="req">*</span></label><input type="text" id="name-'+n+'" placeholder="Full name"><div class="err-msg" id="err-name-'+n+'">Required.</div></div>'+
-      '<div class="field"><label for="sid-'+n+'">Student ID <span class="req">*</span></label><input type="text" id="sid-'+n+'" placeholder="e.g. 22-CSE-041"><div class="err-msg" id="err-sid-'+n+'">Required.</div></div>'+
-    '</div>'+
-    '<div class="field-row">'+
-      '<div class="field"><label for="batch-'+n+'">Batch <span class="req">*</span></label><input type="text" id="batch-'+n+'" placeholder="e.g. 22nd"><div class="err-msg" id="err-batch-'+n+'">Required.</div></div>'+
-      '<div class="field"><label for="section-'+n+'">Section <span class="req">*</span></label><input type="text" id="section-'+n+'" placeholder="e.g. A"><div class="err-msg" id="err-section-'+n+'">Required.</div></div>'+
-    '</div>'+
-    '<div class="field-row">'+
-      '<div class="field"><label for="gmail-'+n+'">Gmail <span class="req">*</span></label><input type="email" id="gmail-'+n+'" placeholder="name@gmail.com"><div class="err-msg" id="err-gmail-'+n+'">Enter a valid Gmail address.</div></div>'+
-      '<div class="field"><label for="mobile-'+n+'">Mobile number <span class="req">*</span></label><input type="tel" id="mobile-'+n+'" placeholder="01XXXXXXXXX"><div class="err-msg" id="err-mobile-'+n+'">Enter a valid mobile number.</div></div>'+
-    '</div>'+
-    '<div class="field-row">'+
-      '<div class="field"><label for="ename-'+n+'">Emergency contact number <span class="req">*</span></label><input type="tel" id="ename-'+n+'" placeholder="01XXXXXXXXX"><div class="err-msg" id="err-ename-'+n+'">Enter a valid number.</div></div>'+
-      '<div class="field"><label for="erel-'+n+'">Relation to you <span class="req">*</span></label><select id="erel-'+n+'"><option value="">select…</option>'+relOpts+'</select><div class="err-msg" id="err-erel-'+n+'">Please select a relation.</div></div>'+
-    '</div>'+
-    '<div class="field-row">'+
-      '<div class="field"><label for="tshirt-'+n+'">T-shirt size <span class="req">*</span></label><select id="tshirt-'+n+'"><option value="">select…</option>'+tOpts+'</select><div class="err-msg" id="err-tshirt-'+n+'">Please select a size.</div></div>'+
-      '<div class="field">'+
-        '<label>Experience level <span class="req">*</span></label>'+
-        '<div class="xp">'+
-          '<input type="range" min="0" max="2" step="1" value="1" id="xp-'+n+'" style="--fill:50%">'+
-          '<div class="xp__labels"><span>Beginner</span><span>Regular</span><span>Expert</span></div>'+
-          '<div class="xp__current" id="xpcur-'+n+'">Regular Programmer</div>'+
-        '</div>'+
-      '</div>'+
-    '</div>'+
-    '<div class="panel-nav">'+
-      '<button class="btn btn--ghost" data-prev="'+(n-1)+'">← back</button>'+
-      '<button class="btn btn--primary" data-next="'+(n+1)+'">next: '+(n<3 ? 'member_'+(n+1)+'.info' : 'review')+' →</button>'+
-    '</div>';
-  }
+        function showConfirmation(code, payload, count) {
+          var overlay = document.getElementById("confirmOverlay")
+          var body = document.getElementById("confirmBody")
+          var lines = [
+            "$ ./submit_registration --confirm",
+            '> compiling registration ................ <span class="ok">OK</span>',
+            '> verifying members (3/3) ................ <span class="ok">OK</span>',
+            '> writing to registry .................... <span class="ok">OK</span>',
+            '<br><span class="ok">REGISTRATION_CONFIRMED</span>',
+            "TEAM: " + payload.teamName,
+            '<div class="confirm-id">TEAM_ID: ' + code + "</div>",
+            count
+              ? "You are registered team #" + count + "."
+              : "Your team has been registered.",
+            "<br>A confirmation has been logged. See you on the contest floor.",
+          ]
+          overlay.classList.add("is-open")
+          if (reduceMotion) {
+            body.innerHTML = lines.join("<br>")
+          } else {
+            body.innerHTML = ""
+            var li = 0
+            function next() {
+              if (li >= lines.length) return
+              var div = document.createElement("div")
+              div.innerHTML = lines[li]
+              body.appendChild(div)
+              li++
+              setTimeout(next, 260)
+            }
+            next()
+          }
+        }
 
-  for(var m=1;m<=3;m++){
-    document.getElementById('memberPanel-'+m).innerHTML = memberPanelHTML(m);
-  }
-
-  /* experience slider live update */
-  for(var m2=1;m2<=3;m2++){
-    (function(n){
-      var rng = document.getElementById('xp-'+n);
-      var cur = document.getElementById('xpcur-'+n);
-      rng.addEventListener('input', function(){
-        var v = parseInt(rng.value,10);
-        rng.style.setProperty('--fill', (v/2*100)+'%');
-        cur.textContent = xpLabels[v];
-      });
-    })(m2);
-  }
-
-  /* upload handling: resize to dataURL, store on window state */
-  var memberPhotos = {1:null,2:null,3:null};
-  function handleFile(n, file){
-    if(!file || !file.type.startsWith('image/')) return;
-    var reader = new FileReader();
-    reader.onload = function(e){
-      var img = new Image();
-      img.onload = function(){
-        var maxDim = 220;
-        var scale = Math.min(1, maxDim / Math.max(img.width, img.height));
-        var w = Math.round(img.width*scale), h = Math.round(img.height*scale);
-        var canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        var ctx = canvas.getContext('2d');
-        ctx.drawImage(img,0,0,w,h);
-        var dataUrl = canvas.toDataURL('image/jpeg', 0.75);
-        memberPhotos[n] = dataUrl;
-        var prev = document.getElementById('preview-'+n);
-        prev.innerHTML = '<img src="'+dataUrl+'" alt="Member '+n+' profile preview">';
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-  for(var m3=1;m3<=3;m3++){
-    (function(n){
-      var zone = document.getElementById('upload-'+n);
-      var input = document.getElementById('file-'+n);
-      zone.addEventListener('click', function(){ input.click(); });
-      zone.addEventListener('keypress', function(ev){ if(ev.key==='Enter') input.click(); });
-      input.addEventListener('change', function(){ handleFile(n, input.files[0]); });
-      ['dragover','dragenter'].forEach(function(evt){
-        zone.addEventListener(evt, function(e){ e.preventDefault(); zone.classList.add('is-drag'); });
-      });
-      ['dragleave','drop'].forEach(function(evt){
-        zone.addEventListener(evt, function(e){ e.preventDefault(); zone.classList.remove('is-drag'); });
-      });
-      zone.addEventListener('drop', function(e){
-        var f = e.dataTransfer.files[0];
-        handleFile(n, f);
-      });
-    })(m3);
-  }
-
-  /* ---------------- REGISTER: step navigation ---------------- */
-  var stepTitles = ['team_name.sh','member_1.info','member_2.info','member_3.info','review.log'];
-  var panelTitleEl = document.getElementById('panelTitle');
-  var progressFill = document.getElementById('progressFill');
-  var currentStep = 0;
-
-  function goToStep(i){
-    currentStep = i;
-    document.querySelectorAll('.panel').forEach(function(p){
-      p.classList.toggle('is-active', parseInt(p.getAttribute('data-panel'),10) === i);
-    });
-    document.querySelectorAll('.step').forEach(function(s){
-      var si = parseInt(s.getAttribute('data-step'),10);
-      s.classList.toggle('is-active', si === i);
-      s.classList.toggle('is-done', si < i);
-    });
-    progressFill.style.width = (((i+1)/5)*100) + '%';
-    panelTitleEl.textContent = stepTitles[i];
-    if(i === 4){ renderReview(); }
-    document.querySelector('.reg-term').scrollIntoView({behavior: reduceMotion?'auto':'smooth', block:'start'});
-  }
-
-  document.getElementById('stepTabs').addEventListener('click', function(e){
-    var btn = e.target.closest('.step');
-    if(btn) goToStep(parseInt(btn.getAttribute('data-step'),10));
-  });
-
-  document.querySelector('main').addEventListener('click', function(e){
-    var nb = e.target.closest('[data-next]');
-    var pb = e.target.closest('[data-prev]');
-    if(nb){
-      var target = parseInt(nb.getAttribute('data-next'),10);
-      if(validateStep(currentStep)) goToStep(target);
-    } else if(pb){
-      goToStep(parseInt(pb.getAttribute('data-prev'),10));
-    }
-  });
-
-  /* ---------------- validation ---------------- */
-  function setError(inputId, show){
-    var input = document.getElementById(inputId);
-    var err = document.getElementById('err-'+inputId);
-    if(input) input.classList.toggle('is-error', show);
-    if(err) err.classList.toggle('show', show);
-  }
-
-  function validateStep(i){
-    var ok = true;
-    if(i === 0){
-      var teamName = document.getElementById('teamName').value.trim();
-      var bad = teamName.length < 2;
-      setError('teamName', bad);
-      if(bad) ok = false;
-    } else if(i >= 1 && i <= 3){
-      var n = i;
-      var checks = [
-        ['name-'+n, document.getElementById('name-'+n).value.trim().length > 1],
-        ['sid-'+n, document.getElementById('sid-'+n).value.trim().length > 1],
-        ['batch-'+n, document.getElementById('batch-'+n).value.trim().length > 0],
-        ['section-'+n, document.getElementById('section-'+n).value.trim().length > 0],
-        ['gmail-'+n, /^[^\s@]+@gmail\.com$/i.test(document.getElementById('gmail-'+n).value.trim())],
-        ['mobile-'+n, /^[0-9+\s-]{7,14}$/.test(document.getElementById('mobile-'+n).value.trim())],
-        ['ename-'+n, /^[0-9+\s-]{7,14}$/.test(document.getElementById('ename-'+n).value.trim())],
-        ['erel-'+n, document.getElementById('erel-'+n).value !== ''],
-        ['tshirt-'+n, document.getElementById('tshirt-'+n).value !== '']
-      ];
-      checks.forEach(function(c){
-        var valid = c[1];
-        setError(c[0], !valid);
-        if(!valid) ok = false;
-      });
-    }
-    if(!ok){
-      var firstBad = document.querySelector('.is-error');
-      if(firstBad) firstBad.scrollIntoView({behavior: reduceMotion?'auto':'smooth', block:'center'});
-    }
-    return ok;
-  }
-
-  /* ---------------- review render ---------------- */
-  function memberSummary(n){
-    return {
-      name: document.getElementById('name-'+n).value.trim(),
-      sid: document.getElementById('sid-'+n).value.trim(),
-      batch: document.getElementById('batch-'+n).value.trim(),
-      section: document.getElementById('section-'+n).value.trim(),
-      gmail: document.getElementById('gmail-'+n).value.trim(),
-      mobile: document.getElementById('mobile-'+n).value.trim(),
-      ename: document.getElementById('ename-'+n).value.trim(),
-      erel: document.getElementById('erel-'+n).value,
-      tshirt: document.getElementById('tshirt-'+n).value,
-      xp: xpLabels[parseInt(document.getElementById('xp-'+n).value,10)],
-      photo: memberPhotos[n]
-    };
-  }
-
-  function renderReview(){
-    var area = document.getElementById('reviewArea');
-    var team = document.getElementById('teamName').value.trim();
-    var html = '<div class="review-card"><div class="review-card__head"><b>team</b><button class="review-card__edit" data-jump="0">edit</button></div><p style="font-family:var(--mono);font-size:15px;">'+ (team || '—') +'</p></div>';
-    for(var n=1;n<=3;n++){
-      var s = memberSummary(n);
-      html += '<div class="review-card">'+
-        '<div class="review-card__head"><b>member_'+n+'</b><button class="review-card__edit" data-jump="'+n+'">edit</button></div>'+
-        (s.photo ? '<img class="review-avatar" src="'+s.photo+'" alt="Member '+n+' preview">' : '')+
-        '<div class="review-grid">'+
-          '<div><span>Name</span><b>'+(s.name||'—')+'</b></div>'+
-          '<div><span>Student ID</span><b>'+(s.sid||'—')+'</b></div>'+
-          '<div><span>Batch / Section</span><b>'+(s.batch||'—')+' / '+(s.section||'—')+'</b></div>'+
-          '<div><span>Gmail</span><b>'+(s.gmail||'—')+'</b></div>'+
-          '<div><span>Mobile</span><b>'+(s.mobile||'—')+'</b></div>'+
-          '<div><span>Emergency contact</span><b>'+(s.ename||'—')+' ('+(s.erel||'—')+')</b></div>'+
-          '<div><span>T-shirt</span><b>'+(s.tshirt||'—')+'</b></div>'+
-          '<div><span>Experience</span><b>'+(s.xp||'—')+'</b></div>'+
-        '</div>'+
-      '</div>';
-    }
-    area.innerHTML = html;
-    area.querySelectorAll('[data-jump]').forEach(function(b){
-      b.addEventListener('click', function(){ goToStep(parseInt(b.getAttribute('data-jump'),10)); });
-    });
-  }
-
-  /* ---------------- submit ---------------- */
-  document.getElementById('submitBtn').addEventListener('click', function(){
-    for(var i=0;i<=3;i++){ if(!validateStep(i)){ goToStep(i); return; } }
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'submitting…';
-
-    var payload = {
-      teamName: document.getElementById('teamName').value.trim(),
-      members: [memberSummary(1), memberSummary(2), memberSummary(3)],
-      submittedAt: new Date().toISOString()
-    };
-    var code = 'CODEX2-' + Math.random().toString(36).slice(2,7).toUpperCase();
-
-    function finish(count){
-      showConfirmation(code, payload, count);
-      submitBtn.disabled = false;
-      submitBtn.textContent = './submit_registration --confirm';
-    }
-
-    try{
-      window.storage.set('teams:' + code, JSON.stringify(payload), true).then(function(){
-        return window.storage.list('teams:', true);
-      }).then(function(res){
-        var count = (res && res.keys) ? res.keys.length : 1;
-        finish(count);
-      }).catch(function(){
-        finish(null);
-      });
-    }catch(e){
-      finish(null);
-    }
-  });
-
-  function showConfirmation(code, payload, count){
-    var overlay = document.getElementById('confirmOverlay');
-    var body = document.getElementById('confirmBody');
-    var lines = [
-      '$ ./submit_registration --confirm',
-      '> compiling registration ................ <span class="ok">OK</span>',
-      '> verifying members (3/3) ................ <span class="ok">OK</span>',
-      '> writing to registry .................... <span class="ok">OK</span>',
-      '<br><span class="ok">REGISTRATION_CONFIRMED</span>',
-      'TEAM: ' + payload.teamName,
-      '<div class="confirm-id">TEAM_ID: ' + code + '</div>',
-      (count ? ('You are registered team #' + count + '.') : 'Your team has been registered.'),
-      '<br>A confirmation has been logged. See you on the contest floor.'
-    ];
-    overlay.classList.add('is-open');
-    if(reduceMotion){
-      body.innerHTML = lines.join('<br>');
-    } else {
-      body.innerHTML = '';
-      var li = 0;
-      function next(){
-        if(li >= lines.length) return;
-        var div = document.createElement('div');
-        div.innerHTML = lines[li];
-        body.appendChild(div);
-        li++;
-        setTimeout(next, 260);
-      }
-      next();
-    }
-  }
-
-  document.getElementById('confirmClose').addEventListener('click', function(){
-    document.getElementById('confirmOverlay').classList.remove('is-open');
-    showView('home');
-  });
-  document.getElementById('confirmAnother').addEventListener('click', function(){
-    document.getElementById('confirmOverlay').classList.remove('is-open');
-    document.getElementById('teamName').value = '';
-    for(var n=1;n<=3;n++){
-      ['name','sid','batch','section','gmail','mobile','ename','tshirt'].forEach(function(f){
-        var el = document.getElementById(f+'-'+n); if(el) el.value = '';
-      });
-      document.getElementById('erel-'+n).value = '';
-      document.getElementById('xp-'+n).value = 1;
-      document.getElementById('xp-'+n).style.setProperty('--fill','50%');
-      document.getElementById('xpcur-'+n).textContent = xpLabels[1];
-      document.getElementById('preview-'+n).innerHTML = 'IMG';
-      memberPhotos[n] = null;
-    }
-    goToStep(0);
-    showView('register');
-  });
-
-})();
-</script>
-</body>
+        document
+          .getElementById("confirmClose")
+          .addEventListener("click", function () {
+            document
+              .getElementById("confirmOverlay")
+              .classList.remove("is-open")
+            showView("home")
+          })
+        document
+          .getElementById("confirmAnother")
+          .addEventListener("click", function () {
+            document
+              .getElementById("confirmOverlay")
+              .classList.remove("is-open")
+            document.getElementById("teamName").value = ""
+            for (var n = 1; n <= 3; n++) {
+              ;[
+                "name",
+                "sid",
+                "batch",
+                "section",
+                "gmail",
+                "mobile",
+                "ename",
+                "tshirt",
+              ].forEach(function (f) {
+                var el = document.getElementById(f + "-" + n)
+                if (el) el.value = ""
+              })
+              document.getElementById("erel-" + n).value = ""
+              document.getElementById("xp-" + n).value = 1
+              document
+                .getElementById("xp-" + n)
+                .style.setProperty("--fill", "50%")
+              document.getElementById("xpcur-" + n).textContent = xpLabels[1]
+              document.getElementById("preview-" + n).innerHTML = "IMG"
+              memberPhotos[n] = null
+            }
+            goToStep(0)
+            showView("register")
+          })
+      })()
+    </script>
+  </body>
 </html>

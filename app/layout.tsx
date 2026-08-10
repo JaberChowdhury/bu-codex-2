@@ -6,15 +6,15 @@ import {
   Nunito,
   Plus_Jakarta_Sans,
 } from "next/font/google"
-import Script from "next/script"
+
 
 import "./globals.css"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { buildThemeScript } from "@/components/theme"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'})
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
@@ -44,6 +44,9 @@ const jetbrains = JetBrains_Mono({
  */
 const setThemeScript = buildThemeScript()
 
+import NextTopLoader from "nextjs-toploader"
+import TelemetryProvider from "@/components/TelemetryProvider"
+
 export const metadata: Metadata = {
   title: "BU CODEX // ROUND 02",
   description:
@@ -69,15 +72,28 @@ export default function RootLayout({
         jetbrains.variable
       )}
     >
+      <head>
+        {typeof window === "undefined" && (
+          <script id="bu-codex-theme" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: setThemeScript }} />
+        )}
+      </head>
       <body>
-        <Script
-          id="bu-codex-theme"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: setThemeScript }}
-        />
-        <SiteNav />
-        {children}
-        <SiteFooter />
+        <TelemetryProvider>
+          <NextTopLoader
+            color="var(--primary)"
+            initialPosition={0.08}
+            crawlSpeed={200}
+            height={3}
+            crawl={true}
+            showSpinner={false}
+            easing="ease"
+            speed={200}
+            shadow="0 0 10px var(--primary),0 0 5px var(--primary)"
+          />
+          <SiteNav />
+          {children}
+          <SiteFooter />
+        </TelemetryProvider>
       </body>
     </html>
   )

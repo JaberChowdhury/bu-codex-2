@@ -4,7 +4,7 @@ import * as React from "react"
 
 export function useTypedLine(
   text: string,
-  options?: { delay?: number; speed?: number; enabled?: boolean },
+  options?: { delay?: number; speed?: number; enabled?: boolean }
 ) {
   const { delay = 0, speed = 22, enabled = true } = options ?? {}
   const [count, setCount] = React.useState(0)

@@ -13,18 +13,31 @@ type PhotoFieldProps = {
   className?: string
 }
 
-function PhotoField({ id, value, onChange, error, className }: PhotoFieldProps) {
+function PhotoField({
+  id,
+  value,
+  onChange,
+  error,
+  className,
+}: PhotoFieldProps) {
   const [preview, setPreview] = React.useState<string | null>(null)
 
   React.useEffect(() => {
-    if (!value) {
+    let objectUrl: string | null = null
+
+    if (value) {
+      objectUrl = URL.createObjectURL(value)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPreview(objectUrl)
+    } else if (preview !== null) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPreview(null)
-      return
     }
-    const objectUrl = URL.createObjectURL(value)
-    setPreview(objectUrl)
-    return () => URL.revokeObjectURL(objectUrl)
-  }, [value])
+
+    return () => {
+      if (objectUrl) URL.revokeObjectURL(objectUrl)
+    }
+  }, [value, preview])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -38,7 +51,7 @@ function PhotoField({ id, value, onChange, error, className }: PhotoFieldProps) 
     <div className={cn("space-y-2", className)}>
       <Label
         htmlFor={id}
-        className="font-mono text-xs uppercase tracking-widest text-muted-foreground"
+        className="font-mono text-xs tracking-widest text-muted-foreground uppercase"
       >
         photo
         <span className="text-accent"> *</span>
@@ -63,7 +76,7 @@ function PhotoField({ id, value, onChange, error, className }: PhotoFieldProps) 
           >
             {value ? "replace photo" : "attach photo"}
           </Label>
-          <p className="font-mono text-xs text-muted-foreground tnum">
+          <p className="tnum font-mono text-xs text-muted-foreground">
             {value ? "photo: attached" : "photo: none"}
           </p>
         </div>

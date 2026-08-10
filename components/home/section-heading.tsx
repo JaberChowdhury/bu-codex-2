@@ -9,7 +9,7 @@ export function SectionHeading({
 }) {
   return (
     <div>
-      <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+      <p className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
         {label}
       </p>
       {children}
