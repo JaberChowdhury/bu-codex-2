@@ -9,7 +9,8 @@ const supabaseKey =
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-export const revalidate = 60 // Revalidate every minute
+export const dynamic = "force-dynamic"
+export const revalidate = 0
 
 export default async function TeamsPage() {
   const { data: teams, error } = await supabase
