@@ -8,7 +8,7 @@ import * as THREE from "three"
 // Instant loading material (no Environment/HDR downloads needed)
 function ShinyMaterial() {
   return (
-    <meshStandardMaterial 
+    <meshStandardMaterial
       color="#ffffff"
       roughness={0.1}
       metalness={0.9}
@@ -37,13 +37,23 @@ function MobiusTriangle() {
   )
 }
 
-function FloatingFour({ position, rotation, delay }: { position: [number, number, number], rotation?: [number, number, number], delay: number }) {
+function FloatingFour({
+  position,
+  rotation,
+  delay,
+}: {
+  position: [number, number, number]
+  rotation?: [number, number, number]
+  delay: number
+}) {
   const meshRef = useRef<THREE.Mesh>(null)
-  
+
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 0.8 + delay) * 0.3
-      meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.5 + delay) * 0.05
+      meshRef.current.position.y =
+        position[1] + Math.sin(state.clock.elapsedTime * 0.8 + delay) * 0.3
+      meshRef.current.rotation.z =
+        Math.sin(state.clock.elapsedTime * 0.5 + delay) * 0.05
     }
   })
 
@@ -67,18 +77,36 @@ export function NotFoundScene() {
     <div className="absolute inset-0 z-0">
       {/* dpr prop limits resolution scaling on high-res displays for massive performance gains */}
       <Canvas camera={{ position: [0, 0, 12], fov: 45 }} dpr={[1, 1.5]}>
-        
         {/* Simple lighting setup replaces the heavy 15MB+ HDR Environment download */}
         <ambientLight intensity={1.5} color="#ffffff" />
         <directionalLight position={[5, 10, 5]} intensity={4} color="#ffffff" />
-        <directionalLight position={[-5, -10, -5]} intensity={2} color="#f3c6d6" />
+        <directionalLight
+          position={[-5, -10, -5]}
+          intensity={2}
+          color="#f3c6d6"
+        />
         <pointLight position={[0, 0, 5]} intensity={2} color="#ffffff" />
-        
-        <FloatingFour position={[-4.5, 0, 0]} rotation={[0, 0.15, 0]} delay={0} />
+
+        <FloatingFour
+          position={[-4.5, 0, 0]}
+          rotation={[0, 0.15, 0]}
+          delay={0}
+        />
         <MobiusTriangle />
-        <FloatingFour position={[4.5, 0, 0]} rotation={[0, -0.15, 0]} delay={1} />
-        
-        <ContactShadows position={[0, -4, 0]} opacity={0.3} scale={20} blur={2} far={4} color="#000000" />
+        <FloatingFour
+          position={[4.5, 0, 0]}
+          rotation={[0, -0.15, 0]}
+          delay={1}
+        />
+
+        <ContactShadows
+          position={[0, -4, 0]}
+          opacity={0.3}
+          scale={20}
+          blur={2}
+          far={4}
+          color="#000000"
+        />
       </Canvas>
     </div>
   )

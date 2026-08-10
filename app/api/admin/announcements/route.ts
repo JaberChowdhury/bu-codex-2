@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { cookies } from "next/headers"
 import { createClient } from "@supabase/supabase-js"
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -22,6 +23,10 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
+    const cookieStore = await cookies()
+    if (cookieStore.get("admin_auth")?.value !== "authenticated") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const { title, category, content } = await req.json()
 
     if (!title || !category || !content) {
@@ -53,6 +58,10 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
   try {
+    const cookieStore = await cookies()
+    if (cookieStore.get("admin_auth")?.value !== "authenticated") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const { id, title, category, content } = await req.json()
 
     if (!id || !title || !category || !content) {
@@ -85,6 +94,10 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
+    const cookieStore = await cookies()
+    if (cookieStore.get("admin_auth")?.value !== "authenticated") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const { searchParams } = new URL(req.url)
     const id = searchParams.get("id")
 

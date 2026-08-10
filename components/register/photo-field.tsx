@@ -30,7 +30,6 @@ function PhotoField({
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setPreview(objectUrl)
     } else if (preview !== null) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPreview(null)
     }
 

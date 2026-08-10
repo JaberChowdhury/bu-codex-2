@@ -111,7 +111,7 @@ export function GalleryGrid() {
         ) : (
           <motion.div
             layout
-            className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:gap-8 space-y-6 xl:space-y-8"
+            className="columns-1 gap-6 space-y-6 sm:columns-2 lg:columns-3 xl:gap-8 xl:space-y-8"
           >
             <AnimatePresence mode="popLayout">
               {visible.map((item) => (
@@ -155,9 +155,11 @@ export function GalleryGrid() {
                         {selectedImage.category}
                       </span>
                       <span className="font-mono text-xs text-white/70">
-                        {selectedImage.date 
-                          ? selectedImage.date 
-                          : new Date(selectedImage.created_at).toLocaleDateString()}
+                        {selectedImage.date
+                          ? selectedImage.date
+                          : new Date(
+                              selectedImage.created_at
+                            ).toLocaleDateString()}
                       </span>
                     </div>
                     <h2 className="text-2xl font-bold text-white md:text-4xl">
@@ -224,7 +226,7 @@ function GalleryCard({
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ type: "spring", damping: 25, stiffness: 200 }}
       onClick={onClick}
-      className="group relative cursor-zoom-in overflow-hidden rounded-2xl border border-border/50 bg-card/50 shadow-xl backdrop-blur-sm transition-[box-shadow,border-color] hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 break-inside-avoid w-full"
+      className="group relative w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-2xl border border-border/50 bg-card/50 shadow-xl backdrop-blur-sm transition-[box-shadow,border-color] hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20"
     >
       <div className="relative w-full overflow-hidden bg-muted/20">
         {!loaded && (
@@ -256,7 +258,7 @@ function GalleryCard({
           src={item.image_url}
           alt={item.title}
           className={cn(
-            "w-full h-auto min-h-[150px] object-cover transition-all duration-700 ease-out group-hover:scale-[1.03]",
+            "h-auto min-h-[150px] w-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.03]",
             loaded ? "blur-0 opacity-100" : "opacity-0 blur-md"
           )}
           onLoad={() => setLoaded(true)}
@@ -264,13 +266,15 @@ function GalleryCard({
         <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       </div>
 
-      <div className="pointer-events-none absolute right-0 bottom-0 left-0 flex translate-y-4 flex-col gap-3 p-6 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 z-30">
+      <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-30 flex translate-y-4 flex-col gap-3 p-6 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
         <div className="flex items-center justify-between">
-          <p className="rounded-md border border-primary/40 bg-primary/20 px-2 py-1 font-mono text-[0.65rem] tracking-widest text-primary-foreground uppercase backdrop-blur-md shadow-sm">
+          <p className="rounded-md border border-primary/40 bg-primary/20 px-2 py-1 font-mono text-[0.65rem] tracking-widest text-primary-foreground uppercase shadow-sm backdrop-blur-md">
             {item.category}
           </p>
-          <p className="tnum rounded-md bg-black/60 px-2 py-1 font-mono text-[0.65rem] text-white/90 backdrop-blur-md border border-white/10">
-            {item.date ? item.date : new Date(item.created_at).toLocaleDateString()}
+          <p className="tnum rounded-md border border-white/10 bg-black/60 px-2 py-1 font-mono text-[0.65rem] text-white/90 backdrop-blur-md">
+            {item.date
+              ? item.date
+              : new Date(item.created_at).toLocaleDateString()}
           </p>
         </div>
 
@@ -330,6 +334,7 @@ function LightboxImage({ item }: { item: GalleryItem }) {
         alt={item.title}
         width={1920}
         height={1080}
+        unoptimized
         className={cn(
           "max-h-[85vh] w-auto object-contain transition-all duration-700",
           loaded ? "blur-0 opacity-100" : "opacity-0 blur-xl"

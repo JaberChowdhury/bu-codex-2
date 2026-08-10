@@ -20,7 +20,9 @@ type Notice = {
 export default function NoticesPage() {
   const [notices, setNotices] = React.useState<Notice[]>([])
   const [loading, setLoading] = React.useState(true)
-  const [selectedNotice, setSelectedNotice] = React.useState<Notice | null>(null)
+  const [selectedNotice, setSelectedNotice] = React.useState<Notice | null>(
+    null
+  )
 
   React.useEffect(() => {
     const fetchNotices = async () => {
@@ -150,7 +152,7 @@ export default function NoticesPage() {
                       </h2>
 
                       {/* line-clamp-3 ensures it stays compact in the list view */}
-                      <p className="leading-relaxed line-clamp-3 whitespace-pre-wrap break-words overflow-hidden text-muted-foreground">
+                      <p className="line-clamp-3 overflow-hidden leading-relaxed break-words whitespace-pre-wrap text-muted-foreground">
                         {notice.content}
                       </p>
                     </div>
@@ -187,7 +189,7 @@ export default function NoticesPage() {
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-3xl border border-border bg-card shadow-2xl flex flex-col"
+              className="relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-2xl"
             >
               {/* Modal Header */}
               <div className="flex items-center justify-between border-b border-border bg-muted/30 p-6">
@@ -202,20 +204,20 @@ export default function NoticesPage() {
                 </div>
                 <button
                   onClick={() => setSelectedNotice(null)}
-                  className="rounded-full bg-background/50 p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground border border-border"
+                  className="rounded-full border border-border bg-background/50 p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 >
                   <IconX size={20} />
                 </button>
               </div>
 
               {/* Modal Body */}
-              <div className="overflow-y-auto p-6 sm:p-10 space-y-6">
-                <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground">
+              <div className="space-y-6 overflow-y-auto p-6 sm:p-10">
+                <h2 className="font-heading text-3xl font-bold text-foreground sm:text-4xl">
                   {selectedNotice.title}
                 </h2>
-                
+
                 <div className="prose prose-sm sm:prose-base dark:prose-invert max-w-none">
-                  <p className="whitespace-pre-wrap leading-relaxed break-words text-muted-foreground">
+                  <p className="leading-relaxed break-words whitespace-pre-wrap text-muted-foreground">
                     {selectedNotice.content}
                   </p>
                 </div>

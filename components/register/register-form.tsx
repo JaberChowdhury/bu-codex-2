@@ -351,9 +351,14 @@ function RegisterForm() {
             <DialogTitle className="font-mono text-accent">
               registration: SUCCESS
             </DialogTitle>
-            <DialogDescription className="font-mono space-y-2 mt-2">
-              <p>Your team has been registered successfully. We&apos;ve saved your details.</p>
-              <p className="font-bold text-foreground">Please do not wait for a confirmation email.</p>
+            <DialogDescription className="mt-2 space-y-2 font-mono">
+              <p>
+                Your team has been registered successfully. We&apos;ve saved
+                your details.
+              </p>
+              <p className="font-bold text-foreground">
+                Please do not wait for a confirmation email.
+              </p>
               <p>Keep your team code safe.</p>
             </DialogDescription>
           </DialogHeader>
@@ -369,7 +374,7 @@ function RegisterForm() {
               {teamCode}
             </p>
           </div>
-          <DialogFooter className="flex flex-col sm:flex-row gap-3">
+          <DialogFooter className="flex flex-col gap-3 sm:flex-row">
             <Button variant="outline" onClick={() => setDialogOpen(false)}>
               close
             </Button>

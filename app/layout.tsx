@@ -7,7 +7,6 @@ import {
   Plus_Jakarta_Sans,
 } from "next/font/google"
 
-
 import "./globals.css"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
@@ -74,7 +73,11 @@ export default function RootLayout({
     >
       <head>
         {typeof window === "undefined" && (
-          <script id="bu-codex-theme" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: setThemeScript }} />
+          <script
+            id="bu-codex-theme"
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: setThemeScript }}
+          />
         )}
       </head>
       <body>

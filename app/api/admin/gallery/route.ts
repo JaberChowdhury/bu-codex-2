@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { cookies } from "next/headers"
 import { createClient } from "@supabase/supabase-js"
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -22,6 +23,10 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
+    const cookieStore = await cookies()
+    if (cookieStore.get("admin_auth")?.value !== "authenticated") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const formData = await req.formData()
     const title = formData.get("title") as string
     const category = formData.get("category") as string
@@ -60,7 +65,12 @@ export async function POST(req: Request) {
     const imageUrl = publicUrlData.publicUrl
 
     // Insert into table
-    const payload: any = { title, category, tags, image_url: imageUrl }
+    const payload: Record<string, string | string[]> = {
+      title,
+      category,
+      tags,
+      image_url: imageUrl,
+    }
     if (date) payload.date = date
 
     const { data, error } = await supabase
@@ -85,6 +95,10 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
   try {
+    const cookieStore = await cookies()
+    if (cookieStore.get("admin_auth")?.value !== "authenticated") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const formData = await req.formData()
     const id = formData.get("id") as string
     const title = formData.get("title") as string
@@ -101,8 +115,14 @@ export async function PUT(req: Request) {
     }
 
     const tags = JSON.parse(tagsStr || "[]")
-    
-    type UpdatePayload = { title: string; category: string; tags: string[]; date?: string; image_url?: string }
+
+    type UpdatePayload = {
+      title: string
+      category: string
+      tags: string[]
+      date?: string
+      image_url?: string
+    }
     const updatePayload: UpdatePayload = { title, category, tags }
     if (date) updatePayload.date = date
 
@@ -152,6 +172,10 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
+    const cookieStore = await cookies()
+    if (cookieStore.get("admin_auth")?.value !== "authenticated") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
     const { searchParams } = new URL(req.url)
     const id = searchParams.get("id")
 
@@ -172,14 +196,14 @@ export async function DELETE(req: Request) {
 
     // Delete from storage if URL exists
     if (record?.image_url) {
-      const urlParts = record.image_url.split('/')
+      const urlParts = record.image_url.split("/")
       const fileName = urlParts[urlParts.length - 1]
-      
+
       if (fileName) {
         const { error: storageError } = await supabase.storage
           .from("gallery_images")
           .remove([fileName])
-          
+
         if (storageError) {
           console.error("Failed to delete image from storage:", storageError)
         }
