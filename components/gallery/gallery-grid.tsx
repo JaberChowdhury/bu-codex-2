@@ -31,10 +31,13 @@ export function GalleryGrid() {
         const res = await fetch("/api/admin/gallery")
         if (res.ok) {
           const data = await res.json()
-          setItems(data)
+          setItems(Array.isArray(data) ? data : [])
+        } else {
+          setItems([])
         }
       } catch (err) {
         console.error("Failed to fetch gallery", err)
+        setItems([])
       } finally {
         setLoading(false)
       }
@@ -67,7 +70,18 @@ export function GalleryGrid() {
     <>
       <AmbientCanvas />
       <div className="relative z-10 flex flex-col gap-12">
-        <div className="flex w-full items-center justify-center">
+        <div className="flex w-full flex-col items-center gap-4">
+          <p className="tnum font-mono text-xs text-muted-foreground">
+            <span className="text-accent">
+              {items.length.toString().padStart(2, "0")}
+            </span>{" "}
+            frames indexed ·{" "}
+            {categories
+              .filter((c) => c !== "all")
+              .length.toString()
+              .padStart(2, "0")}{" "}
+            categories
+          </p>
           <div className="relative flex flex-wrap items-center justify-center gap-2 rounded-full border border-white/10 bg-black/20 p-2 shadow-2xl backdrop-blur-xl">
             {categories.map((category) => (
               <button
@@ -165,18 +179,19 @@ export function GalleryGrid() {
                     <h2 className="text-2xl font-bold text-white md:text-4xl">
                       {selectedImage.title}
                     </h2>
-                    {selectedImage.tags && selectedImage.tags.length > 0 && (
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        {selectedImage.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded border border-white/10 bg-white/10 px-2 py-1 font-mono text-[0.65rem] text-white/80 uppercase backdrop-blur-md"
-                          >
-                            #{tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                    {Array.isArray(selectedImage.tags) &&
+                      selectedImage.tags.length > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {selectedImage.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="rounded border border-white/10 bg-white/10 px-2 py-1 font-mono text-[0.65rem] text-white/80 uppercase backdrop-blur-md"
+                            >
+                              #{tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                   </div>
                 </div>
 
@@ -266,36 +281,32 @@ function GalleryCard({
         <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       </div>
 
-      <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-30 flex translate-y-4 flex-col gap-3 p-6 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+      <div className="flex flex-col gap-2 p-4">
         <div className="flex items-center justify-between">
-          <p className="rounded-md border border-primary/40 bg-primary/20 px-2 py-1 font-mono text-[0.65rem] tracking-widest text-primary-foreground uppercase shadow-sm backdrop-blur-md">
+          <span className="rounded bg-primary/10 px-2 py-0.5 font-mono text-[10px] font-medium text-primary capitalize">
             {item.category}
-          </p>
-          <p className="tnum rounded-md border border-white/10 bg-black/60 px-2 py-1 font-mono text-[0.65rem] text-white/90 backdrop-blur-md">
+          </span>
+          <span className="tnum font-mono text-[10px] text-muted-foreground">
             {item.date
               ? item.date
               : new Date(item.created_at).toLocaleDateString()}
-          </p>
+          </span>
         </div>
-
-        <div className="flex flex-col gap-1.5">
-          <h3 className="font-heading text-lg font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-            {item.title}
-          </h3>
-
-          {item.tags && item.tags.length > 0 && (
-            <div className="mt-1 flex flex-wrap gap-1.5">
-              {item.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded border border-white/20 bg-black/40 px-1.5 py-0.5 font-mono text-[0.6rem] text-white/80 uppercase backdrop-blur-sm"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
+        <h3 className="font-heading text-sm font-bold text-card-foreground">
+          {item.title}
+        </h3>
+        {Array.isArray(item.tags) && item.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {item.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded border border-primary/20 bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] text-primary"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </motion.div>
   )

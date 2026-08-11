@@ -8,6 +8,41 @@ const supabaseKey =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 const supabase = createClient(supabaseUrl, supabaseKey)
 
+function normalizeTags(rawTags: unknown): string[] {
+  if (!rawTags) return []
+  if (Array.isArray(rawTags)) return rawTags.map(String).filter(Boolean)
+  if (typeof rawTags === "string") {
+    const trimmed = rawTags.trim()
+    if (!trimmed) return []
+
+    // Postgres array format string: {"tag1","tag2"}
+    if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
+      return trimmed
+        .slice(1, -1)
+        .split(",")
+        .map((t) => t.replace(/^["']|["']$/g, "").trim())
+        .filter(Boolean)
+    }
+
+    // JSON array format string: ["tag1","tag2"]
+    if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+      try {
+        const parsed = JSON.parse(trimmed)
+        if (Array.isArray(parsed)) return parsed.map(String).filter(Boolean)
+      } catch {
+        // fallback
+      }
+    }
+
+    // Comma-separated format string: "tag1, tag2"
+    return trimmed
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean)
+  }
+  return []
+}
+
 export async function GET() {
   const { data, error } = await supabase
     .from("gallery")
@@ -18,7 +53,12 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 
-  return NextResponse.json(data)
+  const formatted = data?.map((item) => ({
+    ...item,
+    tags: normalizeTags(item.tags),
+  }))
+
+  return NextResponse.json(formatted)
 }
 
 export async function POST(req: Request) {
@@ -41,7 +81,7 @@ export async function POST(req: Request) {
       )
     }
 
-    const tags = JSON.parse(tagsStr || "[]")
+    const tags = normalizeTags(tagsStr)
 
     // Upload to bucket
     const fileExt = file.name.split(".").pop() || "jpg"
@@ -83,7 +123,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    return NextResponse.json(data)
+    return NextResponse.json({ ...data, tags: normalizeTags(data.tags) })
   } catch (err) {
     console.error(err)
     return NextResponse.json(
@@ -114,7 +154,7 @@ export async function PUT(req: Request) {
       )
     }
 
-    const tags = JSON.parse(tagsStr || "[]")
+    const tags = normalizeTags(tagsStr)
 
     type UpdatePayload = {
       title: string
@@ -160,7 +200,7 @@ export async function PUT(req: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    return NextResponse.json(data)
+    return NextResponse.json({ ...data, tags: normalizeTags(data.tags) })
   } catch (err) {
     console.error(err)
     return NextResponse.json(

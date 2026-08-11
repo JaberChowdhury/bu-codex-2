@@ -86,15 +86,21 @@ export function AdminDashboard({
     "grid"
   )
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    let file = e.target.files?.[0]
     if (file) {
-      if (file.size > 1024 * 1024) {
-        alert("Image exceeds 1MB limit")
+      if (file.size > 20 * 1024 * 1024) {
+        alert("Image file size exceeds 20MB limit")
         e.target.value = ""
         setGalleryPreview(null)
         return
       }
+      const { compressImage } = await import("@/lib/image_compression")
+      file = await compressImage(file, {
+        maxWidth: 1000,
+        maxHeight: 1000,
+        quality: 0.75,
+      })
       setGalleryPreview(URL.createObjectURL(file))
     } else {
       setGalleryPreview(null)
@@ -247,8 +253,26 @@ export function AdminDashboard({
       formData.append("title", galleryTitle)
       formData.append("category", galleryCategory)
       if (galleryDate) formData.append("date", galleryDate)
-      formData.append("tags", JSON.stringify(tags))
-      if (file) formData.append("file", file)
+
+      let finalTags = [...tags]
+      if (
+        tagInput.trim() &&
+        !finalTags.includes(tagInput.trim().toLowerCase())
+      ) {
+        finalTags = [...finalTags, tagInput.trim().toLowerCase()]
+      }
+      formData.append("tags", JSON.stringify(finalTags))
+
+      let fileToUpload = file
+      if (fileToUpload) {
+        const { compressImage } = await import("@/lib/image_compression")
+        fileToUpload = await compressImage(fileToUpload, {
+          maxWidth: 1000,
+          maxHeight: 1000,
+          quality: 0.75,
+        })
+        formData.append("file", fileToUpload)
+      }
 
       if (editingGalleryId) {
         // Update mode
@@ -304,7 +328,15 @@ export function AdminDashboard({
     setGalleryCategory(item.category as string)
     setGalleryDate((item.date as string) || "")
     setGalleryPreview((item.image_url as string) || null)
-    setTags((item.tags as string[]) || [])
+    let rawTags = item.tags as unknown
+    if (typeof rawTags === "string") {
+      try {
+        rawTags = JSON.parse(rawTags as string)
+      } catch {
+        rawTags = (rawTags as string).split(",").map((t) => t.trim())
+      }
+    }
+    setTags(Array.isArray(rawTags) ? (rawTags as string[]).map(String) : [])
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
@@ -934,6 +966,15 @@ export function AdminDashboard({
                                 {item.date as string}
                               </span>
                             )}
+                            {Array.isArray(item.tags) &&
+                              item.tags.map((tag: string) => (
+                                <span
+                                  key={tag}
+                                  className="rounded bg-secondary/20 px-1.5 py-0.5 font-mono text-[10px] text-secondary-foreground"
+                                >
+                                  #{tag}
+                                </span>
+                              ))}
                           </div>
                         </div>
                       </motion.div>
@@ -986,14 +1027,15 @@ export function AdminDashboard({
                               <span className="rounded bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground capitalize">
                                 {item.category as string}
                               </span>
-                              {(item.tags as string[])?.map((tag: string) => (
-                                <span
-                                  key={tag}
-                                  className="rounded bg-primary/10 px-2 py-0.5 font-mono text-xs text-primary"
-                                >
-                                  #{tag}
-                                </span>
-                              ))}
+                              {Array.isArray(item.tags) &&
+                                item.tags.map((tag: string) => (
+                                  <span
+                                    key={tag}
+                                    className="rounded bg-primary/10 px-2 py-0.5 font-mono text-xs text-primary"
+                                  >
+                                    #{tag}
+                                  </span>
+                                ))}
                               {item.date && (
                                 <span className="rounded border border-accent/20 bg-accent/10 px-2 py-0.5 font-mono text-xs text-emerald-400">
                                   {item.date as string}

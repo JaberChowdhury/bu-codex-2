@@ -13,9 +13,6 @@ export default function GalleryPage() {
         <p className="text-sm text-muted-foreground">
           Stills from Round 01. Fresh frames from Round 02 land soon.
         </p>
-        <p className="tnum font-mono text-xs text-muted-foreground">
-          <span className="text-accent">09</span> frames indexed · 03 categories
-        </p>
       </header>
 
       <GalleryGrid />

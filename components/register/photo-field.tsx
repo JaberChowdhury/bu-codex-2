@@ -38,12 +38,24 @@ function PhotoField({
     }
   }, [value, preview])
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     event.target.value = ""
     if (!file) return
     if (!file.type.startsWith("image/")) return
-    onChange(file)
+    if (file.size > 20 * 1024 * 1024) {
+      alert("Selected photo exceeds 20MB limit")
+      return
+    }
+
+    // Import compression lazily or directly
+    const { compressImage } = await import("@/lib/image_compression")
+    const compressed = await compressImage(file, {
+      maxWidth: 400,
+      maxHeight: 400,
+      quality: 0.75,
+    })
+    onChange(compressed)
   }
 
   return (

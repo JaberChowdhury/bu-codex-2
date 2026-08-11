@@ -151,15 +151,23 @@ function RegisterForm() {
       formData.append("teamCode", code)
       formData.append("department", draft.department)
 
-      draft.members.forEach((member, index) => {
+      const { compressImage } = await import("@/lib/image_compression")
+
+      for (let index = 0; index < draft.members.length; index++) {
+        const member = draft.members[index]
         if (member.photo) {
-          formData.append(`photo_${index}`, member.photo)
+          const compressedPhoto = await compressImage(member.photo, {
+            maxWidth: 400,
+            maxHeight: 400,
+            quality: 0.75,
+          })
+          formData.append(`photo_${index}`, compressedPhoto)
         }
         // Send the rest of the member data as JSON string
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { photo, ...rest } = member
         formData.append(`member_${index}`, JSON.stringify(rest))
-      })
+      }
 
       const response = await fetch("/api/register", {
         method: "POST",

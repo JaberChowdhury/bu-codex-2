@@ -9,6 +9,7 @@ import {
   IconLoader2,
 } from "@tabler/icons-react"
 
+type ProblemInfo = { name: string; solved: number; total: number }
 type Result = { p: string; status: string; time?: string; tries?: number }
 type LeaderboardRow = {
   rank: number
@@ -19,7 +20,7 @@ type LeaderboardRow = {
 }
 
 export default function LeaderboardPage() {
-  const [problems, setProblems] = useState<string[]>([])
+  const [problems, setProblems] = useState<ProblemInfo[]>([])
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardRow[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -27,7 +28,12 @@ export default function LeaderboardPage() {
     fetch("/api/leaderboard")
       .then((res) => res.json())
       .then((data) => {
-        setProblems(data.problems)
+        if (Array.isArray(data.problems)) {
+          const formatted = data.problems.map((p: string | ProblemInfo) =>
+            typeof p === "string" ? { name: p, solved: 0, total: 0 } : p
+          )
+          setProblems(formatted)
+        }
         setLeaderboardData(data.leaderboardData)
         setLoading(false)
       })
@@ -112,12 +118,15 @@ export default function LeaderboardPage() {
                       <th className="w-24 p-6 text-center font-medium">
                         Penalty
                       </th>
-                      {problems.map((p) => (
+                      {problems.map((prob) => (
                         <th
-                          key={p}
-                          className="w-20 p-6 text-center font-medium"
+                          key={prob.name}
+                          className="w-20 p-4 text-center font-medium"
                         >
-                          {p}
+                          <div>{prob.name}</div>
+                          <div className="font-mono text-[10px] font-normal text-muted-foreground/70">
+                            {prob.solved}/{prob.total}
+                          </div>
                         </th>
                       ))}
                     </tr>
@@ -153,9 +162,9 @@ export default function LeaderboardPage() {
                           {row.penalty}
                         </td>
                         {row.results.map((res, i) => (
-                          <td key={i} className="p-3 text-center">
+                          <td key={i} className="p-2 text-center">
                             <div
-                              className={`mx-auto flex h-14 w-14 flex-col items-center justify-center space-y-0.5 rounded-xl border text-xs ${
+                              className={`mx-auto flex h-14 w-16 flex-col items-center justify-center space-y-0.5 rounded-xl border font-mono text-xs ${
                                 res.status === "solved"
                                   ? "border-[#10b981]/20 bg-[#10b981]/10 text-[#047857] dark:text-[#34d399]"
                                   : res.status === "failed"
@@ -165,23 +174,23 @@ export default function LeaderboardPage() {
                             >
                               {res.status === "solved" && (
                                 <>
-                                  <span className="font-mono font-bold">
+                                  <span className="text-[11px] leading-none font-bold">
                                     {res.time}
                                   </span>
-                                  <span className="text-[10px] opacity-60">
-                                    {res.tries} try
-                                  </span>
+                                  {res.tries && res.tries > 1 ? (
+                                    <span className="text-[10px] leading-none font-semibold opacity-75">
+                                      (-{res.tries - 1})
+                                    </span>
+                                  ) : null}
                                 </>
                               )}
                               {res.status === "failed" && (
-                                <>
-                                  <span className="font-mono font-bold">
-                                    -{res.tries}
-                                  </span>
-                                </>
+                                <span className="text-[11px] font-bold">
+                                  (-{res.tries})
+                                </span>
                               )}
                               {res.status === "none" && (
-                                <span className="font-mono">-</span>
+                                <span className="opacity-40">-</span>
                               )}
                             </div>
                           </td>
