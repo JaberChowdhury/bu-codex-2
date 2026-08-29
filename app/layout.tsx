@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Script from "next/script"
 import {
   Geist,
   Geist_Mono,
@@ -79,7 +80,7 @@ export default function RootLayout({
             dangerouslySetInnerHTML={{ __html: setThemeScript }}
           />
         )}
-        <script defer src="https://cloud.umami.is/script.js" data-website-id="0ee135ef-eea7-489a-adf0-c046d76733d3"></script>
+        <Script src="https://cloud.umami.is/script.js" data-website-id="0ee135ef-eea7-489a-adf0-c046d76733d3" strategy="afterInteractive" />
       </head>
       <body>
         <TelemetryProvider>
