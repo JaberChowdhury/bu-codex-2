@@ -50,12 +50,6 @@ function SiteFooter() {
               >
                 Register
               </Link>
-              <Link
-                href={`${base}/organisers`}
-                className="text-muted-foreground transition-colors hover:text-accent"
-              >
-                Organising Committee
-              </Link>
               <span className="text-muted-foreground/50">judge on vjudge</span>
               <span className="text-muted-foreground/50">teams of three</span>
             </div>

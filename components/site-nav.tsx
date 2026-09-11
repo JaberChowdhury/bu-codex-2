@@ -25,7 +25,6 @@ function SiteNav() {
 
   const dropdownFlags = [
     { label: "--teams", href: `${base}/teams` },
-    { label: "--organisers", href: `${base}/organisers` },
     { label: "--rules", href: `${base}/rules` },
     { label: "--policies", href: `${base}/policies` },
     { label: "--leaderboard", href: `${base}/leaderboard` },

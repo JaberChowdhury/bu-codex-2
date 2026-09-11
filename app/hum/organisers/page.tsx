@@ -1,1 +1,6 @@
-export { default } from "@/components/pages/organisers/page"
+import { notFound } from "next/navigation"
+
+export default function OrganisersPage() {
+  notFound()
+}
+
