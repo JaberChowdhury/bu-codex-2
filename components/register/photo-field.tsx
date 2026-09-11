@@ -23,20 +23,19 @@ function PhotoField({
   const [preview, setPreview] = React.useState<string | null>(null)
 
   React.useEffect(() => {
-    let objectUrl: string | null = null
-
-    if (value) {
-      objectUrl = URL.createObjectURL(value)
+    if (!value) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setPreview(objectUrl)
-    } else if (preview !== null) {
       setPreview(null)
+      return
     }
+
+    const objectUrl = URL.createObjectURL(value)
+    setPreview(objectUrl)
 
     return () => {
-      if (objectUrl) URL.revokeObjectURL(objectUrl)
+      URL.revokeObjectURL(objectUrl)
     }
-  }, [value, preview])
+  }, [value])
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]

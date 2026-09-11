@@ -1,8 +1,13 @@
 "use client"
 
 import * as React from "react"
+import dynamic from "next/dynamic"
 import { motion, AnimatePresence } from "framer-motion"
-import { AmbientCanvas } from "./three-bg"
+
+const AmbientCanvas = dynamic(
+  () => import("./three-bg").then((mod) => mod.AmbientCanvas),
+  { ssr: false }
+)
 
 import Image from "next/image"
 import { cn } from "@/lib/utils"

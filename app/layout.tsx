@@ -50,7 +50,7 @@ import TelemetryProvider from "@/components/TelemetryProvider"
 export const metadata: Metadata = {
   title: "BU CODEX // ROUND 02",
   description:
-    "Competitive programming contest by BU CSE. Teams of three. Five hours. Sep 12, 2026.",
+    "Competitive programming contest by BU CSE. Teams of three. Five hours. Oct 02–03, 2026.",
 }
 
 export default function RootLayout({

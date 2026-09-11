@@ -25,7 +25,16 @@ export async function GET(req: Request) {
   } catch {
     return NextResponse.json({ error: "Invalid url" }, { status: 400 })
   }
-  if (!target.hostname.endsWith("supabase.co")) {
+  const allowedHost = process.env.NEXT_PUBLIC_SUPABASE_URL
+    ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).hostname
+    : null
+
+  const isAllowedHost =
+    target.protocol === "https:" &&
+    (target.hostname === allowedHost ||
+      (target.hostname.endsWith(".supabase.co") && !target.hostname.includes("@")))
+
+  if (!isAllowedHost) {
     return NextResponse.json({ error: "Forbidden host" }, { status: 400 })
   }
 

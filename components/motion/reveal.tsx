@@ -47,8 +47,10 @@ export function Reveal({
   if (asChild) {
     const child = React.Children.only(children) as React.ReactElement<{
       className?: string
+      ref?: React.Ref<HTMLDivElement>
     }>
     return React.cloneElement(child, {
+      ref,
       className: cn("reveal", child.props.className),
     })
   }

@@ -3,11 +3,12 @@
 import * as React from "react"
 
 import { useTypedLine } from "@/components/motion/use-typed-line"
+import { EVENT_DETAILS } from "@/lib/constants"
 
 const LINES = [
   "> bu codex --run round_02",
-  "[ OK ] problemset.load ........ 11",
-  "[ OK ] slots.allocate .......... 020",
+  `[ OK ] problemset.load ........ ${EVENT_DETAILS.PROBLEMS_COUNT}`,
+  `[ OK ] slots.allocate .......... ${String(EVENT_DETAILS.TEAM_SLOTS).padStart(3, "0")}`,
   "[ OK ] judge.spinup ............ vjudge",
 ]
 

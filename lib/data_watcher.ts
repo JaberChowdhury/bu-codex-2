@@ -1,13 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 
 export interface UltimateUserData {
   userId: string // NEW: The persistent fingerprint ID
-  storage: {
-    localStorage: string[]
-    sessionStorage: string[]
-    cookies: string
-  }
   hardware: {
     cores: number
     memory: number | string
@@ -87,12 +82,14 @@ const useUltimateCollector = () => {
         (canvas.getContext("experimental-webgl") as any)
       if (!gl) return "Not Supported"
       const debugInfo = gl.getExtension("WEBGL_debug_renderer_info")
-      return debugInfo
+      const info = debugInfo
         ? {
             vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL),
             renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL),
           }
         : "Restricted"
+      gl.getExtension("WEBGL_lose_context")?.loseContext()
+      return info
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       return "Error"
@@ -179,11 +176,6 @@ const useUltimateCollector = () => {
     // 7. Construct Payload
     const data: UltimateUserData = {
       userId: fingerprintId, // Attach generated ID here
-      storage: {
-        localStorage: Object.keys(window.localStorage || {}),
-        sessionStorage: Object.keys(window.sessionStorage || {}),
-        cookies: document.cookie,
-      },
       hardware: {
         cores: nav.hardwareConcurrency || 0,
         memory: nav.deviceMemory || "unknown",
@@ -247,7 +239,7 @@ const useUltimateCollector = () => {
     collect()
   }, [collect])
 
-  return { userData, refresh: collect }
+  return useMemo(() => ({ userData, refresh: collect }), [userData, collect])
 }
 
 export default useUltimateCollector

@@ -19,6 +19,7 @@ function SiteNav() {
 
   const mainFlags = [
     { label: "--home", href: `${base}/` },
+    { label: "--notices", href: `${base}/notices` },
     { label: "--gallery", href: `${base}/gallery` },
     { label: "--register", href: `${base}/register` },
   ]
@@ -28,14 +29,18 @@ function SiteNav() {
     { label: "--rules", href: `${base}/rules` },
     { label: "--policies", href: `${base}/policies` },
     { label: "--leaderboard", href: `${base}/leaderboard` },
-    { label: "--notices", href: `${base}/notices` },
+    { label: "--organisers", href: `${base}/organisers` },
   ]
 
   const allFlags = [...mainFlags, ...dropdownFlags]
 
   const isActive = (href: string) => {
-    if (href === `${base}/`) return pathname === href
-    return pathname === href || pathname.startsWith(`${href}/`)
+    const cleanPath = pathname.replace(/\/$/, "") || "/"
+    const cleanHref = href.replace(/\/$/, "") || "/"
+    if (cleanHref === (base.replace(/\/$/, "") || "/")) {
+      return cleanPath === cleanHref
+    }
+    return cleanPath === cleanHref || cleanPath.startsWith(`${cleanHref}/`)
   }
 
   const isDropdownActive = dropdownFlags.some((flag) => isActive(flag.href))

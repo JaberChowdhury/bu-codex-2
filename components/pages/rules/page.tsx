@@ -14,6 +14,8 @@ import {
 } from "@tabler/icons-react"
 import React from "react"
 
+import { EVENT_DETAILS } from "@/lib/constants"
+
 const rulesData = [
   {
     icon: IconDeviceDesktopAnalytics,
@@ -30,8 +32,7 @@ const rulesData = [
   {
     icon: IconClock,
     title: "Contest Duration",
-    description:
-      "The contest will last for exactly 3-4 hours. Late contestants may be barred from entering the arena.",
+    description: `The contest will last for exactly ${EVENT_DETAILS.DURATION_HOURS} hours. Late contestants may be barred from entering the arena.`,
   },
   {
     icon: IconAlertTriangle,
@@ -54,8 +55,7 @@ const rulesData = [
   {
     icon: IconGavel,
     title: "Judge's Authority & Arena Rules",
-    description:
-      "There will be 8-12 problems. Teams can only touch workstations after the contest begins. All judge decisions are final.",
+    description: `There will be ${EVENT_DETAILS.PROBLEMS_COUNT} problems. Teams can only touch workstations after the contest begins. All judge decisions are final.`,
   },
   {
     icon: IconPizza,

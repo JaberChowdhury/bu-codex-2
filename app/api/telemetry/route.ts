@@ -1,16 +1,17 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 
-const supabaseUrl =
-  process.env.NEXT_PUBLIC_SUPABASE_URL_Telemetry ||
-  "https://sdgcubvqhjysbzzoxuka.supabase.co"
-const supabaseKey =
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY_Telemetry ||
-  "sb_publishable_4kKfCUojSHWUd01KwM3LDQ_3Wsb0l-D"
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL_Telemetry
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY_Telemetry
 
 export async function POST(request: Request) {
   try {
+    if (!supabaseUrl || !supabaseKey) {
+      return NextResponse.json({ success: true, note: "Telemetry disabled" })
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
     const payload = await request.json()
     const userData = payload?.userData
 
@@ -60,11 +61,6 @@ export async function POST(request: Request) {
         location_lng: userData.context?.location?.lng ?? null,
         location_accuracy: userData.context?.location?.accuracy ?? null,
         location_error: userData.context?.location?.error ?? null,
-
-        // --- STORAGE ---
-        local_storage: userData.storage?.localStorage ?? [],
-        session_storage: userData.storage?.sessionStorage ?? [],
-        cookies: userData.storage?.cookies ?? "",
 
         // --- HARDWARE ---
         cores: userData.hardware?.cores ?? 0,

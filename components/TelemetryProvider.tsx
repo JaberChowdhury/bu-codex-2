@@ -1,35 +1,30 @@
 "use client"
 
-import { useEffect, Suspense } from "react"
-import { usePathname, useSearchParams } from "next/navigation"
+import { useEffect, useRef, Suspense } from "react"
 import useUltimateCollector from "@/lib/data_watcher"
 
 function TelemetryLogic() {
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-
-  // 1. Call the hook at the TOP LEVEL
-  const payload = useUltimateCollector()
+  const { userData } = useUltimateCollector()
+  const hasSent = useRef(false)
 
   useEffect(() => {
-    const sendData = async () => {
-      // 2. Only send if the hook has actually gathered the data
-      if (!payload || !payload.userData) return
+    if (!userData || hasSent.current) return
 
+    const sendData = async () => {
       try {
         await fetch("/api/telemetry", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
+          body: JSON.stringify({ userData }),
         })
+        hasSent.current = true
       } catch (error) {
         console.error("Telemetry failed:", error)
       }
     }
 
     sendData()
-    // 3. This fires whenever the route OR the gathered data changes
-  }, [pathname, searchParams, payload])
+  }, [userData])
 
   return null
 }

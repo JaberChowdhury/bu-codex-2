@@ -2,13 +2,18 @@
 
 import * as React from "react"
 import { motion } from "framer-motion"
+import dynamic from "next/dynamic"
 import {
   IconCode,
   IconTerminal2,
   IconShield,
   IconCpu,
 } from "@tabler/icons-react"
-import { AmbientCanvas } from "@/components/gallery/three-bg"
+
+const AmbientCanvas = dynamic(
+  () => import("@/components/gallery/three-bg").then((mod) => mod.AmbientCanvas),
+  { ssr: false }
+)
 
 const organizers = [
   {
