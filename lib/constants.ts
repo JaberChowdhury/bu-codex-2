@@ -15,8 +15,8 @@ export const EVENT_DETAILS = {
   // Logistics
   TEAM_SLOTS: 20,
   TEAM_SIZE: 3,
-  ENTRY_FEE_AMOUNT: "400tk",
-  ENTRY_FEE_TEXT: "400tk per team",
+  ENTRY_FEE_AMOUNT: "450tk",
+  ENTRY_FEE_TEXT: "450tk per team",
   DURATION_TEXT: "5h 00m",
   DURATION_HOURS: 5,
   PROBLEMS_COUNT: 11,
